@@ -51,7 +51,6 @@ BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
 	EVT_MENU(ID_Down, NwnTFrame::OnDown)
 	EVT_MENU(ID_About, NwnTFrame::OnAbout)
 	EVT_MENU(ID_Exit, NwnTFrame::OnExit)
-//	EVT_BUTTON(ID_Cancel, TblPropDialog::OnCancel)
 END_EVENT_TABLE()
 
 const wxChar *open_help = wxT("Open a file.");

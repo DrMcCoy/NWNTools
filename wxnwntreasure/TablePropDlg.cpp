@@ -2,9 +2,10 @@
 
 #include "TablePropDlg.h"
 
-
-
-
+BEGIN_EVENT_TABLE(TblPropDialog, wxDialog)
+    EVT_BUTTON( wxID_OK, TblPropDialog::OnOk )
+    EVT_CHECKBOX( ID_GlblCheckbox, TblPropDialog::OnGlblCheck )
+END_EVENT_TABLE()
 
 TblPropDialog::TblPropDialog(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
@@ -25,7 +26,7 @@ TblPropDialog::TblPropDialog(wxWindow* parent, int id, const wxString& title, co
         "Pick By Class"
     };
     combo_box_1 = new wxComboBox(this, -1, "", wxDefaultPosition, wxDefaultSize, 9, combo_box_1_choices, wxCB_DROPDOWN);
-    checkbox_1 = new wxCheckBox(this, -1, "Global Table - Global tables will be made ");
+    checkbox_1 = new wxCheckBox(this, ID_GlblCheckbox, "Global Table - Global tables will be made ");
     label_1 = new wxStaticText(this, -1, "available as starting points.");
     label_TblNum = new wxStaticText(this, -1, "Table Number");
     spin_ctrl_1 = new wxSpinCtrl(this, -1, "100", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
@@ -36,6 +37,7 @@ TblPropDialog::TblPropDialog(wxWindow* parent, int id, const wxString& title, co
     do_layout();
     // end wxGlade
 }
+
 
 
 void TblPropDialog::set_properties()
@@ -75,24 +77,32 @@ void TblPropDialog::do_layout()
     Layout();
     // end wxGlade
 }
-/*
-void TblPropDialog::OnCancel(wxCommandEvent& WXUNUSED(event))
-{
-//    this.EndModal();
-}
-*/
 
 void TblPropDialog::OnOk(wxCommandEvent &event)
 {
-  event.Skip();
+    event.Skip();
+}
+
+
+void TblPropDialog::OnGlblCheck(wxCommandEvent &event)
+{
+
+    if (checkbox_1->GetValue()==true) {
+        label_TblNum->Enable(true);
+        spin_ctrl_1->Enable(true);
+    }
+    else {
+         label_TblNum->Disable();
+         spin_ctrl_1->Disable();
+    }
 }
 
 
 
 
 
-BEGIN_EVENT_TABLE(TblPropDialog,wxDialog)
-    EVT_BUTTON( wxID_OK, TblPropDialog::OnOk )
-END_EVENT_TABLE()
+
+
+
 
 
