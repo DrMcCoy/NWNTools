@@ -29,6 +29,7 @@
 #include "table.xpm"
 #include "gold.xpm"
 #include "after.xpm"
+#include "prop.xpm"
 #include "tableprop.xpm"
 #include "up.xpm"
 #include "down.xpm"
@@ -109,7 +110,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 	_tb->EnableTool(ID_After, 0);
 	_tb->AddTool(ID_Table, wxT("Table"), wxBitmap(table_xpm), "Table...");
 	_tb->AddSeparator();
-	_tb->AddTool(ID_Prop, wxT("Prop."), wxBitmap(tableprop_xpm), "Proporties...");
+	_tb->AddTool(ID_Prop, wxT("Prop."), wxBitmap(prop_xpm), "Proporties...");
 	_tb->AddTool(ID_TProp, wxT("Table Prop."), wxBitmap(tableprop_xpm), "Table Proporties...");
 	_tb->AddSeparator();
 	_tb->AddTool(ID_Delete, wxT("Delete"), wxBitmap(none_xpm), "Delete...");
