@@ -2,6 +2,8 @@
 bin_PROGRAMS = wxnwntreasure
 
 wxnwntreasure_SOURCES = \
+	ItemPropDlg.cpp \
+	ItemPropDlg.h \
 	TablePropDlg.cpp \
 	TablePropDlg.h \
 	wxNwnTreasure.cpp \

@@ -22,7 +22,7 @@
 
 //#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
 
-#include "new16.xpm"
+#include "new.xpm"
 #include "fileopen.xpm"
 #include "save.xpm"
 //#include "encounter.xpm"
@@ -101,7 +101,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 
 	_tb = CreateToolBar(wxTB_TEXT | wxTB_FLAT | wxTB_DOCKABLE, -1, "Toolbar");
 
-	_tb->AddTool(ID_New, wxT("New"), wxBitmap(new16_xpm), "New...");
+	_tb->AddTool(ID_New, wxT("New"), wxBitmap(new_xpm), "New...");
 	_tb->AddTool(ID_Open, wxT("Open"), wxBitmap(fileopen_xpm), "Open...");
 	_tb->AddTool(ID_Save, wxT("Save"), wxBitmap(save_xpm), "Save...");
 	_tb->AddSeparator();
