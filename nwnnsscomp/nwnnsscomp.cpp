@@ -1483,13 +1483,18 @@ bool Compile (unsigned char *pauchData, UINT32 ulSize,
 	// Extract the default dir
 	//
 
-	const char *pszFileName = NwnBasename (pszInFile);
-	size_t nLength = pszFileName - pszInFile;
+        //make a copy, as basename may modify
+        char *pszInFileCopy = strdup(pszInFile);
+        //should really use dirname here, but whatever
+	const char *pszFileName = NwnBasename (pszInFileCopy);
+        //cannot rely on result being a pointer in the same string
+	size_t nLength = strlen(pszInFile) - strlen(pszFileName);
 	char *pszDefDir = (char *) alloca (sizeof (char) * (nLength + 1));
 	memcpy (pszDefDir, pszInFile, sizeof (char) * (nLength));
 	pszDefDir [nLength] = 0;
 	g_sLoader .SetDefaultDir (pszDefDir);
-	
+	free(pszInFileCopy);
+
 	//
 	// Compile
 	//
