@@ -15,13 +15,14 @@
 
 
 #include "wxNwnTreasure.h"
+#include "TablePropDlg.h"
 
 //#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
 
 #include "new.xpm"
 #include "fileopen.xpm"
 #include "save.xpm"
-#include "encounter.xpm"
+//#include "encounter.xpm"
 #include "none.xpm"
 #include "table.xpm"
 #include "gold.xpm"
@@ -48,6 +49,7 @@ BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
 	EVT_MENU(ID_Down, NwnTFrame::OnDown)
 	EVT_MENU(ID_About, NwnTFrame::OnAbout)
 	EVT_MENU(ID_Exit, NwnTFrame::OnExit)
+//	EVT_BUTTON(ID_Cancel, TblPropDialog::OnCancel)
 END_EVENT_TABLE()
 
 const wxChar *open_help = wxT("Open a file.");
@@ -222,9 +224,15 @@ void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
 {
-	wxString msg;
+/*	wxString msg;
 	msg.Printf( _T("Insert Table Proporties code here."));
 	wxMessageBox(msg, _T("Table Proporties placeholder"), wxOK | wxICON_INFORMATION, this);
+*/
+
+    TblPropDialog* dialog_1 = new TblPropDialog(0, -1, "");
+
+    dialog_1->ShowModal();
+//    return true;
 }
 
 void NwnTFrame::OnDelete(wxCommandEvent& WXUNUSED(event))
@@ -260,6 +268,7 @@ void NwnTFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 void NwnTFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 {
     // TRUE is to force the frame to close
+
     Close(TRUE);
 }
 
