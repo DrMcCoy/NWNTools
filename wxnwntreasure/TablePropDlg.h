@@ -10,6 +10,10 @@
 #ifndef TABLEPROPDLG_H
 #define TABLEPROPDLG_H
 
+enum
+{
+    ID_GlblCheckbox,
+};
 
 class TblPropDialog: public wxDialog {
 public:
@@ -23,6 +27,9 @@ private:
     void set_properties();
     void do_layout();
     // end wxGlade
+    
+    void OnOk(wxCommandEvent &event);
+    void OnGlblCheck(wxCommandEvent &event);
 
 protected:
     // begin wxGlade: TblPropDialog::attributes
@@ -37,15 +44,10 @@ protected:
     wxButton* button_1;
     wxButton* button_1_copy;
     // end wxGlade
-
-private:
-    void OnOk( wxCommandEvent &event );
-
+    
 private:
 	DECLARE_EVENT_TABLE()
-
+    
 };
-
-
 
 #endif // TABLEPROPDLG_H
