@@ -2229,7 +2229,7 @@ int main (int argc, char *argv [])
 
 			char *pszOrgInFile = papszInFiles [i];
 			char szInFile [512];
-                        char *tmp;
+                        const char *tmp;
 			strcpy (szInFile, papszInFiles [i]);
                         tmp = NwnBasename(szInFile);
 			char *p = strchr (tmp, '.');	
