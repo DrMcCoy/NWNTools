@@ -8,7 +8,9 @@
 //! IDs for various widget events.
 enum
 {
-    ID_Open,
+	ID_New,
+	ID_Open,
+	ID_Save,
 };
 
 class NwnTFrame: public wxFrame {
@@ -26,10 +28,10 @@ private:
 
 protected:
     // begin wxGlade: NwnTFrame::attributes
-    wxMenuBar* menubar;
-    wxStatusBar* statusbar;
+    wxMenuBar* _mb;
+    wxStatusBar* _sb;
     wxToolBar* _tb;
-    wxTreeCtrl* tree_ctrl_1;
+    wxTreeCtrl* _tc1;
     // end wxGlade
 
     //! Called when the user wants to open a file.
