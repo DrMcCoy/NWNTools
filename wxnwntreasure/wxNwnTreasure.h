@@ -11,34 +11,48 @@ enum
 	ID_New,
 	ID_Open,
 	ID_Save,
+	ID_Create,
+	ID_After,
+	ID_Table,
+	ID_Prop,
+	ID_TProp,
+	ID_Delete,
+	ID_Up,
+	ID_Down,
+	ID_About,
 	ID_Exit,
+	ID_Empty,
+	ID_Treasure_Tbl,
 };
 
 class NwnTFrame: public wxFrame {
 public:
-    // begin wxGlade: NwnTFrame::ids
-    // end wxGlade
 
     NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
 
 private:
-    // begin wxGlade: NwnTFrame::methods
+
     void set_properties();
     void do_layout();
-    // end wxGlade
 
 protected:
-    // begin wxGlade: NwnTFrame::attributes
+
     wxMenuBar* _mb;
     wxStatusBar* _sb;
     wxToolBar* _tb;
     wxTreeCtrl* _tc1;
-    // end wxGlade
 
-    //! Called when the user wants to open a file.
 	void OnNew(wxCommandEvent& event);
 	void OnOpen(wxCommandEvent& event);
 	void OnSave(wxCommandEvent& event);
+	void OnCreate(wxCommandEvent& event);
+	void OnAfter(wxCommandEvent& event);
+	void OnTable(wxCommandEvent& event);
+	void OnProp(wxCommandEvent& event);
+	void OnTProp(wxCommandEvent& event);
+	void OnDelete(wxCommandEvent& event);
+	void OnUp(wxCommandEvent& event);
+	void OnDown(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
 	void OnExit(wxCommandEvent& event);
 

@@ -9,13 +9,14 @@
  ***************************************************************************/
 
 #include <wx/wx.h>
-#include <wx/image.h>
+//#include <wx/image.h>
 #include <wx/treectrl.h>
 
 
 
 #include "wxNwnTreasure.h"
-#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
+
+//#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
 
 #include "new.xpm"
 #include "fileopen.xpm"
@@ -27,14 +28,24 @@
 #include "tableprop.xpm"
 #include "up.xpm"
 #include "down.xpm"
+#include "helpicon.xpm"
 #include "exit.xpm"
 
-#endif
+//#endif
 
 BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
 	EVT_MENU(ID_New, NwnTFrame::OnNew)
 	EVT_MENU(ID_Open, NwnTFrame::OnOpen)
 	EVT_MENU(ID_Save, NwnTFrame::OnSave)
+	EVT_MENU(ID_Create, NwnTFrame::OnCreate)
+	EVT_MENU(ID_After, NwnTFrame::OnAfter)
+	EVT_MENU(ID_Table, NwnTFrame::OnTable)
+	EVT_MENU(ID_Prop, NwnTFrame::OnProp)
+	EVT_MENU(ID_TProp, NwnTFrame::OnTProp)
+	EVT_MENU(ID_Delete, NwnTFrame::OnDelete)
+	EVT_MENU(ID_Up, NwnTFrame::OnUp)
+	EVT_MENU(ID_Down, NwnTFrame::OnDown)
+	EVT_MENU(ID_About, NwnTFrame::OnAbout)
 	EVT_MENU(ID_Exit, NwnTFrame::OnExit)
 END_EVENT_TABLE()
 
@@ -55,26 +66,28 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
     _mFile->Append(wxNewId(), "Export Script...", "");
     _mFile->AppendSeparator();
     wxMenu* _mFile_Recent = new wxMenu();
-    _mFile_Recent->Append(wxNewId(), "<Empty>", "");
-    _mFile->Append(wxNewId(), "Recent Files", _mFile_Recent, "");
-    _mFile->AppendSeparator();
-    _mFile->Append(wxNewId(), "Exit", "");
+        _mFile_Recent->Append(ID_Empty, "<Empty>", "");
+                _mFile_Recent->Enable(ID_Empty, 0);
+        _mFile->Append(wxNewId(), "Recent Files", _mFile_Recent, "");
+        _mFile->AppendSeparator();
+        _mFile->Append(ID_Exit, "Exit", "");
     _mb->Append(_mFile, "File");
+    
     wxMenu* _mEdit = new wxMenu();
-    _mEdit->Append(wxNewId(), "Insert New In...", "");
-    _mEdit->Append(wxNewId(), "Insert New After...", "");
-    _mEdit->Append(wxNewId(), "Insert Table...", "");
+        _mEdit->Append(ID_Create, "Insert New In...", "");
+        _mEdit->Append(ID_After, "Insert New After...", "");
+        _mEdit->Append(ID_Table, "Insert Table...", "");
+        _mEdit->AppendSeparator();
+    _mEdit->Append(ID_Prop, "Proporties...", "");
+    _mEdit->Append(ID_TProp, "Table Proporties...", "");
     _mEdit->AppendSeparator();
-    _mEdit->Append(wxNewId(), "Proporties...", "");
-    _mEdit->Append(wxNewId(), "Table Proporties...", "");
+    _mEdit->Append(ID_Up, "Move Up", "");
+    _mEdit->Append(ID_Down, "Move Down", "");
     _mEdit->AppendSeparator();
-    _mEdit->Append(wxNewId(), "Move Up", "");
-    _mEdit->Append(wxNewId(), "Move Down", "");
-    _mEdit->AppendSeparator();
-    _mEdit->Append(wxNewId(), "Delete", "");
+    _mEdit->Append(ID_Delete, "Delete", "");
     _mb->Append(_mEdit, "Edit");
     wxMenu* _mHelp = new wxMenu();
-    _mHelp->Append(wxNewId(), "About", "");
+    _mHelp->Append(ID_About, "About", "");
 	_mb->Append(_mHelp, "Help");
 	_sb = CreateStatusBar(1);
 
@@ -86,24 +99,41 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 	_tb->AddTool(ID_Open, wxT("Open"), wxBitmap(fileopen_xpm), "Open...");
 	_tb->AddTool(ID_Save, wxT("Save"), wxBitmap(save_xpm), "Save...");
 	_tb->AddSeparator();
-	_tb->AddTool(ID_Save, wxT("Create in"), wxBitmap(none_xpm), "Create in...");
-	_tb->AddTool(ID_Save, wxT("After"), wxBitmap(none_xpm), "After...");
-	_tb->AddTool(ID_Save, wxT("Table"), wxBitmap(table_xpm), "Table...");
+	_tb->AddTool(ID_Create, wxT("Create in"), wxBitmap(gold_xpm), "Create in...");
+	_tb->EnableTool(ID_Create, 0);
+	_tb->AddTool(ID_After, wxT("After"), wxBitmap(gold_xpm), "After...");
+	_tb->EnableTool(ID_After, 0);
+	_tb->AddTool(ID_Table, wxT("Table"), wxBitmap(table_xpm), "Table...");
 	_tb->AddSeparator();
-	_tb->AddTool(ID_Save, wxT("Prop."), wxBitmap(tableprop_xpm), "Proporties...");
-	_tb->AddTool(ID_Save, wxT("Table Prop."), wxBitmap(tableprop_xpm), "Table Proporties...");
+	_tb->AddTool(ID_Prop, wxT("Prop."), wxBitmap(tableprop_xpm), "Proporties...");
+	_tb->AddTool(ID_TProp, wxT("Table Prop."), wxBitmap(tableprop_xpm), "Table Proporties...");
 	_tb->AddSeparator();
-	_tb->AddTool(ID_Save, wxT("Delete"), wxBitmap(none_xpm), "Delete...");
+	_tb->AddTool(ID_Delete, wxT("Delete"), wxBitmap(none_xpm), "Delete...");
 	_tb->AddSeparator();
-	_tb->AddTool(ID_Save, wxT("Up"), wxBitmap(up_xpm), "Up...");
-	_tb->AddTool(ID_Save, wxT("Down"), wxBitmap(down_xpm), "Down...");
+	_tb->AddTool(ID_Up, wxT("Up"), wxBitmap(up_xpm), "Up...");
+	_tb->AddTool(ID_Down, wxT("Down"), wxBitmap(down_xpm), "Down...");
 	_tb->AddSeparator();
+	_tb->AddTool(ID_About, wxT("About"), wxBitmap(helpicon_xpm), "About...");
 	_tb->AddTool(ID_Exit, wxT("Exit"), wxBitmap(exit_xpm), "Exit...");
 
 	_tb->Realize();
 
 	_tc1 = new wxTreeCtrl(this, -1, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
+	
 
+ 
+    _tc1->AddRoot(wxT("Tables"));
+
+    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Treasure Table") 
+            , -1, -1, ID_Treasure_Tbl );
+    _tc1->AppendItem(_tc1->ID_Treasure_Tbl, wxT("Treasure") 
+            /*, MyTreeCtrl::TreeCtrlIcon_File */ );
+    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Encounter Table") 
+            /*, wxBitmap(encounter_xpm) */ );
+    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Placeable Table") 
+            /*, wxBitmap(encounter_xpm) */ );
+    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Profile Table") 
+            /*, MyTreeCtrl::TreeCtrlIcon_File */ );	
 	set_properties();
 	do_layout();
 
@@ -160,11 +190,60 @@ void NwnTFrame::OnSave(wxCommandEvent& WXUNUSED(event))
 	wxMessageBox(msg, _T("Save placeholder"), wxOK | wxICON_INFORMATION, this);
 }
 
-
-void NwnTFrame::OnExit(wxCommandEvent& WXUNUSED(event))
+void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
 {
-    // TRUE is to force the frame to close
-    Close(TRUE);
+	wxString msg;
+	msg.Printf( _T("Insert Create In code here."));
+	wxMessageBox(msg, _T("Create In placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnAfter(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert After code here."));
+	wxMessageBox(msg, _T("After placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert Table code here."));
+	wxMessageBox(msg, _T("Table placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert Proporties code here."));
+	wxMessageBox(msg, _T("Proporties placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert Table Proporties code here."));
+	wxMessageBox(msg, _T("Table Proporties placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnDelete(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert Delete code here."));
+	wxMessageBox(msg, _T("Delete placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnUp(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert Up code here."));
+	wxMessageBox(msg, _T("Up placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnDown(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert Down code here."));
+	wxMessageBox(msg, _T("Down placeholder"), wxOK | wxICON_INFORMATION, this);
 }
 
 void NwnTFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
@@ -174,6 +253,12 @@ void NwnTFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
                 _T("Using %s"), wxVERSION_STRING);
 
     wxMessageBox(msg, _T("About wxNwnTreasure"), wxOK | wxICON_INFORMATION, this);
+}
+
+void NwnTFrame::OnExit(wxCommandEvent& WXUNUSED(event))
+{
+    // TRUE is to force the frame to close
+    Close(TRUE);
 }
 
 
