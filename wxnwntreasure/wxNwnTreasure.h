@@ -34,12 +34,13 @@ enum
 	ID_Exit,
 	ID_Empty,
 	ID_Treasure_Tbl,
+	ID_TreeChg,
 };
 
 class NwnTFrame: public wxFrame {
 public:
 
-    NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
+    NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
 
 private:
 
@@ -72,6 +73,7 @@ protected:
 	void OnDown(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
 	void OnExit(wxCommandEvent& event);
+	void OnTreeChg(wxCommandEvent& event);
 
 private:
 	DECLARE_EVENT_TABLE()

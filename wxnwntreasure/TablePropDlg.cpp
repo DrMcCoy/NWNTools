@@ -19,28 +19,30 @@ END_EVENT_TABLE()
 TblPropDialog::TblPropDialog(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
 {
+
    
-    label_TblName = new wxStaticText(this, -1, "Table Name");
-    text_TblName = new wxTextCtrl(this, -1, "");
-    label_DMode = new wxStaticText(this, -1, "Decision Mode");
+    label_TblName = new wxStaticText(this, -1, wxT("Table Name"));
+    text_TblName = new wxTextCtrl(this, -1, wxT(""));
+    label_DMode = new wxStaticText(this, -1, wxT("Decision Mode"));
+
     const wxString combo_box_1_choices[] = {
-        "Pick One Of",
-        "Pick Multiple From",
-        "Pick By Racial Type",
-        "Pick By Level Range",
-        "Pick By Random Class",
-        "Pick By Specific",
-        "Pick By Weapon Focus",
-        "Pick By Armor Proficiency",
-        "Pick By Class"
+        wxT("Pick One Of"),
+        wxT("Pick Multiple From"),
+        wxT("Pick By Racial Type"),
+        wxT("Pick By Level Range"),
+        wxT("Pick By Random Class"),
+        wxT("Pick By Specific"),
+        wxT("Pick By Weapon Focus"),
+        wxT("Pick By Armor Proficiency"),
+        wxT("Pick By Class")
     };
-    combo_box_1 = new wxComboBox(this, -1, "", wxDefaultPosition, wxDefaultSize, 9, combo_box_1_choices, wxCB_DROPDOWN);
-    checkbox_1 = new wxCheckBox(this, ID_GlblCheckbox, "Global Table - Global tables will be made ");
-    label_1 = new wxStaticText(this, -1, "available as starting points.");
-    label_TblNum = new wxStaticText(this, -1, "Table Number");
-    spin_ctrl_1 = new wxSpinCtrl(this, -1, "100", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
-    button_1 = new wxButton(this, wxID_OK, "OK");
-    button_2 = new wxButton(this, wxID_CANCEL, "Cancel");
+    combo_box_1 = new wxComboBox(this, -1, wxT(""), wxDefaultPosition, wxDefaultSize, 9, combo_box_1_choices, wxCB_DROPDOWN);
+    checkbox_1 = new wxCheckBox(this, ID_GlblCheckbox, wxT("Global Table - Global tables will be made "));
+    label_1 = new wxStaticText(this, -1, wxT("available as starting points."));
+    label_TblNum = new wxStaticText(this, -1, wxT("Table Number"));
+    spin_ctrl_1 = new wxSpinCtrl(this, -1, wxT("100"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
+    button_1 = new wxButton(this, wxID_OK, wxT("OK"));
+    button_2 = new wxButton(this, wxID_CANCEL, wxT("Cancel"));
 
     set_properties();
     do_layout();
@@ -52,7 +54,9 @@ TblPropDialog::TblPropDialog(wxWindow* parent, int id, const wxString& title, co
 void TblPropDialog::set_properties()
 {
 
-    SetTitle("Table Proporties");
+
+    SetTitle(wxT("Table Proporties"));
+
     SetSize(wxSize(300, 263));
     combo_box_1->SetSelection(0);
     label_TblNum->Disable();
