@@ -62,6 +62,7 @@ void TblPropDialog::set_properties()
     combo_box_1->SetSelection(0);
     label_TblNum->Disable();
     spin_ctrl_1->Disable();
+    button_1->SetDefault();
 
 }
 
@@ -100,6 +101,37 @@ wxString TblPropDialog::GetTblName()
     return value;
 }
 
+wxString TblPropDialog::GetName()
+{
+    wxString name;
+    name = text_TblName->GetValue();
+
+    return name;
+}
+
+wxString TblPropDialog::GetMode()
+{
+    wxString mode;
+    mode = combo_box_1->GetValue();
+
+    return mode;
+}
+
+bool TblPropDialog::GetGlobal()
+{
+    bool global;
+    global = checkbox_1->GetValue();
+
+    return global;
+}
+
+int TblPropDialog::GetTblNum()
+{
+    int tblnum;
+    tblnum = 100;
+
+    return tblnum;
+}
 
 void TblPropDialog::OnOk(wxCommandEvent &event)
 {    

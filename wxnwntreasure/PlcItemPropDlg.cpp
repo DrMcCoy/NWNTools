@@ -90,9 +90,7 @@ void PlcItemPropDlg::set_properties()
     label_15->Enable(0);
     choice_3->Enable(0);
     choice_4->Enable(0);
-    
-
-
+    button_1->SetDefault();
 }
 
 

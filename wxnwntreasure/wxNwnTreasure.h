@@ -39,7 +39,7 @@ enum
 	ID_TreeChg,
 };
 
-wxArrayString TblArray;
+
 
 class NwnTFrame: public wxFrame {
 public:

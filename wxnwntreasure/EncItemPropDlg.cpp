@@ -91,9 +91,7 @@ void EncItemPropDlg::set_properties()
     label_15->Enable(0);
     choice_3->Enable(0);
     choice_4->Enable(0);
-    
-
-
+    button_1->SetDefault();
 }
 
 
@@ -215,6 +213,7 @@ void EncItemPropDlg::OnChoiceSel(wxCommandEvent &event)
   
    if (current==1) { main_sizer->Show(gridsizer_mid1, false); };
    if (current==2) { main_sizer->Show(gridsizer_mid2, false); };
+
 
 
    if (choice==0) { current=0; this->SetSize(wxSize(340, 110)); Centre(); };

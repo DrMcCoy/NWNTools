@@ -86,7 +86,6 @@ ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const 
 
 void ItemPropDlg::set_properties()
 {
-
     SetTitle(wxT("Item Proporties"));
     this->SetSize(wxSize(340, 110));
     current=0;
@@ -96,11 +95,7 @@ void ItemPropDlg::set_properties()
     choice_4->SetSelection(0);
     button_3->SetSize(wxSize(20,20));
     text_2->SetSize(wxSize(175, 22));
-
-    
-    
-
-
+    button_1->SetDefault();
 }
 
 

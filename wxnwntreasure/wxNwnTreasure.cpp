@@ -22,6 +22,7 @@
 #include "EncItemPropDlg.h"
 #include "PlcItemPropDlg.h"
 #include "ProItemPropDlg.h"
+//#include "TblData.h"
 
 
 
@@ -74,6 +75,21 @@ BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
 	EVT_MENU(ID_Exit, NwnTFrame::OnExit)
 	EVT_TREE_SEL_CHANGED(ID_TreeChg, NwnTFrame::OnTreeChg)
 END_EVENT_TABLE()
+
+class TblData: public wxTreeItemData {
+    wxString name;
+    wxString mode;
+    bool global;
+    int tblnum;
+
+  public:
+    TblData (wxString a, wxString b, bool c, int d) {name=a; mode=b; global=c; tblnum=d;}
+
+    wxString GetName();
+    wxString GetMode();
+    bool GetGlobal();
+    int GetTblNum();
+};
 
 NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
@@ -178,6 +194,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
 	
     _tc1->AssignImageList(images);
 	
+
     set_properties();
     do_layout();
 
@@ -200,6 +217,7 @@ void NwnTFrame::set_properties()
     }
 
 }
+
 
 
 void NwnTFrame::do_layout()
@@ -243,6 +261,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
  wxTreeItemIdValue tree_sel = _tc1->GetSelection();
  
  if (_tc1->GetItemParent(tree_sel)==_tc1_b1) {
+
   ItemPropDlg
    IPropDlg ( this, -1,
                  this->GetTitle(),
@@ -260,6 +279,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
   EncItemPropDlg
    EPropDlg ( this, -1,
                  this->GetTitle(),
+
                  wxPoint(300,200),
                  wxSize(250, 300),
                  wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
@@ -317,8 +337,9 @@ void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
 
 
         if (TPropDlg.ShowModal()==wxID_OK) {
-                _tc1->AppendItem(branch, TPropDlg.GetTblName(), 5); 
-                TblArray.Add(TPropDlg.GetTblName());
+                TblData* pTblData = new TblData(TPropDlg.GetName(), TPropDlg.GetMode(), TPropDlg.GetGlobal(), TPropDlg.GetTblNum());
+                _tc1->AppendItem(branch, TPropDlg.GetTblName(), 5, 5, pTblData); 
+                
         }
     }
 }
@@ -491,4 +512,5 @@ bool wxNwnTreasure::OnInit()
     frame_1->Show();
     return true;
 }
+
 
