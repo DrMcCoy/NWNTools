@@ -124,19 +124,24 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
 	_tb->AddTool(ID_Save, wxT("Save"), wxBitmap(save_xpm), wxT("Save..."));
 	_tb->AddSeparator();
 	_tb->AddTool(ID_Create, wxT("Create in"), wxBitmap(gold_xpm), wxT("Create in..."));
-	_tb->EnableTool(ID_Create, 1);
+	_tb->EnableTool(ID_Create, 0);
 	_tb->AddTool(ID_After, wxT("After"), wxBitmap(after_xpm), wxT("After..."));
-	_tb->EnableTool(ID_After, 1);
+	_tb->EnableTool(ID_After, 0);
 	_tb->AddTool(ID_Table, wxT("Table"), wxBitmap(table_xpm), wxT("Table..."));
-	_tb->AddSeparator();
+	_tb->EnableTool(ID_Table, 0);
+  _tb->AddSeparator();
 	_tb->AddTool(ID_Prop, wxT("Prop."), wxBitmap(prop_xpm), wxT("Proporties..."));
+	_tb->EnableTool(ID_Prop, 0);
 	_tb->AddTool(ID_TProp, wxT("Table Prop."), wxBitmap(tableprop_xpm), wxT("Table Proporties..."));
+	_tb->EnableTool(ID_TProp, 0);  
 	_tb->AddSeparator();
 	_tb->AddTool(ID_Delete, wxT("Delete"), wxBitmap(none_xpm), wxT("Delete..."));
 	_tb->AddSeparator();
 	_tb->AddTool(ID_Up, wxT("Up"), wxBitmap(up_xpm), wxT("Up..."));
+	_tb->EnableTool(ID_Up, 0);
 	_tb->AddTool(ID_Down, wxT("Down"), wxBitmap(down_xpm), wxT("Down..."));
-	_tb->AddSeparator();
+	_tb->EnableTool(ID_Down, 0);
+  _tb->AddSeparator();
 	_tb->AddTool(ID_About, wxT("About"), wxBitmap(helpicon_xpm), wxT("About..."));
 	_tb->AddTool(ID_Exit, wxT("Exit"), wxBitmap(exit_xpm), wxT("Exit..."));
 
@@ -203,6 +208,7 @@ void NwnTFrame::do_layout()
     SetAutoLayout(true);
     SetSizer(sizer_1);
     Layout();
+
     Centre();    
 
 }
@@ -361,6 +367,30 @@ void NwnTFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 void NwnTFrame::OnTreeChg(wxCommandEvent& WXUNUSED(event))
 {
 
+  wxTreeItemIdValue branch = _tc1->GetSelection();
+
+  if ( (branch == _tc1_b1) || (branch == _tc1_b2) || (branch == _tc1_b3) || (branch == _tc1_b4)) {
+    _tb->EnableTool(ID_Table, 1);
+  }
+  else if ( (branch != _tc1_b1) && (branch != _tc1_b2) && (branch != _tc1_b3) && (branch != _tc1_b4)) {
+    _tb->EnableTool(ID_Table, 0);
+  }  
+
+  if ( (_tc1->GetItemParent(branch) == _tc1_b1) || (_tc1->GetItemParent(branch) == _tc1_b2)
+  || (_tc1->GetItemParent(branch) == _tc1_b3) || (_tc1->GetItemParent(branch) == _tc1_b4)) {
+    _tb->EnableTool(ID_Create, 1);
+  }
+  else if ( (_tc1->GetItemParent(branch) != _tc1_b1) && (_tc1->GetItemParent(branch) != _tc1_b2)
+  && (_tc1->GetItemParent(branch) != _tc1_b3) && (_tc1->GetItemParent(branch) != _tc1_b4)) {
+    _tb->EnableTool(ID_Create, 0);
+  }
+
+  if ((_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b1)
+  || (_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b2)
+  || (_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b3)
+  || (_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b4) {
+    _tb->EnableTool(ID_Prop, 1);
+  }
 }
 
 
