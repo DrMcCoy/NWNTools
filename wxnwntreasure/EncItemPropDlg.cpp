@@ -16,6 +16,11 @@ BEGIN_EVENT_TABLE(EncItemPropDlg, wxDialog)
     EVT_CHOICE( ID_EncChoice, EncItemPropDlg::OnChoiceSel )
 END_EVENT_TABLE()
 
+        const wxString choice_1_choices[] = {
+        wxT("Spawn Nothing"),
+        wxT("Spawn Creature/NPC"),
+        wxT("Move To Table")
+            };
 
 EncItemPropDlg::EncItemPropDlg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
@@ -23,11 +28,7 @@ EncItemPropDlg::EncItemPropDlg(wxWindow* parent, int id, const wxString& title, 
 
     label_1 = new wxStaticText(this, -1, wxT("Action To Take"));
     label_2 = new wxStaticText(this, -1, wxT("Chance"));
-        const wxString choice_1_choices[] = {
-        wxT("Spawn Nothing"),
-        wxT("Spawn Creature/NPC"),
-        wxT("Move To Table")
-            };
+
         const wxString choice_2_choices[] = {
         wxT(""),
             };
@@ -45,7 +46,7 @@ EncItemPropDlg::EncItemPropDlg(wxWindow* parent, int id, const wxString& title, 
     spin_1 = new wxSpinCtrl(this, -1, wxT("1"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
   
     label_6 = new wxStaticText(this, -1, wxT("Creature Blueprint"));
-    text_2 = new wxTextCtrl(this, -1, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_LINEWRAP|wxTE_MULTILINE|wxTE_READONLY);
+    text_2 = new wxTextCtrl(this, -1, wxT(""));
     button_3 = new wxButton(this, -1, wxT("..."));
 
     label_8 = new wxStaticText(this, -1, wxT("Minimum"));
@@ -168,9 +169,39 @@ void EncItemPropDlg::do_layout()
 
 wxString EncItemPropDlg::GetTblName()
 {
-  wxString value = choice_1->GetStringSelection();
-
+  wxString value1 = choice_1->GetStringSelection();
+  int iChance = spin_1->GetValue() ;
+  
+  wxString chance; chance << iChance;
+  wxString value;
+  
+  if (value1 == choice_1_choices[0]) { value = wxT("Chance ") + chance + wxT(" - ") + wxT("None"); }
+  
+  else if (value1 == choice_1_choices[1]) { 
+      wxString blueprint = text_2->GetValue();
+      int x = spin_4->GetValue();
+      int y = spin_5->GetValue();
+      wxString min; wxString max;
+      min << x; max << y;
+      value = wxT("Chance ") + chance + wxT(" - ") + blueprint + wxT(", Count = ") + min + wxT("-") + max;
+  }
+  else if (value1 == choice_1_choices[2]) { 
+          
+      value = wxT("Chance ") + chance + wxT(" - ") + wxT("Table");
+  }
     return value;
+}
+
+int EncItemPropDlg::GetIcon()
+{
+  
+  wxString value; 
+  value = choice_1->GetStringSelection();
+  if (value == choice_1_choices[0]) { icon = 6; }
+  else if (value == choice_1_choices[1]) { icon = 1; }
+  else if (value == choice_1_choices[2]) { icon = 8; }
+  
+  return icon;
 }
 
 void EncItemPropDlg::OnOk(wxCommandEvent &event)

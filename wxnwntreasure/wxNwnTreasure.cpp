@@ -12,6 +12,7 @@
 #include <wx/image.h>
 #include <wx/imaglist.h>
 #include <wx/treectrl.h>
+#include <wx/string.h>
 
 
 
@@ -71,8 +72,6 @@ BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
 	EVT_MENU(ID_Exit, NwnTFrame::OnExit)
 	EVT_TREE_SEL_CHANGED(ID_TreeChg, NwnTFrame::OnTreeChg)
 END_EVENT_TABLE()
-
-//const wxChar *open_help = wxT("Open a file.");
 
 NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
@@ -156,6 +155,8 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
     images->Add(wxIcon(global_xpm));
     images->Add(wxIcon(noref_xpm));
     images->Add(wxIcon(none_xpm));
+    images->Add(wxIcon(gold_xpm));    
+    images->Add(wxIcon(table_xpm));    
 
 
 
@@ -165,7 +166,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
     _tc1_b2 = _tc1->AppendItem(_tc1->GetRootItem(), wxT("Encounter Table"), 1);
     _tc1_b3 = _tc1->AppendItem(_tc1->GetRootItem(), wxT("Placeable Table"), 2);
     _tc1_b4 =  _tc1->AppendItem(_tc1->GetRootItem(), wxT("Profile Table"), 3);
-	_tc1->AppendItem(_tc1_b4, wxT("Profile"), 4);
+	_tc1_b4_sb1 = _tc1->AppendItem(_tc1_b4, wxT("Profile"), 4);
 
 	
     _tc1->AssignImageList(images);
@@ -243,7 +244,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                );
     
       if (IPropDlg.ShowModal()==wxID_OK) {
-           _tc1->AppendItem(tree_sel, IPropDlg.GetTblName(), 5);
+           _tc1->AppendItem(tree_sel, IPropDlg.GetTblName(), IPropDlg.GetIcon());
       }
     };
 
@@ -257,7 +258,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                );
 
       if (EPropDlg.ShowModal()==wxID_OK) {
-           _tc1->AppendItem(tree_sel, EPropDlg.GetTblName(), 5);
+           _tc1->AppendItem(tree_sel, EPropDlg.GetTblName(), EPropDlg.GetIcon());
       }
     };
     
@@ -271,7 +272,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                );
 
       if (PPropDlg.ShowModal()==wxID_OK) {
-           _tc1->AppendItem(tree_sel, PPropDlg.GetTblName(), 5);
+           _tc1->AppendItem(tree_sel, PPropDlg.GetTblName(), PPropDlg.GetIcon());
       }
 
 };  
@@ -285,18 +286,20 @@ void NwnTFrame::OnAfter(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
 {
-   TblPropDialog
-   TPropDlg ( this, -1,
+    wxTreeItemIdValue branch = _tc1->GetSelection();
+    if ((branch == _tc1_b1 || branch == _tc1_b2 || branch == _tc1_b3) && (branch != _tc1_b4)) {
+        TblPropDialog
+        TPropDlg ( this, -1,
                  this->GetTitle(),
                  wxPoint(100,100),
                  wxSize(250, 300),
                  wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
                );
 
-    wxTreeItemIdValue branch = _tc1->GetSelection();
-    if (branch != _tc1_b4){
+
         if (TPropDlg.ShowModal()==wxID_OK) {
                 _tc1->AppendItem(branch, TPropDlg.GetTblName(), 5); 
+                TblArray.Add(TPropDlg.GetTblName());
         }
     }
 }
@@ -317,9 +320,12 @@ void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnDelete(wxCommandEvent& WXUNUSED(event))
 {
-	wxString msg;
-	msg.Printf( _T("Insert Delete code here."));
-	wxMessageBox(msg, _T("Delete placeholder"), wxOK | wxICON_INFORMATION, this);
+	wxTreeItemIdValue item;
+	item = _tc1->GetSelection();
+	if ((item != _tc1_b1) && (item != _tc1_b2) && (item != _tc1_b3) && (item != _tc1_b4) && (item != _tc1_b4_sb1)) {
+	   _tc1->Delete(item);
+	}
+
 }
 
 void NwnTFrame::OnUp(wxCommandEvent& WXUNUSED(event))

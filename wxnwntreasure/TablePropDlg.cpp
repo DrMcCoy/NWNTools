@@ -100,6 +100,7 @@ wxString TblPropDialog::GetTblName()
     return value;
 }
 
+
 void TblPropDialog::OnOk(wxCommandEvent &event)
 {    
     EndModal(wxID_OK);

@@ -15,6 +15,8 @@
 #define WXNWNTREASURE_H
 
 
+#include "wx/string.h"
+
 
 //! IDs for various widget events.
 enum
@@ -37,11 +39,14 @@ enum
 	ID_TreeChg,
 };
 
+wxArrayString TblArray;
+
 class NwnTFrame: public wxFrame {
 public:
 
     NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
-
+    
+    
 private:
 
     void set_properties();
@@ -57,7 +62,8 @@ protected:
     wxTreeItemIdValue _tc1_b2;
     wxTreeItemIdValue _tc1_b3;
     wxTreeItemIdValue _tc1_b4;
-    wxTreeItemIdValue _tc1_b1_sb1;
+    wxTreeItemIdValue _tc1_b4_sb1;
+
 
 
 	void OnNew(wxCommandEvent& event);

@@ -8,7 +8,7 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
-//#include "wxChoice.h"
+
 #include "ItemPropDlg.h"
 
 BEGIN_EVENT_TABLE(ItemPropDlg, wxDialog)
@@ -16,6 +16,12 @@ BEGIN_EVENT_TABLE(ItemPropDlg, wxDialog)
     EVT_CHOICE( ID_Choice, ItemPropDlg::OnChoiceSel )
 END_EVENT_TABLE()
 
+        const wxString choice_1_choices[] = {
+        wxT("Drop Nothing"),
+        wxT("Drop Gold"),
+        wxT("Drop Item"),
+        wxT("Move To Table")
+            };
 
 ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
@@ -24,15 +30,8 @@ ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const 
 
     label_1 = new wxStaticText(this, -1, wxT("Action To Take"));
     label_2 = new wxStaticText(this, -1, wxT("Percent Chance"));
-        const wxString choice_1_choices[] = {
-        wxT("Drop Nothing"),
-        wxT("Drop Gold"),
-        wxT("Drop Item"),
-        wxT("Move To Table")
-            };
-        const wxString choice_2_choices[] = {
-        wxT(""),
-            };
+
+        const wxString choice_2_choices[] = {wxT("")};
         const wxString choice_3_choices[] = {
         wxT("Inherit"),
         wxT("Generic"),
@@ -54,7 +53,7 @@ ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const 
     text_1 = new wxTextCtrl(this, -1, wxT("1.00"));
     
     label_6 = new wxStaticText(this, -1, wxT("Item Blueprint"));
-    text_2 = new wxTextCtrl(this, -1, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_LINEWRAP|wxTE_MULTILINE|wxTE_READONLY);
+    text_2 = new wxTextCtrl(this, -1, wxT(""));
     button_3 = new wxButton(this, -1, wxT("..."));
 
     label_7 = new wxStaticText(this, -1, wxT("The minimum and maximum values should both be set to 1 for non-stackable items.  For stackables, the count will be randomized in the given range."));
@@ -191,9 +190,47 @@ void ItemPropDlg::do_layout()
 
 wxString ItemPropDlg::GetTblName()
 {
-  wxString value = choice_1->GetStringSelection();
+  wxString value1 = choice_1->GetStringSelection();
+  int iChance = spin_1->GetValue() ;
+  wxString chance; chance << iChance;
+  if (value1 == choice_1_choices[0]) { value1 = wxT("Chance ") + chance + wxT(" - ") + wxT("None"); }
+  else if (value1 == choice_1_choices[1]) { 
+      int numdice = spin_2->GetValue();
+      int die = spin_3->GetValue();
+      wxString x; x << numdice; 
+      wxString y; y << die;
+      wxString dice; dice = x + wxT("d") + y;
+      wxString multiplier = text_1->GetValue();
+      value1 = wxT("Chance ") + chance + wxT(" - ") + wxT("Gold, ") + dice + wxT(", Multiplier = ") + multiplier; 
+  }
+  else if (value1 == choice_1_choices[2]) { 
+      wxString blueprint = text_2->GetValue();
+      int x = spin_4->GetValue();
+      int y = spin_5->GetValue();
+      wxString min; wxString max;
+      min << x; max << y;
+      value1 = wxT("Chance ") + chance + wxT(" - ") + blueprint + wxT(", Count = ") + min + wxT("-") + max; 
+  }
+  else if (value1 == choice_1_choices[3]) { 
+          
+      value1 = wxT("Chance ") + chance + wxT(" - ") + wxT("Table");
+  }
+    
+  
+  wxString value = value1 ;
 
     return value;
+}
+
+int ItemPropDlg::GetIcon()
+{
+  wxString value = choice_1->GetStringSelection();
+  if (value == choice_1_choices[0]) { icon = 6; }
+  else if (value == choice_1_choices[1]) { icon = 7; }
+  else if (value == choice_1_choices[2]) { icon = 0; }
+  else if (value == choice_1_choices[3]) { icon = 8; }
+  
+  return icon;
 }
 
 void ItemPropDlg::OnOk(wxCommandEvent &event)

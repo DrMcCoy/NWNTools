@@ -31,6 +31,7 @@ public:
     PlcItemPropDlg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_DIALOG_STYLE);
 
     wxString GetTblName();
+    int GetIcon();
     
 private:
 
@@ -40,7 +41,7 @@ private:
 
     void OnOk(wxCommandEvent &event);
     void OnChoiceSel(wxCommandEvent &event);
-
+    int icon;
 
 protected:
 
