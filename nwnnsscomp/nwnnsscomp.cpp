@@ -2229,13 +2229,20 @@ int main (int argc, char *argv [])
 
 			char *pszOrgInFile = papszInFiles [i];
 			char szInFile [512];
+                        char *tmp;
 			strcpy (szInFile, papszInFiles [i]);
-			char *p = strchr (NwnBasename (szInFile), '.');
-			if (p) 
-				*p = 0;
+                        tmp = NwnBasename(szInFile);
+			char *p = strchr (tmp, '.');	
+
+                        if (p) {
+                            *p = '\0';
+                        }
+                        strcpy (szInFile, tmp);
 			strcat (szInFile, g_fCompile ? ".nss" : ".ncs");
-                        //note that on linux the following returns true/false indicating whether any error occurred
-                        //on windows it returns the number of files compiled - errors are not reported in the return code
+                        //note that on linux the following returns true/false 
+                        //indicating whether any error occurred
+                        //on windows it returns the number of files compiled 
+                        //- errors are not reported in the return code
 			int nCount = Wildcard (szInFile, pszOutFile);
 			if (!nCount)
 			{
