@@ -16,12 +16,13 @@
 
 #include "wxNwnTreasure.h"
 #include "TablePropDlg.h"
+#include "ItemPropDlg.h"
 
 
 
 //#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
 
-#include "new.xpm"
+#include "new16.xpm"
 #include "fileopen.xpm"
 #include "save.xpm"
 //#include "encounter.xpm"
@@ -77,7 +78,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
         _mFile->AppendSeparator();
         _mFile->Append(ID_Exit, "Exit", "");
     _mb->Append(_mFile, "File");
-    
+
     wxMenu* _mEdit = new wxMenu();
         _mEdit->Append(ID_Create, "Insert New In...", "");
         _mEdit->Append(ID_After, "Insert New After...", "");
@@ -100,7 +101,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 
 	_tb = CreateToolBar(wxTB_TEXT | wxTB_FLAT | wxTB_DOCKABLE, -1, "Toolbar");
 
-	_tb->AddTool(ID_New, wxT("New"), wxBitmap(new_xpm), "New...");
+	_tb->AddTool(ID_New, wxT("New"), wxBitmap(new16_xpm), "New...");
 	_tb->AddTool(ID_Open, wxT("Open"), wxBitmap(fileopen_xpm), "Open...");
 	_tb->AddTool(ID_Save, wxT("Save"), wxBitmap(save_xpm), "Save...");
 	_tb->AddSeparator();
@@ -219,19 +220,20 @@ void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))
 {
-	wxString msg;
-	msg.Printf( _T("Insert Proporties code here."));
-	wxMessageBox(msg, _T("Proporties placeholder"), wxOK | wxICON_INFORMATION, this);
+  ItemPropDlg
+   IPropDlg ( this, -1,
+                 this->GetTitle(),
+                 wxPoint(300,200),
+                 wxSize(250, 300),
+                 wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
+               );
+
+    IPropDlg.ShowModal();
+
 }
 
 void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
 {
-/*	wxString msg;
-	msg.Printf( _T("Insert Table Proporties code here."));
-	wxMessageBox(msg, _T("Table Proporties placeholder"), wxOK | wxICON_INFORMATION, this);
-*/
-
-   // TblPropDlg* dialog_1 = new TblPropDlg(0, -1, "");
 
   TblPropDialog
    TPropDlg ( this, -1,
@@ -242,7 +244,7 @@ void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
                );
 
     TPropDlg.ShowModal();
-//    return true;
+
 }
 
 void NwnTFrame::OnDelete(wxCommandEvent& WXUNUSED(event))

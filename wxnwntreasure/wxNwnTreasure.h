@@ -47,7 +47,8 @@ protected:
     wxTreeItemIdValue _tc1_b2;
     wxTreeItemIdValue _tc1_b3;
     wxTreeItemIdValue _tc1_b4;
-    wxDialog* TblPropDialop;
+    //wxDialog* TblPropDialog;
+    //wxDialog* MyPanel;
 
 	void OnNew(wxCommandEvent& event);
 	void OnOpen(wxCommandEvent& event);

@@ -42,12 +42,12 @@ protected:
     wxStaticText* label_TblNum;
     wxSpinCtrl* spin_ctrl_1;
     wxButton* button_1;
-    wxButton* button_1_copy;
+    wxButton* button_2;
     // end wxGlade
-    
+
 private:
 	DECLARE_EVENT_TABLE()
-    
+
 };
 
 #endif // TABLEPROPDLG_H

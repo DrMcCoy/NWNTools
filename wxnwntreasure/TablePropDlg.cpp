@@ -31,7 +31,7 @@ TblPropDialog::TblPropDialog(wxWindow* parent, int id, const wxString& title, co
     label_TblNum = new wxStaticText(this, -1, "Table Number");
     spin_ctrl_1 = new wxSpinCtrl(this, -1, "100", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
     button_1 = new wxButton(this, wxID_OK, "OK");
-    button_1_copy = new wxButton(this, wxID_CANCEL, "Cancel");
+    button_2 = new wxButton(this, wxID_CANCEL, "Cancel");
 
     set_properties();
     do_layout();
@@ -70,11 +70,12 @@ void TblPropDialog::do_layout()
     grid_sizer_2->Add(label_TblNum, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
     grid_sizer_2->Add(spin_ctrl_1, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_2->Add(button_1, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 10);
-    grid_sizer_2->Add(button_1_copy, 0, wxALL|wxALIGN_CENTER_VERTICAL, 10);
+    grid_sizer_2->Add(button_2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 10);
     sizer_1->Add(grid_sizer_2, 1, wxEXPAND, 0);
     SetAutoLayout(true);
     SetSizer(sizer_1);
     Layout();
+    Centre();
     // end wxGlade
 }
 
