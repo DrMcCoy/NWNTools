@@ -63,6 +63,15 @@ void TblPropDialog::set_properties()
     label_TblNum->Disable();
     spin_ctrl_1->Disable();
     button_1->SetDefault();
+    
+    if (checkbox_1->GetValue()==true) {
+        label_TblNum->Enable(true);
+        spin_ctrl_1->Enable(true);
+    }
+    else {
+         label_TblNum->Disable();
+         spin_ctrl_1->Disable();
+    }
 
 }
 
@@ -128,9 +137,46 @@ bool TblPropDialog::GetGlobal()
 int TblPropDialog::GetTblNum()
 {
     int tblnum;
-    tblnum = 100;
+    tblnum = spin_ctrl_1->GetValue();
 
     return tblnum;
+}
+
+void TblPropDialog::SetName(wxString a)
+{
+    wxString name = a;
+    text_TblName->SetValue(name);
+
+}
+
+void TblPropDialog::SetMode(wxString b)
+{
+    wxString mode = b;
+    combo_box_1->SetValue(mode);
+
+}
+
+void TblPropDialog::SetGlobal(bool c)
+{
+    bool global = c;
+    checkbox_1->SetValue(global);
+    
+    if (checkbox_1->GetValue()==true) {
+        label_TblNum->Enable(true);
+        spin_ctrl_1->Enable(true);
+    }
+    else {
+         label_TblNum->Disable();
+         spin_ctrl_1->Disable();
+    }
+
+}
+
+void TblPropDialog::SetTblNum(int d)
+{
+    int tblnum = d;
+    spin_ctrl_1->SetValue(tblnum);
+
 }
 
 void TblPropDialog::OnOk(wxCommandEvent &event)

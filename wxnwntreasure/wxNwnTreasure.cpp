@@ -22,7 +22,7 @@
 #include "EncItemPropDlg.h"
 #include "PlcItemPropDlg.h"
 #include "ProItemPropDlg.h"
-//#include "TblData.h"
+#include "TblData.h"
 
 
 
@@ -76,20 +76,7 @@ BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
 	EVT_TREE_SEL_CHANGED(ID_TreeChg, NwnTFrame::OnTreeChg)
 END_EVENT_TABLE()
 
-class TblData: public wxTreeItemData {
-    wxString name;
-    wxString mode;
-    bool global;
-    int tblnum;
 
-  public:
-    TblData (wxString a, wxString b, bool c, int d) {name=a; mode=b; global=c; tblnum=d;}
-
-    wxString GetName();
-    wxString GetMode();
-    bool GetGlobal();
-    int GetTblNum();
-};
 
 NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
@@ -171,15 +158,15 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
             wxTR_LINES_AT_ROOT|wxTR_HIDE_ROOT|wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
 
     wxImageList *images = new wxImageList(16, 16, TRUE);
-    images->Add(wxIcon(item_xpm));
-    images->Add(wxIcon(encounter_xpm));
-    images->Add(wxIcon(placeable_xpm));
-    images->Add(wxIcon(profile_xpm));
-    images->Add(wxIcon(global_xpm));
-    images->Add(wxIcon(noref_xpm));
-    images->Add(wxIcon(none_xpm));
-    images->Add(wxIcon(gold_xpm));    
-    images->Add(wxIcon(table_xpm));    
+    images->Add(wxIcon(item_xpm));       // image 0
+    images->Add(wxIcon(encounter_xpm));  // image 1
+    images->Add(wxIcon(placeable_xpm));  // image 2
+    images->Add(wxIcon(profile_xpm));    // image 3
+    images->Add(wxIcon(global_xpm));     // image 4
+    images->Add(wxIcon(noref_xpm));      // image 5
+    images->Add(wxIcon(none_xpm));       // image 6
+    images->Add(wxIcon(gold_xpm));       // image 7
+    images->Add(wxIcon(table_xpm));      // image 8
 
 
 
@@ -337,8 +324,13 @@ void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
 
 
         if (TPropDlg.ShowModal()==wxID_OK) {
-                TblData* pTblData = new TblData(TPropDlg.GetName(), TPropDlg.GetMode(), TPropDlg.GetGlobal(), TPropDlg.GetTblNum());
-                _tc1->AppendItem(branch, TPropDlg.GetTblName(), 5, 5, pTblData); 
+                TblData* pTblData = new TblData( TPropDlg.GetName(), TPropDlg.GetMode(), 
+                                TPropDlg.GetGlobal(), TPropDlg.GetTblNum());
+                int icon;                
+                if (TPropDlg.GetGlobal()==true) { icon = 4; }
+                else {icon = 5; }
+                _tc1->AppendItem(branch, TPropDlg.GetTblName(), icon, icon, pTblData); 
+             
                 
         }
     }
@@ -352,8 +344,39 @@ void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
 {
-
+    wxTreeItemIdValue branch = _tc1->GetSelection();
     
+        TblPropDialog
+        TPropDlg ( this, -1,
+                 this->GetTitle(),
+                 wxPoint(100,100),
+                 wxSize(250, 300),
+                 wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
+               );
+        TblData *pTblData = static_cast<TblData*>(_tc1->GetItemData(branch));
+        wxString name; wxString mode; bool global; int tblnum;
+        name = pTblData->GetName(); TPropDlg.SetName(name);
+        mode = pTblData->GetMode(); TPropDlg.SetMode(mode);
+        global = pTblData->GetGlobal(); TPropDlg.SetGlobal(global);
+        tblnum = pTblData->GetTblNum(); TPropDlg.SetTblNum(tblnum);
+
+        if (TPropDlg.ShowModal()==wxID_OK) {
+                name = TPropDlg.GetName();
+                mode = TPropDlg.GetMode();
+                global = TPropDlg.GetGlobal();
+                tblnum = TPropDlg.GetTblNum();
+                pTblData->SetName(name);
+                pTblData->SetMode(mode);
+                pTblData->SetGlobal(global);
+                pTblData->SetTblNum(tblnum);
+                _tc1->SetItemText(branch, TPropDlg.GetTblName());
+                int icon; 
+                if (TPropDlg.GetGlobal()==true) { icon = 4; }
+                else {icon = 5; }
+                _tc1->SetItemImage(branch, icon, wxTreeItemIcon_Normal );
+                _tc1->SetItemImage(branch, icon, wxTreeItemIcon_Selected );
+        }
+
 
 
 }
