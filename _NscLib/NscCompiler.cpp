@@ -128,7 +128,7 @@ bool NscCompilerInitialize (CNwnLoader *pLoader, int nVersion,
 	NscAddToken ("switch",         SWITCH);
 	NscAddToken ("while",          WHILE);
 	if (fEnableExtensions || nVersion >= 999)
-        NscAddToken ("const",      CONST);
+        NscAddToken ("const",      NWCONST);
 
 	NscAddToken ("OBJECT_SELF",    OBJECT_SELF_CONST);
 	NscAddToken ("OBJECT_INVALID", OBJECT_INVALID_CONST);

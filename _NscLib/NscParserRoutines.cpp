@@ -597,7 +597,7 @@ bool NscBuildSyntaxError (int nToken, YYSTYPE yylval)
 				pszToken = "while";
 				break;
 
-			case CONST:
+			case NWCONST:
 				pszToken = "const";
 				break;
 

@@ -97,7 +97,7 @@ bool NscBuildSyntaxError (int nToken, YYSTYPE yylval);
 %token OBJECT_SELF_CONST OBJECT_INVALID_CONST
 
 %token BREAK CASE CONTINUE DEFAULT DO ELSE 
-%token FOR IF RETURN  SWITCH  WHILE CONST
+%token FOR IF RETURN  SWITCH  WHILE NWCONST
 
 %start translation_unit
 
@@ -457,7 +457,7 @@ constant_expression:
 */
 
 qualified_type_specifier:
-	CONST { NscBuildSaveLine (1); } type_specifier 
+	NWCONST { NscBuildSaveLine (1); } type_specifier 
 		{ 
 			$$ = NscBuildMakeConstType ($3); 
 			NscBuildCopyLine (0, 1); 

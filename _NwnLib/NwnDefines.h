@@ -310,6 +310,9 @@ template <class Type>
 class CNwnByteOrder : public CNwnByteOrderCore <Type>
 {
 public:
+    using CNwnByteOrderCore<Type>::LittleEndianSwap;
+    using CNwnByteOrderCore<Type>::BigEndianSwap;
+
 	static Type LittleEndian (const Type &in)
 	{
 		Type out;
@@ -319,32 +322,32 @@ public:
 	static Type LittleEndian (const unsigned char *in)
 	{
 		Type out;
-		CNwnByteOrderSubCore<Type>::LittleEndianSwap (in, (unsigned char *) &out);
+		LittleEndianSwap (in, (unsigned char *) &out);
 		return out;
 	}
 	static void LittleEndian (const Type &in, Type &out)
 	{
-                CNwnByteOrderSubCore<Type>::LittleEndianSwap ((const unsigned char *) &in, (unsigned char *) &out);
+                LittleEndianSwap ((const unsigned char *) &in, (unsigned char *) &out);
 	}
 	static void LittleEndian (const unsigned char *in, Type &out)
 	{
-		CNwnByteOrderSubCore<Type>::LittleEndianSwap (in, (unsigned char *) &out);
+		LittleEndianSwap (in, (unsigned char *) &out);
 	}
 	static void LittleEndian (const Type &in, unsigned char *out)
 	{
-		CNwnByteOrderSubCore<Type>::LittleEndianSwap ((const unsigned char *) &in, out);
+		LittleEndianSwap ((const unsigned char *) &in, out);
 	}
 	static void LittleEndian (const unsigned char *in, unsigned char *out)
 	{
-		CNwnByteOrderSubCore<Type>::LittleEndianSwap (in, out);
+		LittleEndianSwap (in, out);
 	}
 	static void LittleEndianIP (Type &inout)
 	{
-		CNwnByteOrderSubCore<Type>::LittleEndianSwap ((const unsigned char *) &inout, (unsigned char *) &inout);
+		LittleEndianSwap ((const unsigned char *) &inout, (unsigned char *) &inout);
 	}
 	static void LittleEndianIP (unsigned char *inout)
 	{
-		CNwnByteOrderSubCore<Type>::LittleEndianSwap (inout, inout);
+		LittleEndianSwap (inout, inout);
 	}
 
 	static Type BigEndian (const Type &in)
@@ -356,32 +359,32 @@ public:
 	static Type BigEndian (const unsigned char *in)
 	{
 		Type out;
-		CNwnByteOrderSubCore<Type>::BigEndianSwap (in, (unsigned char *) &out);
+		BigEndianSwap (in, (unsigned char *) &out);
 		return out;
 	}
 	static void BigEndian (const Type &in, Type &out)
 	{
-		CNwnByteOrderSubCore<Type>::BigEndianSwap ((const unsigned char *) &in, (unsigned char *) &out);
+		BigEndianSwap ((const unsigned char *) &in, (unsigned char *) &out);
 	}
 	static void BigEndian (const unsigned char *in, Type &out)
 	{
-		CNwnByteOrderSubCore<Type>::BigEndianSwap (in, (unsigned char *) &out);
+		BigEndianSwap (in, (unsigned char *) &out);
 	}
 	static void BigEndian (const Type &in, unsigned char *out)
 	{
-		CNwnByteOrderSubCore<Type>::BigEndianSwap ((const unsigned char *) &in, out);
+		BigEndianSwap ((const unsigned char *) &in, out);
 	}
 	static void BigEndian (const unsigned char *in, unsigned char *out)
 	{
-		CNwnByteOrderSubCore<Type>::BigEndianSwap (in, out);
+		BigEndianSwap (in, out);
 	}
 	static void BigEndianIP (Type &inout)
 	{
-		CNwnByteOrderSubCore<Type>::BigEndianSwap ((const unsigned char *) &inout, (unsigned char *) &inout);
+		BigEndianSwap ((const unsigned char *) &inout, (unsigned char *) &inout);
 	}
 	static void BigEndianIP (unsigned char *inout)
 	{
-		CNwnByteOrderSubCore<Type>::BigEndianSwap (inout, inout);
+		BigEndianSwap (inout, inout);
 	}
 };
 
