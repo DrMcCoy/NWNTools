@@ -450,9 +450,10 @@ void NwnTFrame::ShowEncProp()
                );
         EncItemTblData *pEncItemTblData = static_cast<EncItemTblData*>(_tc1->GetItemData(branch));
         wxString action; int chance;
+        /* This next line appears to be where the Segfualt happens. */
         action = pEncItemTblData->GetAction();
         EPropDlg.SetAction(action);
- /*       chance = pEncItemTblData->GetChance();
+        chance = pEncItemTblData->GetChance();
         EPropDlg.SetChance(chance);
         if (action == wxT("Spawn Creature/NPC")) {
            wxString blueprint; int min; int max;
@@ -470,9 +471,9 @@ void NwnTFrame::ShowEncProp()
            EPropDlg.SetTable(tablename, min, max, mod, specific);
            EPropDlg.ShowTable();
         }
-        */
+        
         if (EPropDlg.ShowModal()==wxID_OK) {
-        /*   action = EPropDlg.GetAction(); chance = EPropDlg.GetChance();
+           action = EPropDlg.GetAction(); chance = EPropDlg.GetChance();
            pEncItemTblData->SetData(action, chance);
           if (action == wxT("Drop Item")) {
              wxString blueprint; int min; int max;
@@ -489,7 +490,7 @@ void NwnTFrame::ShowEncProp()
 
           }
           _tc1->SetItemText(branch, EPropDlg.GetTblName());
-          */
+        
         }
 }
 
