@@ -11,6 +11,7 @@ enum
 	ID_New,
 	ID_Open,
 	ID_Save,
+	ID_Exit,
 };
 
 class NwnTFrame: public wxFrame {
@@ -35,7 +36,11 @@ protected:
     // end wxGlade
 
     //! Called when the user wants to open a file.
-    void OnOpen(wxCommandEvent& event);
+	void OnNew(wxCommandEvent& event);
+	void OnOpen(wxCommandEvent& event);
+	void OnSave(wxCommandEvent& event);
+	void OnAbout(wxCommandEvent& event);
+	void OnExit(wxCommandEvent& event);
 
 private:
 	DECLARE_EVENT_TABLE()

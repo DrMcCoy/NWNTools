@@ -15,12 +15,12 @@
 
 
 #include "wxNwnTreasure.h"
+#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
 
 #include "new.xpm"
 #include "fileopen.xpm"
 #include "save.xpm"
 #include "encounter.xpm"
-
 #include "none.xpm"
 #include "table.xpm"
 #include "gold.xpm"
@@ -29,12 +29,13 @@
 #include "down.xpm"
 #include "exit.xpm"
 
-
+#endif
 
 BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
-	EVT_MENU(ID_New, NwnTFrame::OnOpen)
+	EVT_MENU(ID_New, NwnTFrame::OnNew)
 	EVT_MENU(ID_Open, NwnTFrame::OnOpen)
-	EVT_MENU(ID_Save, NwnTFrame::OnOpen)
+	EVT_MENU(ID_Save, NwnTFrame::OnSave)
+	EVT_MENU(ID_Exit, NwnTFrame::OnExit)
 END_EVENT_TABLE()
 
 const wxChar *open_help = wxT("Open a file.");
@@ -97,7 +98,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 	_tb->AddTool(ID_Save, wxT("Up"), wxBitmap(up_xpm), "Up...");
 	_tb->AddTool(ID_Save, wxT("Down"), wxBitmap(down_xpm), "Down...");
 	_tb->AddSeparator();
-	_tb->AddTool(ID_Save, wxT("Exit"), wxBitmap(exit_xpm), "Exit...");
+	_tb->AddTool(ID_Exit, wxT("Exit"), wxBitmap(exit_xpm), "Exit...");
 
 	_tb->Realize();
 
@@ -138,10 +139,43 @@ void NwnTFrame::do_layout()
 
 }
 
+void NwnTFrame::OnNew(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert new file code here."));
+	wxMessageBox(msg, _T("New placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
 void NwnTFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-
+	wxString msg;
+	msg.Printf( _T("Insert file open code here."));
+	wxMessageBox(msg, _T("Open placeholder"), wxOK | wxICON_INFORMATION, this);
 }
+
+void NwnTFrame::OnSave(wxCommandEvent& WXUNUSED(event))
+{
+	wxString msg;
+	msg.Printf( _T("Insert file save code here."));
+	wxMessageBox(msg, _T("Save placeholder"), wxOK | wxICON_INFORMATION, this);
+}
+
+
+void NwnTFrame::OnExit(wxCommandEvent& WXUNUSED(event))
+{
+    // TRUE is to force the frame to close
+    Close(TRUE);
+}
+
+void NwnTFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
+{
+    wxString msg;
+    msg.Printf( _T("Nwn Treasure Editor (OK Edition)\n")
+                _T("Using %s"), wxVERSION_STRING);
+
+    wxMessageBox(msg, _T("About wxNwnTreasure"), wxOK | wxICON_INFORMATION, this);
+}
+
 
 
 class wxNwnTreasure: public wxApp {
