@@ -1,11 +1,15 @@
 from distutils.core import setup, Extension
+import sys
 
+link_args = []
+if sys.platform == 'darwin':
+    link_args.append('-Wl,-flat_namespace,-U,_environ')
 module1 = Extension('nsscompiler',
                     libraries = ['nsc','nwn'],
                     library_dirs = ['../../_NscLib','../../_NwnLib'],
                     extra_compile_args=['-Wno-sign-compare'],
                     sources = ['compiler.cpp'],
-                    extra_link_args=['-Wl,-flat_namespace,-U,_environ'])
+                    extra_link_args=link_args)
 
 setup (name = 'nwntools',
        version = '1.01',
