@@ -41,6 +41,10 @@ protected:
     wxStatusBar* _sb;
     wxToolBar* _tb;
     wxTreeCtrl* _tc1;
+    wxTreeItemIdValue _tc1_b1;
+    wxTreeItemIdValue _tc1_b2;
+    wxTreeItemIdValue _tc1_b3;
+    wxTreeItemIdValue _tc1_b4;
 
 	void OnNew(wxCommandEvent& event);
 	void OnOpen(wxCommandEvent& event);

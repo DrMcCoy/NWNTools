@@ -25,6 +25,7 @@
 #include "none.xpm"
 #include "table.xpm"
 #include "gold.xpm"
+#include "after.xpm"
 #include "tableprop.xpm"
 #include "up.xpm"
 #include "down.xpm"
@@ -101,7 +102,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 	_tb->AddSeparator();
 	_tb->AddTool(ID_Create, wxT("Create in"), wxBitmap(gold_xpm), "Create in...");
 	_tb->EnableTool(ID_Create, 0);
-	_tb->AddTool(ID_After, wxT("After"), wxBitmap(gold_xpm), "After...");
+	_tb->AddTool(ID_After, wxT("After"), wxBitmap(after_xpm), "After...");
 	_tb->EnableTool(ID_After, 0);
 	_tb->AddTool(ID_Table, wxT("Table"), wxBitmap(table_xpm), "Table...");
 	_tb->AddSeparator();
@@ -119,21 +120,22 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 	_tb->Realize();
 
 	_tc1 = new wxTreeCtrl(this, -1, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
-	
 
- 
+
+
     _tc1->AddRoot(wxT("Tables"));
 
-    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Treasure Table") 
-            , -1, -1, ID_Treasure_Tbl );
-    _tc1->AppendItem(_tc1->ID_Treasure_Tbl, wxT("Treasure") 
+    _tc1_b1 = _tc1->AppendItem(_tc1->GetRootItem(), wxT("Treasure Table")
+             );
+
+
+    _tc1_b2 = _tc1->AppendItem(_tc1->GetRootItem(), wxT("Encounter Table")
+            /*, wxBitmap(encounter_xpm) */ );
+    _tc1_b3 = _tc1->AppendItem(_tc1->GetRootItem(), wxT("Placeable Table")
+            /*, wxBitmap(encounter_xpm) */ );
+    _tc1_b4 =  _tc1->AppendItem(_tc1->GetRootItem(), wxT("Profile Table")
             /*, MyTreeCtrl::TreeCtrlIcon_File */ );
-    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Encounter Table") 
-            /*, wxBitmap(encounter_xpm) */ );
-    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Placeable Table") 
-            /*, wxBitmap(encounter_xpm) */ );
-    _tc1->AppendItem(_tc1->GetRootItem(), wxT("Profile Table") 
-            /*, MyTreeCtrl::TreeCtrlIcon_File */ );	
+	_tc1->AppendItem(_tc1_b4, wxT("Profile"));
 	set_properties();
 	do_layout();
 
@@ -144,11 +146,11 @@ void NwnTFrame::set_properties()
 {
 
     SetTitle("NWN Treasure Editor (OK Edition)");
-    SetSize(wxSize(950, 600));
+    SetSize(wxSize(1050, 600));
     int statusbar_widths[] = { -1 };
     _sb->SetStatusWidths(1, statusbar_widths);
     const wxString statusbar_fields[] = {
-    	"Welcome to NWN"
+    	"Welcome to NWN Treasure Editor (OK Edition)"
      };
 
     for(int i = 0; i < _sb->GetFieldsCount(); ++i) {
