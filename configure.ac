@@ -32,19 +32,19 @@ AC_ARG_VAR(RPMBUILD, [RPM building utility])
 AC_CHECK_PROG(RPMBUILD, [rpmbuild], [rpmbuild])
 AM_CONDITIONAL(RPMBUILD, [test -n "$RPMBUILD"])
 
-AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG(2.3.4, [wxwin=1])
-if test "$wxwin" != 1 ; then
-	AC_MSG_ERROR([
-		wxWindows must be installed on your system
-		but wx-config script couldn't be found.
+#AM_OPTIONS_WXCONFIG
+#AM_PATH_WXCONFIG(2.3.4, [wxwin=1])
+#if test "$wxwin" != 1 ; then
+#	AC_MSG_ERROR([
+#		wxWindows must be installed on your system
+#		but wx-config script couldn't be found.
 
-		Please check that wx-config is in path, the directory
-		where wxWindows libraries are installed (returned by
-		'wx-config --libs' command) is in LD_LIBRARY_PATH or
-		equivalent variable and wxWindows version is 2.3.4 or above.
-	])
-fi
+#		Please check that wx-config is in path, the directory
+#		where wxWindows libraries are installed (returned by
+#		'wx-config --libs' command) is in LD_LIBRARY_PATH or
+#		equivalent variable and wxWindows version is 2.3.4 or above.
+#	])
+#fi
 
 # Checks for libraries.
 

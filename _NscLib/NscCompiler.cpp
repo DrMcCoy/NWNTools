@@ -276,8 +276,9 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 	sCtx .AddStream (pStream);
 	sCtx .SetPhase2 (true);
 	sCtx .yyparse ();
-	if (sCtx .GetErrors () > 0)
-		return NscResult_Failure;
+	if (sCtx .GetErrors () > 0) {
+            return NscResult_Failure;
+        }
 
 	//
 	// Generate the output

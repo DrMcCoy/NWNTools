@@ -19,6 +19,8 @@ libnmc_a_LIBADD = @LIBOBJS@
 
 AM_CXXFLAGS = -fno-default-inline
 
+libnmc_a_CXXFLAGS = -Wno-invalid-offsetof
+
 EXTRA_DIST = \
 		_NmcLib.vcproj
 

@@ -1,7 +1,7 @@
 #! /bin/sh
 
 set -x
-aclocal-1.7 && \
+aclocal && \
 autoheader && \
 automake --no-force --add-missing --copy --gnits && \
 autoconf && \
