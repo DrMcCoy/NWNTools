@@ -55,7 +55,7 @@ BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
 	EVT_MENU(ID_Exit, NwnTFrame::OnExit)
 END_EVENT_TABLE()
 
-const wxChar *open_help = wxT("Open a file.");
+//const wxChar *open_help = wxT("Open a file.");
 
 NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint& pos, const wxSize& size, long style):
     wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
@@ -124,7 +124,8 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 
 	_tb->Realize();
 
-	_tc1 = new wxTreeCtrl(this, -1, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
+	_tc1 = new wxTreeCtrl(this, -1, wxDefaultPosition, wxDefaultSize, 
+            wxTR_LINES_AT_ROOT|wxTR_HIDE_ROOT|wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
 
 
 
@@ -178,9 +179,11 @@ void NwnTFrame::do_layout()
 
 void NwnTFrame::OnNew(wxCommandEvent& WXUNUSED(event))
 {
-	wxString msg;
+
+    wxString msg;
 	msg.Printf( _T("Insert new file code here."));
 	wxMessageBox(msg, _T("New placeholder"), wxOK | wxICON_INFORMATION, this);
+
 }
 
 void NwnTFrame::OnOpen(wxCommandEvent& WXUNUSED(event))

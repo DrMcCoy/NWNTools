@@ -1,9 +1,19 @@
+/***************************************************************************
+ *   Copyright (C) 2003 by John S. Brown                                   *
+ *   malakh@dragoncat dot net                                              *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ ***************************************************************************/
 
-
+//#include "wxChoice.h"
 #include "ItemPropDlg.h"
 
 BEGIN_EVENT_TABLE(ItemPropDlg, wxDialog)
     EVT_BUTTON( wxID_OK, ItemPropDlg::OnOk )
+    EVT_CHOICE( ID_Choice, ItemPropDlg::OnChoiceSel )
 END_EVENT_TABLE()
 
 
@@ -13,14 +23,59 @@ ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const 
 
     label_1 = new wxStaticText(this, -1, "Action To Take");
     label_2 = new wxStaticText(this, -1, "Percent Chance");
-    const wxString combo_1_choices[] = {
+        const wxString choice_1_choices[] = {
         "Drop Nothing",
         "Drop Gold",
         "Drop Item",
         "Move To Table"
-    };
-    combo_1 = new wxComboBox(this, -1, "", wxDefaultPosition, wxDefaultSize, 4, combo_1_choices, wxCB_DROPDOWN);
+            };
+        const wxString choice_2_choices[] = {
+        "",
+            };
+        const wxString choice_3_choices[] = {
+        "Inherit",
+        "Generic",
+        "Specific",
+            };                        
+        const wxString choice_4_choices[] = {
+        "Inherit",
+        "Generic",
+        "Specific",
+            };                        
+    choice_1 = new wxChoice(this, ID_Choice, wxDefaultPosition, wxDefaultSize, 4, choice_1_choices, 0);
     spin_1 = new wxSpinCtrl(this, -1, "1", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
+    
+    label_3 = new wxStaticText(this, -1, "Number of Die");
+    spin_2 = new wxSpinCtrl(this, -1, "1", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
+    label_4 = new wxStaticText(this, -1, "Die");
+    spin_3 = new wxSpinCtrl(this, -1, "1", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);    
+    label_5 = new wxStaticText(this, -1, "Multiplier");
+    text_1 = new wxTextCtrl(this, -1, "1.00");
+    
+    label_6 = new wxStaticText(this, -1, "Item Blueprint");
+    text_2 = new wxTextCtrl(this, -1, "", wxDefaultPosition, wxDefaultSize, wxTE_LINEWRAP|wxTE_MULTILINE|wxTE_READONLY);
+    button_3 = new wxButton(this, -1, "...");
+
+    label_7 = new wxStaticText(this, -1, "The minimum and maximum values should both be set to 1 for non-stackable items.  For stackables, the count will be randomized in the given range.");
+    label_8 = new wxStaticText(this, -1, "Minimum");
+    label_9 = new wxStaticText(this, -1, "Maximum");
+    spin_4 = new wxSpinCtrl(this, -1, "1", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);    
+    spin_5 = new wxSpinCtrl(this, -1, "1", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);                      
+    
+    label_10 = new wxStaticText(this, -1, "Table Name");
+    choice_2 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 0, choice_2_choices, 0);
+    label_11 = new wxStaticText(this, -1, "The minimum and maximum specify the number of times this table will be used for generation.");
+    label_12 = new wxStaticText(this, -1, "Minimum");
+    label_13 = new wxStaticText(this, -1, "Maximum");
+    spin_6 = new wxSpinCtrl(this, -1, "1", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);    
+    spin_7 = new wxSpinCtrl(this, -1, "1", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);    
+    label_14 = new wxStaticText(this, -1, "Modifier");
+    label_15 = new wxStaticText(this, -1, "Specific");
+    choice_3 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 3, choice_3_choices, 0);
+    choice_4 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 3, choice_4_choices, 0);
+    
+    
+    
     button_1 = new wxButton(this, wxID_OK, "OK");
     button_2 = new wxButton(this, wxID_CANCEL, "Cancel");
 
@@ -29,13 +84,20 @@ ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const 
 
 }
 
-
 void ItemPropDlg::set_properties()
 {
-
     SetTitle("Item Proporties");
-    combo_1->SetSelection(0);
+    this->SetSize(wxSize(340, 110));
+    current=0;
+    choice_1->SetSelection(current);
+    choice_2->SetSelection(0);
+    choice_3->SetSelection(0);
+    choice_4->SetSelection(0);
+    button_3->SetSize(wxSize(20,20));
+    text_2->SetSize(wxSize(175, 22));
 
+    
+    
 
 
 }
@@ -43,19 +105,81 @@ void ItemPropDlg::set_properties()
 
 void ItemPropDlg::do_layout()
 {
-    wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
+ main_sizer = new wxBoxSizer(wxVERTICAL);
+    
+    gridsizer_top = new wxGridSizer(2, 3, 0, 0);
+	    gridsizer_top->Add(label_1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
+	    gridsizer_top->Add(choice_1, 0, wxALIGN_CENTER_VERTICAL, 0);
+	    gridsizer_top->Add(20, 20, 0, 0);
+	    gridsizer_top->Add(label_2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
+	    gridsizer_top->Add(spin_1, 0, wxALIGN_CENTER_VERTICAL, 0);
+	    gridsizer_top->Add(20, 20, 0, 0);
+    main_sizer->Add(gridsizer_top, 0, wxEXPAND, 0);
+    
+    gridsizer_mid1 = new wxGridSizer(3, 3, 0, 0);
+        gridsizer_mid1->Add(label_3, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
+        gridsizer_mid1->Add(spin_2, 0, wxALIGN_CENTER_VERTICAL, 0);
+        gridsizer_mid1->Add(20, 20, 0, 0);
+        gridsizer_mid1->Add(label_4, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10); 
+        gridsizer_mid1->Add(spin_3, 0, wxALIGN_CENTER_VERTICAL, 0);
+        gridsizer_mid1->Add(20, 20, 0, 0);
+        gridsizer_mid1->Add(label_5, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10); 
+        gridsizer_mid1->Add(text_1, 0, wxALIGN_CENTER_VERTICAL, 0);
+        gridsizer_mid1->Add(20, 20, 0, 0);
+    main_sizer->Add(gridsizer_mid1, 0, wxEXPAND, 0);
 
-    wxGridSizer* gridsizer_top = new wxGridSizer(2, 2, 0, 0);
-	gridsizer_top->Add(label_1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
-	gridsizer_top->Add(combo_1, 0, wxALIGN_CENTER_VERTICAL, 0);
-	gridsizer_top->Add(label_2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
-	gridsizer_top->Add(spin_1, 0, wxALIGN_CENTER_VERTICAL, 0);
-    main_sizer->Add(gridsizer_top, 1, wxEXPAND, 0);
+    gridsizer_mid2 = new wxGridSizer(3, 1, 0, 0);
+         mid2_sizer1 = new wxGridSizer(1, 3, 0, 0);        
+            mid2_sizer1->Add(label_6, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10); 
+            mid2_sizer1->Add(text_2, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid2_sizer1->Add(button_3, 0, wxALL|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 10);
+         gridsizer_mid2->Add(mid2_sizer1, 0, wxEXPAND, 0);
+         text_sizer = new wxBoxSizer(wxVERTICAL);
+            text_sizer->Add(label_7, 1, wxALL|wxEXPAND, 5);                  
+         gridsizer_mid2->Add(text_sizer, 1, wxEXPAND, 5);
+         mid2_sizer2 = new wxGridSizer(2, 3, 0, 0);
+            mid2_sizer2->Add(label_8, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);       
+            mid2_sizer2->Add(spin_4, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid2_sizer2->Add(20, 20, 0, 0);
+            mid2_sizer2->Add(label_9, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);                   
+            mid2_sizer2->Add(spin_5, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid2_sizer2->Add(20, 20, 0, 0);
+         gridsizer_mid2->Add(mid2_sizer2, 0, wxEXPAND, 0);   
+    main_sizer->Add(gridsizer_mid2, 1, wxEXPAND, 0);
+    
+    gridsizer_mid3 = new wxGridSizer(3, 1, 0, 0);
+         mid3_sizer1 = new wxGridSizer(1, 3, 0, 0);        
+            mid3_sizer1->Add(label_10, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10); 
+            mid3_sizer1->Add(choice_2, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid3_sizer1->Add(20, 20, 0, 0);
+         gridsizer_mid3->Add(mid3_sizer1, 0, wxEXPAND, 0);
+         text_sizer2 = new wxBoxSizer(wxVERTICAL);
+            text_sizer2->Add(label_11, 1, wxALL|wxEXPAND, 5);                  
+         gridsizer_mid3->Add(text_sizer2, 1, wxEXPAND, 5);
+         mid3_sizer2 = new wxGridSizer(4, 3, 10, 10); 
+            mid3_sizer2->Add(label_12, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
+            mid3_sizer2->Add(spin_6, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid3_sizer2->Add(20, 20, 0, 0);
+            mid3_sizer2->Add(label_13, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
+            mid3_sizer2->Add(spin_7, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid3_sizer2->Add(20, 20, 0, 0);
+            mid3_sizer2->Add(label_14, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
+            mid3_sizer2->Add(choice_3, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid3_sizer2->Add(20, 20, 0, 0);
+            mid3_sizer2->Add(label_15, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 10);
+            mid3_sizer2->Add(choice_4, 0, wxALIGN_CENTER_VERTICAL, 0);
+            mid3_sizer2->Add(20, 20, 0, 0);
+         gridsizer_mid3->Add(mid3_sizer2, 0, wxEXPAND, 0);
+    main_sizer->Add(gridsizer_mid3, 1, wxEXPAND, 0);
+    
+    button_sizer = new wxGridSizer(1, 2, 0, 0);
+	 button_sizer->Add(button_1, 0, wxALIGN_BOTTOM|wxALIGN_RIGHT|wxALL, 10);
+	 button_sizer->Add(button_2, 0, wxALIGN_BOTTOM|wxALL, 10);
+    main_sizer->Add(button_sizer, 0, wxALIGN_BOTTOM|wxEXPAND, 0);
 
-    wxBoxSizer* button_sizer = new wxBoxSizer(wxHORIZONTAL);
-	button_sizer->Add(button_1, 0, wxALIGN_RIGHT, 0);
-	button_sizer->Add(button_2, 0, 0, 0);
-    main_sizer->Add(button_sizer, 1, wxEXPAND, 0);
+    main_sizer->Show(gridsizer_mid1, false);
+    main_sizer->Show(gridsizer_mid2, false);
+    main_sizer->Show(gridsizer_mid3, false);
     SetAutoLayout(true);
     SetSizer(main_sizer);
     Layout();
@@ -65,7 +189,23 @@ void ItemPropDlg::do_layout()
 
 void ItemPropDlg::OnOk(wxCommandEvent &event)
 {
-       main_sizer->Show(gridsizer_top, 1);
-       Layout();
+       event.Skip();
+}
+
+void ItemPropDlg::OnChoiceSel(wxCommandEvent &event)
+{
+   int  choice = choice_1->GetSelection();
+  
+   if (current==1) { main_sizer->Show(gridsizer_mid1, false); };
+   if (current==2) { main_sizer->Show(gridsizer_mid2, false); };
+   if (current==3) { main_sizer->Show(gridsizer_mid3, false); };
+
+   if (choice==0) { current=0; this->SetSize(wxSize(340, 110)); };
+   if (choice==1) { main_sizer->Show(gridsizer_mid1, true); current=1; this->SetSize(wxSize(340, 175)); };
+   if (choice==2) { main_sizer->Show(gridsizer_mid2, true); current=2; this->SetSize(wxSize(340, 300)); };
+   if (choice==3) { main_sizer->Show(gridsizer_mid3, true); current=3; this->SetSize(wxSize(340, 350)); };
+
+   main_sizer->Layout ();
+
 }
 
