@@ -643,6 +643,13 @@ public:
 		m_anLineNumbers [nDest] = m_anLineNumbers [nSource];
 	}
 
+        // @cmember set the stream to output errors to
+
+        void SetErrorOutputStream (CNwnStream *s)
+        {
+            m_pErrorStream = s;
+        }
+
 // @access Protected methods
 protected:
 
@@ -651,16 +658,30 @@ protected:
 	void GenerateError (const char *pszType, 
 		const char *pszText, va_list marker)
 	{
-		if (m_pStreamTop == NULL)
-			printf ("%s: ", pszType);
-		else
-		{
-			printf ("%s(%d): %s: ", 
-				m_pStreamTop ->pStream ->GetFileName (), 
-				m_pStreamTop ->nLine, pszType);
-		}
-		vprintf (pszText, marker);
-		printf ("\n");
+            char *prefix,*error;
+            if (m_pStreamTop == NULL)
+                asprintf (&prefix,"%s: ", pszType);
+            else
+            {
+                asprintf (&prefix,"%s(%d): %s: ", 
+                          m_pStreamTop ->pStream ->GetFileName (), 
+                          m_pStreamTop ->nLine, pszType);
+            }
+            printf(prefix);
+            
+            vasprintf (&error,pszText, marker);
+            printf(error);
+            
+            if (m_pErrorStream)
+            {
+                m_pErrorStream->Write(prefix,strlen(prefix));
+                m_pErrorStream->Write(error,strlen(error));
+                m_pErrorStream->Write((void*)"\n",1);
+            }
+            
+            printf ("\n");
+            free(prefix);
+            free(error);
 	}
 
 	// @cmember Read the next line
@@ -681,6 +702,10 @@ protected:
 	// @cmember Number of errors
 
 	int						m_nErrors;
+
+        // @cmember Stream containing errors and warnings produced
+
+        CNwnStream                                     *m_pErrorStream;
 
 	//
 	// ------- COMPILE TIME

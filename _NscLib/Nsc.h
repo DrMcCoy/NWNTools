@@ -596,12 +596,14 @@ enum NscResult
 
 bool NscCompilerInitialize (CNwnLoader *pLoader, int nVersion, bool fEnableExtensions);
 NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName, 
-	unsigned char *pauchData, UINT32 ulSize, bool fAllocated,
-	int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
-	CNwnStream *pCodeOutput, CNwnStream *pDebugOutput);
+                            unsigned char *pauchData, UINT32 ulSize, bool fAllocated,
+                            int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
+                            CNwnStream *pCodeOutput, CNwnStream *pDebugOutput, 
+                            CNwnStream *pErrorOuput = NULL);
 NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName, 
-	int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
-	CNwnStream *pCodeOutput, CNwnStream *pDebugOutput);
+                            int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
+                            CNwnStream *pCodeOutput, CNwnStream *pDebugOutput,
+                            CNwnStream *pErrorOuput = NULL);
 void NscScriptDecompile (CNwnStream &sStream, 
 	unsigned char *pauchData, unsigned long ulSize);
 const char *NscGetActionName (int nAction);

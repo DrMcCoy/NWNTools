@@ -2,8 +2,10 @@
 
 #include "../../_NscLib/Nsc.h"
 #include "../../_NwnLib/NwnStdLoader.h"
+#include "../../_NwnLib/NwnModuleFile.h"
 
 CNwnStdLoader loader;
+CNwnModuleFile mod;
 int version = 999999;
 
 static PyObject *compiler_init(PyObject *self, PyObject *args) {
@@ -11,19 +13,37 @@ static PyObject *compiler_init(PyObject *self, PyObject *args) {
     if(!PyArg_ParseTuple(args,"s",&nwndir)) {
         return NULL;
     }
+    printf("initializing nwn loader from \"%s\"\n",nwndir);
     if(!loader.Initialize(nwndir)) {
         PyErr_SetString(PyExc_IOError,"NWN dir not found in compiler module");
         return NULL;
     }
+    printf("initializing compiler\n");
     if(!NscCompilerInitialize(&loader,version,true)) {
         PyErr_SetString(PyExc_SystemError, "NWN compiler failed to initialize");
         return NULL;
     }
-    loader.AddModuleHaks();
     Py_INCREF(Py_None);
     return Py_None;
 }
 
+static PyObject *compiler_set_module(PyObject *self, PyObject *args) {
+    const char *modFile;
+    if(!PyArg_ParseTuple(args,"s",&modFile)) {
+        return NULL;
+    }
+    if(!loader.OpenModule(&mod,modFile)) {
+        PyErr_SetString(PyExc_IOError,"Could not open module in nsscompiler");
+        return NULL;
+    }
+    
+    loader.SetModule(&mod);
+    loader.AddModuleHaks();
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+        
+    
 static PyObject *compiler_free(PyObject *self, PyObject *args) {
     loader.Close();
     Py_INCREF(Py_None);
@@ -32,7 +52,8 @@ static PyObject *compiler_free(PyObject *self, PyObject *args) {
     
 static PyObject *compiler_compile(PyObject *self, PyObject *args) {
     CNwnMemoryStream out;
-    
+    CNwnMemoryStream err;
+
     unsigned char *data;
     int dataLength = 0;
     const char *name;
@@ -42,22 +63,26 @@ static PyObject *compiler_compile(PyObject *self, PyObject *args) {
         return NULL;
     }
     NscResult result = NscCompileScript(&loader,name,data,dataLength,false,version,
-                                        optimizeFlag,false,&out,NULL);
-    if(result == NscResult_Failure) {
-        PyErr_SetString(PyExc_SystemError, "script compilation failed");
-        return NULL;
-    } else if(result == NscResult_Include) {
-        PyErr_Warn(PyExc_UserWarning, "script is an include file, not compiled");
-        Py_INCREF(Py_None);
-        return Py_None;
+                                        optimizeFlag,false,&out,NULL,&err);
+    // the following is already handled through a (None,str) return
+    //if(result == NscResult_Failure) {
+    //  PyErr_SetString(PyExc_SystemError, "script compilation failed");
+    //  return NULL;
+    //}
+    if(result == NscResult_Include) {
+        err.WriteLine("script has no main() function, not compiled");
     }
-    return Py_BuildValue("s#",
-                         out.GetData(),out.GetPosition());
+    
+    return Py_BuildValue("s#s#",
+                         out.GetData(),out.GetPosition(),
+                         err.GetData(),err.GetPosition());
 }
 
 static PyMethodDef Methods[] = {
     {"init", compiler_init, METH_VARARGS,
      "initialize compiler module"},
+    {"set_module", compiler_set_module, METH_VARARGS,
+     "set the nwn module for the compiler to use"},
     {"compile", compiler_compile, METH_VARARGS,
      "compile an nss buffer"},
     {"free", compiler_free, METH_VARARGS,

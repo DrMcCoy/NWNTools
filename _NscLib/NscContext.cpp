@@ -76,6 +76,7 @@ CNscContext::CNscContext ()
 	m_fOptReturn = false;
 	m_fOptExpression = false;
 	m_nUsedFiles = 0;
+        m_pErrorStream = NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -666,7 +667,6 @@ bool CNscContext::ReadNextLine (bool fInComment)
 	//
 	// Read the next line
 	//
-
 try_again:;
 	for (;;)
 	{
@@ -710,7 +710,6 @@ try_again:;
 
 			if (strncmp (p, "#include", 8) == 0)
 			{
-
 				//
 				// Force a new line read on this stream on return
 				//
@@ -732,11 +731,10 @@ try_again:;
 				char *pszTemp = (char *) alloca (nCount + 5);
 				memmove (pszTemp, pszNameStart, nCount);
 				pszTemp [nCount] = 0;
-
 				//
 				// Remove any extension
 				//
-
+                                
 				p = strchr (pszTemp, '.');
 				if (p)
 					*p = 0;
@@ -767,6 +765,7 @@ try_again:;
 					bool fAllocated = false;
 					UINT32 ulSize = 0;
 					unsigned char *pauchData = NULL;
+
 					if (m_pLoader)
 					{
 						pauchData = m_pLoader ->LoadResource (
@@ -793,7 +792,6 @@ try_again:;
 				//
 				// Read the next line
 				//
-
 				goto try_again;
 			}
 

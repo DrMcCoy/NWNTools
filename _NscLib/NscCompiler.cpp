@@ -203,11 +203,12 @@ bool NscCompilerInitialize (CNwnLoader *pLoader, int nVersion,
 //-----------------------------------------------------------------------------
 
 NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName, 
-	unsigned char *pauchData, UINT32 ulSize, bool fAllocated,
-	int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
-	CNwnStream *pCodeOutput, CNwnStream *pDebugOutput)
+                            unsigned char *pauchData, UINT32 ulSize, bool fAllocated,
+                            int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
+                            CNwnStream *pCodeOutput, CNwnStream *pDebugOutput,
+                            CNwnStream *pErrorOutput)
 {
-	//yydebug = 1;
+    //yydebug = 1;
 
 	//
 	// Generate a full name from the partial
@@ -229,6 +230,11 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 	CNscContext sCtx;
 	sCtx .SetLoader (pLoader);
 	sCtx .LoadSymbolTable (&g_sNscNWScript);
+        if (pErrorOutput)
+        {
+            sCtx. SetErrorOutputStream(pErrorOutput);
+        }
+
 	if (fEnableOptimizations)
 	{
 		sCtx .SetOptReturn (true);
@@ -242,7 +248,9 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 
 	CNwnMemoryStream *pStream = new CNwnMemoryStream 
 		(pszFullName, pauchData, ulSize, false);
+
 	sCtx .AddStream (pStream);
+        //sCtx.yydebug = 1;
 	sCtx .yyparse ();
 	if (sCtx .GetErrors () > 0)
 	{
@@ -250,7 +258,7 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 			free (pauchData);
 		return NscResult_Failure;
 	}
-
+        
 	//
 	// Search for main or starting conditional
 	//
@@ -310,8 +318,8 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 //-----------------------------------------------------------------------------
 
 NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName, 
-	int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
-	CNwnStream *pCodeOutput, CNwnStream *pDebugOutput)
+                            int nVersion, bool fEnableOptimizations, bool fIgnoreIncludes, 
+                            CNwnStream *pCodeOutput, CNwnStream *pDebugOutput, CNwnStream *pErrorOutput)
 {
 
 	//
@@ -333,8 +341,8 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 	//
 
 	return NscCompileScript (pLoader, pszName, pauchData, 
-		ulSize, fAllocated, nVersion, fEnableOptimizations, 
-		fIgnoreIncludes, pCodeOutput, pDebugOutput);
+                                 ulSize, fAllocated, nVersion, fEnableOptimizations, 
+                                 fIgnoreIncludes, pCodeOutput, pDebugOutput, pErrorOutput);
 }
 
 //-----------------------------------------------------------------------------

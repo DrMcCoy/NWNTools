@@ -260,7 +260,6 @@ unsigned char *CNwnStdLoader::LoadResource (const char *pszName,
 		if (pauchData)
 			return pauchData;
 	}
-
 	//
 	// Try from the default dir
 	//
