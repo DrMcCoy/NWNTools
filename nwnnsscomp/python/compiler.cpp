@@ -32,7 +32,6 @@ static PyObject *compiler_free(PyObject *self, PyObject *args) {
     
 static PyObject *compiler_compile(PyObject *self, PyObject *args) {
     CNwnMemoryStream out;
-    CNwnMemoryStream dbg;
     
     unsigned char *data;
     int dataLength = 0;
@@ -43,7 +42,7 @@ static PyObject *compiler_compile(PyObject *self, PyObject *args) {
         return NULL;
     }
     NscResult result = NscCompileScript(&loader,name,data,dataLength,false,version,
-                                        optimizeFlag,false,&out,&dbg);
+                                        optimizeFlag,false,&out,NULL);
     if(result == NscResult_Failure) {
         PyErr_SetString(PyExc_SystemError, "script compilation failed");
         return NULL;
@@ -52,9 +51,8 @@ static PyObject *compiler_compile(PyObject *self, PyObject *args) {
         Py_INCREF(Py_None);
         return Py_None;
     }
-    return Py_BuildValue("s#s#",
-                         out.GetData(),out.GetPosition(),
-                         dbg.GetData(),dbg.GetPosition());
+    return Py_BuildValue("s#",
+                         out.GetData(),out.GetPosition());
 }
 
 static PyMethodDef Methods[] = {

@@ -12,6 +12,8 @@ module1 = Extension('nwntools.nsscompiler',
                     extra_link_args=link_args)
 
 setup (name = 'nwntools',
+       package_dir = {'nwntools':''},
+       packages = ['nwntools'],
        version = '1.1',
        description = 'nss compiler',
        author = 'By Torlack, python interface by sumpfork',
@@ -20,4 +22,4 @@ setup (name = 'nwntools',
        long_description = '''
 nss compiler in python
 ''',
-	ext_modules=[module1])
+       ext_modules=[module1])
