@@ -9,9 +9,18 @@ AM_CXXFLAGS = $(WX_CXXFLAGS)
 AM_LDFLAGS = $(WX_LIBS)
 
 EXTRA_DIST = \
+	down.xpm \
 	encounter.xpm \
+	exit.xpm \
 	fileopen.xpm \
-	helpicon.xpm
+	gold.xpm \
+	helpicon.xpm \
+	new.xpm \
+	none.xpm \
+	save.xpm \
+	table.xpm \
+	tableprop.xpm \
+	up.xpm
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
