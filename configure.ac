@@ -18,6 +18,11 @@ AC_PROG_RANLIB
 
 AC_ARG_VAR(MSTA, [COCOM syntax description translator])
 AC_CHECK_PROG(MSTA, [msta], [msta])
+if test "$MSTA" != msta ; then
+   AC_MSG_ERROR([Could not find the msta command from the cocom
+                       compiler compiler suite, please install from
+                       cocom.sourceforge.net])
+fi
 
 AC_ARG_VAR(EBUILD, [ebuild parsing command])
 AC_PATH_PROG(EBUILD, [ebuild], [], [/usr/sbin:/usr/bin:/usr/lib/portage/bin])
