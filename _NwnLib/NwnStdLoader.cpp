@@ -149,6 +149,20 @@ bool CNwnStdLoader::Initialize (const char *pszNwnDir)
 	m_asKeyFiles [3] .Open (str .c_str ());
 
 	//
+	// Open the xp2 file
+	//
+
+	str = m_strRoot + "xp2.key";
+	m_asKeyFiles [4] .Open (str .c_str ());
+
+	//
+	// Open the xp2 patch file
+	//
+
+	str = m_strRoot + "xp2patch.key";
+	m_asKeyFiles [5] .Open (str .c_str ());
+
+	//
 	// Create the other directories
 	//
 	// Currently a HACK

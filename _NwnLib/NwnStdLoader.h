@@ -195,7 +195,7 @@ protected:
 
 	// @cmember NWN key file
 
-	CNwnKeyFile				m_asKeyFiles [4];
+	CNwnKeyFile				m_asKeyFiles [6];
 
 	// @cmember If true, override is enabled
 
