@@ -1,5 +1,5 @@
 /* XPM */
-static char *fileopen[]={
+static char *fileopen_xpm[]={
 "16 15 7 1",
 ". c None",
 "# c #000000",
