@@ -7,39 +7,39 @@ ProItemPropDlg::ProItemPropDlg(wxWindow* parent, int id, const wxString& title, 
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
 {
     // begin wxGlade: ProItemPropDlg::ProItemPropDlg
-    label_1 = new wxStaticText(this, -1, "Profile Name");
-    text_1 = new wxTextCtrl(this, -1, "");
-    label_2 = new wxStaticText(this, -1, "Respawn Type");
+    label_1 = new wxStaticText(this, -1, wxT("Profile Name"));
+    text_1 = new wxTextCtrl(this, -1, wxT(""));
+    label_2 = new wxStaticText(this, -1, wxT("Respawn Type"));
     const wxString choice_1_choices[] = {
-        "No Respawn",
-        "Respawn"
+        wxT("No Respawn"),
+        wxT("Respawn")
     };
     choice_1 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 2, choice_1_choices, 0);
-    label_3 = new wxStaticText(this, -1, "Respawn Time");
-    spin_1 = new wxSpinCtrl(this, -1, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
-    label_4 = new wxStaticText(this, -1, "Respawn");
+    label_3 = new wxStaticText(this, -1, wxT("Respawn Time"));
+    spin_1 = new wxSpinCtrl(this, -1, wxT(""), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
+    label_4 = new wxStaticText(this, -1, wxT("Respawn"));
     const wxString choice_2_choices[] = {
-        "(Defualt)"
+        wxT("(Defualt)")
     };
     choice_2 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 1, choice_2_choices, 0);
-    button_1 = new wxButton(this, -1, "...");
-    label_5 = new wxStaticText(this, -1, "Death/Open Spawn");
+    button_1 = new wxButton(this, -1, wxT("..."));
+    label_5 = new wxStaticText(this, -1, wxT("Death/Open Spawn"));
     const wxString choice_3_choices[] = {
-        ""
+        wxT("")
     };
     choice_3 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 1, choice_3_choices, 0);
-    button_2 = new wxButton(this, -1, "...");
-    label_6 = new wxStaticText(this, -1, "Death/Open Sound");
-    text_2 = new wxTextCtrl(this, -1, "");
-    label_7 = new wxStaticText(this, -1, "Death/Open Damage");
-    spin_2 = new wxSpinCtrl(this, -1, "", wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
-    label_8 = new wxStaticText(this, -1, "Treasure Table");
+    button_2 = new wxButton(this, -1, wxT("..."));
+    label_6 = new wxStaticText(this, -1, wxT("Death/Open Sound"));
+    text_2 = new wxTextCtrl(this, -1, wxT(""));
+    label_7 = new wxStaticText(this, -1, wxT("Death/Open Damage"));
+    spin_2 = new wxSpinCtrl(this, -1, wxT(""), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
+    label_8 = new wxStaticText(this, -1, wxT("Treasure Table"));
     const wxString choice_4_choices[] = {
-        "(Defualt)"
+        wxT("(Defualt)")
     };
     choice_4 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 1, choice_4_choices, 0);
-    button_OK = new wxButton(this, -1, "&OK");
-    button_Cancel = new wxButton(this, -1, "&Cancel");
+    button_OK = new wxButton(this, -1, wxT("&OK"));
+    button_Cancel = new wxButton(this, -1, wxT("&Cancel"));
 
     set_properties();
     do_layout();
@@ -50,7 +50,7 @@ ProItemPropDlg::ProItemPropDlg(wxWindow* parent, int id, const wxString& title, 
 void ProItemPropDlg::set_properties()
 {
     // begin wxGlade: ProItemPropDlg::set_properties
-    SetTitle("Profile Proporties");
+    SetTitle(wxT("Profile Proporties"));
     choice_1->SetSelection(1);
     choice_2->SetSelection(0);
     button_1->SetSize(wxSize(25, 21));

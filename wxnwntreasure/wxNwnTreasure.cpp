@@ -173,13 +173,13 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
     _tc1_b2 = _tc1->AppendItem(_tc1->GetRootItem(), wxT("Encounter Table"), 1);
     _tc1_b3 = _tc1->AppendItem(_tc1->GetRootItem(), wxT("Placeable Table"), 2);
     _tc1_b4 =  _tc1->AppendItem(_tc1->GetRootItem(), wxT("Profile Table"), 3);
-	_tc1_b4_sb1 = _tc1->AppendItem(_tc1_b4, wxT("Profile"), 4);
+    _tc1_b4_sb1 = _tc1->AppendItem(_tc1_b4, wxT("Profile"), 4);
 
 	
     _tc1->AssignImageList(images);
 	
-	set_properties();
-	do_layout();
+    set_properties();
+    do_layout();
 
 }
 
@@ -350,16 +350,60 @@ void NwnTFrame::OnDelete(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnUp(wxCommandEvent& WXUNUSED(event))
 {
-	wxString msg;
-	msg.Printf( _T("Insert Up code here."));
-	wxMessageBox(msg, _T("Up placeholder"), wxOK | wxICON_INFORMATION, this);
+
+  wxString cur_text;
+  wxString pre_text;
+
+  int cur_icon;
+  int pre_icon;  
+
+  wxTreeItemIdValue current;
+  wxTreeItemIdValue previous;
+
+  current = _tc1->GetSelection();
+  previous = _tc1->GetPrevSibling(current);
+  
+  cur_text = _tc1->GetItemText(current);
+  pre_text = _tc1->GetItemText(previous);
+
+  cur_icon = _tc1->GetItemImage(current);
+  pre_icon = _tc1->GetItemImage(previous);
+  
+  _tc1->SetItemText(current, pre_text);
+  _tc1->SetItemText(previous, cur_text); 
+  
+  _tc1->SetItemImage(current, pre_icon);
+  _tc1->SetItemImage(previous, cur_icon);
+  
 }
 
 void NwnTFrame::OnDown(wxCommandEvent& WXUNUSED(event))
 {
-	wxString msg;
-	msg.Printf( _T("Insert Down code here."));
-	wxMessageBox(msg, _T("Down placeholder"), wxOK | wxICON_INFORMATION, this);
+
+  wxString cur_text;
+  wxString next_text;
+
+  int cur_icon;
+  int next_icon;
+
+  wxTreeItemIdValue current;
+  wxTreeItemIdValue next;
+
+  current = _tc1->GetSelection();
+  next = _tc1->GetNextSibling(current);
+
+  cur_text = _tc1->GetItemText(current);
+  next_text = _tc1->GetItemText(next);
+
+  cur_icon = _tc1->GetItemImage(current);
+  next_icon = _tc1->GetItemImage(next);
+
+  _tc1->SetItemText(current, next_text);
+  _tc1->SetItemText(next, cur_text);
+
+  _tc1->SetItemImage(current, next_icon);
+  _tc1->SetItemImage(next, cur_icon);
+
 }
 
 void NwnTFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
