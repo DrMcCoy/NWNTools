@@ -21,7 +21,8 @@ EXTRA_DIST = \
 	save.xpm \
 	table.xpm \
 	tableprop.xpm \
-	up.xpm
+	up.xpm \
+	after.xpm
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
