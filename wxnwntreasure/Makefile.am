@@ -2,6 +2,10 @@
 bin_PROGRAMS = wxnwntreasure
 
 wxnwntreasure_SOURCES = \
+	EncItemPropDlg.cpp \
+	EncItemPropDlg.h \
+	PlcItemPropDlg.cpp \
+	PlcItemPropDlg.h
 	ItemPropDlg.cpp \
 	ItemPropDlg.h \
 	TablePropDlg.cpp \
@@ -31,7 +35,14 @@ EXTRA_DIST = \
 	saveas.xpm \
 	table.xpm \
 	tableprop.xpm \
-	up.xpm
+	up.xpm \
+	encounter.xpm \
+	profile.xpm \
+	placeable.xpm \
+	nwntreasure.xpm \
+	noref.xpm \
+	global.xpm \
+	item.xpm
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
