@@ -9,6 +9,7 @@ module1 = Extension('nwntools.nsscompiler',
                     library_dirs = ['../../_NscLib','../../_NwnLib'],
                     extra_compile_args=['-Wno-sign-compare'],
                     sources = ['compiler.cpp'],
+                    depends = ['../../_NscLib/libnsc.a','../../_NwnLib/libnwn.a'],
                     extra_link_args=link_args)
 
 setup (name = 'nwntools',

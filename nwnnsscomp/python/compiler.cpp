@@ -51,8 +51,8 @@ static PyObject *compiler_free(PyObject *self, PyObject *args) {
 }
     
 static PyObject *compiler_compile(PyObject *self, PyObject *args) {
-    CNwnMemoryStream out;
-    CNwnMemoryStream err;
+    CNwnMemoryStream *out = new CNwnMemoryStream();
+    CNwnMemoryStream *err = new CNwnMemoryStream();
 
     unsigned char *data;
     int dataLength = 0;
@@ -62,20 +62,24 @@ static PyObject *compiler_compile(PyObject *self, PyObject *args) {
     if(!PyArg_ParseTuple(args,"s#si",&data,&dataLength,&name,&optimizeFlag)) {
         return NULL;
     }
-    NscResult result = NscCompileScript(&loader,name,data,dataLength,false,version,
-                                        optimizeFlag,false,&out,NULL,&err);
+    NscResult result = NscCompileScript(&loader,name,data,dataLength,
+                                        false,version,
+                                        optimizeFlag,false,out,NULL,err);
     // the following is already handled through a (None,str) return
     //if(result == NscResult_Failure) {
     //  PyErr_SetString(PyExc_SystemError, "script compilation failed");
     //  return NULL;
     //}
     if(result == NscResult_Include) {
-        err.WriteLine("script has no main() function, not compiled");
+        err->WriteLine("script has no main() function, not compiled");
     }
     
-    return Py_BuildValue("s#s#",
-                         out.GetData(),out.GetPosition(),
-                         err.GetData(),err.GetPosition());
+    PyObject *r = Py_BuildValue("s#s#",
+                                out->GetData(),out->GetPosition(),
+                                err->GetData(),err->GetPosition());
+    delete err;
+    delete out;
+    return r;
 }
 
 static PyMethodDef Methods[] = {
