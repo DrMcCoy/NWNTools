@@ -5,7 +5,8 @@ wxnwntreasure_SOURCES = \
 	wxNwnTreasure.cpp \
 	wxNwnTreasure.h
 
-AM_CXXFLAGS = $(WX_CXXFLAGS)
+AM_CPPFLAGS = $(WX_CPPFLAGS)
+AM_CXXFLAGS = $(WX_CXXFLAGS_ONLY)
 AM_LDFLAGS = $(WX_LIBS)
 
 EXTRA_DIST = \
