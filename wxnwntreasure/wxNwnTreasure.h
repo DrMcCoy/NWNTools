@@ -5,28 +5,41 @@
 #ifndef WXNWNTREASURE_H
 #define WXNWNTREASURE_H
 
+//! IDs for various widget events.
+enum
+{
+    ID_Open,
+};
 
-class MainFrame: public wxFrame {
+class NwnTFrame: public wxFrame {
 public:
-    // begin wxGlade: MainFrame::ids
+    // begin wxGlade: NwnTFrame::ids
     // end wxGlade
 
-    MainFrame(wxWindow* parent, int id, const char* title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
+    NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_FRAME_STYLE);
 
 private:
-    // begin wxGlade: MainFrame::methods
+    // begin wxGlade: NwnTFrame::methods
     void set_properties();
     void do_layout();
     // end wxGlade
 
 protected:
-    // begin wxGlade: MainFrame::attributes
+    // begin wxGlade: NwnTFrame::attributes
     wxMenuBar* menubar;
     wxStatusBar* statusbar;
     wxToolBar* _tb;
     wxTreeCtrl* tree_ctrl_1;
     // end wxGlade
+
+    //! Called when the user wants to open a file.
+    void OnOpen(wxCommandEvent& event);
+
+private:
+	DECLARE_EVENT_TABLE()
+
 };
+
 
 
 #endif // WXNWNTREASURE_H

@@ -2,17 +2,26 @@
 
 #include <wx/wx.h>
 #include <wx/image.h>
+// begin wxGlade: ::dependencies
 #include <wx/treectrl.h>
+// end wxGlade
+
 
 #include "wxNwnTreasure.h"
 
-//#include "open.xpm"
+#include "fileopen.xpm"
 
 
-MainFrame::MainFrame(wxWindow* parent, int id, const char* title, const wxPoint& pos, const wxSize& size, long style):
+BEGIN_EVENT_TABLE(NwnTFrame, wxFrame)
+	EVT_MENU(ID_Open, NwnTFrame::OnOpen)
+END_EVENT_TABLE()
+
+const wxChar *open_help = wxT("Open a CHM book.");
+
+NwnTFrame::NwnTFrame(wxWindow* parent, int id, const char* title, const wxPoint& pos, const wxSize& size, long style):
     wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
 {
-    // begin wxGlade: MainFrame::MainFrame
+    // begin wxGlade: NwnTFrame::NwnTFrame
     menubar = new wxMenuBar();
     SetMenuBar(menubar);
     wxMenu* wxglade_tmp_menu_1 = new wxMenu();
@@ -46,27 +55,15 @@ MainFrame::MainFrame(wxWindow* parent, int id, const char* title, const wxPoint&
     wxglade_tmp_menu_3->Append(wxNewId(), "About", "");
     menubar->Append(wxglade_tmp_menu_3, "Help");
     statusbar = CreateStatusBar(1);
-    
-    _tb = CreateToolBar();
-    
-    
-    _tb->SetToolBitmapSize(wxSize(20, 20));
-    _tb->AddTool(wxNewId(), "New", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddTool(wxNewId(), "Open", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "Open a file.", "");
-    _tb->AddTool(wxNewId(), "Save", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddSeparator();
-    _tb->AddTool(wxNewId(), "Create In", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddTool(wxNewId(), "After", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddTool(wxNewId(), "Table", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddSeparator();
-    _tb->AddTool(wxNewId(), "Prop.", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddTool(wxNewId(), "Table Prop.", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddSeparator();
-    _tb->AddTool(wxNewId(), "Delete", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddSeparator();
-    _tb->AddTool(wxNewId(), "Up", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->AddTool(wxNewId(), "Down", wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, "", "");
-    _tb->Realize();
+
+
+
+  _tb = CreateToolBar(wxTB_FLAT | wxTB_DOCKABLE | wxTB_HORIZONTAL | wxTB_TEXT);
+
+  _tb->AddTool(ID_Open, wxT("Open"), wxBitmap(fileopen_xpm), "Open...");
+
+  _tb->Realize();
+
     tree_ctrl_1 = new wxTreeCtrl(this, -1, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
 
     set_properties();
@@ -75,16 +72,17 @@ MainFrame::MainFrame(wxWindow* parent, int id, const char* title, const wxPoint&
 }
 
 
-void MainFrame::set_properties()
+void NwnTFrame::set_properties()
 {
-    // begin wxGlade: MainFrame::set_properties
+    // begin wxGlade: NwnTFrame::set_properties
     SetTitle("NWN Treasure Editor (OK Edition)");
     SetSize(wxSize(823, 561));
     int statusbar_widths[] = { -1 };
     statusbar->SetStatusWidths(1, statusbar_widths);
     const wxString statusbar_fields[] = {
-        "Welcome to NWN"
-    };
+    	"Welcome to NWN"
+     };
+
     for(int i = 0; i < statusbar->GetFieldsCount(); ++i) {
         statusbar->SetStatusText(statusbar_fields[i], i);
     }
@@ -92,9 +90,9 @@ void MainFrame::set_properties()
 }
 
 
-void MainFrame::do_layout()
+void NwnTFrame::do_layout()
 {
-    // begin wxGlade: MainFrame::do_layout
+    // begin wxGlade: NwnTFrame::do_layout
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
     sizer_1->Add(tree_ctrl_1, 1, wxEXPAND, 0);
     SetAutoLayout(true);
@@ -103,6 +101,10 @@ void MainFrame::do_layout()
     // end wxGlade
 }
 
+void NwnTFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
+{
+
+}
 
 
 class wxNwnTreasure: public wxApp {
@@ -110,13 +112,17 @@ public:
     bool OnInit();
 };
 
+
+
+
 IMPLEMENT_APP(wxNwnTreasure)
 
 bool wxNwnTreasure::OnInit()
 {
 //    wxInitAllImageHandlers();
-    MainFrame* frame_1 = new MainFrame(0, -1, "");
+    NwnTFrame* frame_1 = new NwnTFrame(0, -1, "");
     SetTopWindow(frame_1);
     frame_1->Show();
     return true;
 }
+
