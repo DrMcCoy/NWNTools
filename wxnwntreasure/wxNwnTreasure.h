@@ -5,6 +5,8 @@
 #ifndef WXNWNTREASURE_H
 #define WXNWNTREASURE_H
 
+
+
 //! IDs for various widget events.
 enum
 {
@@ -45,6 +47,7 @@ protected:
     wxTreeItemIdValue _tc1_b2;
     wxTreeItemIdValue _tc1_b3;
     wxTreeItemIdValue _tc1_b4;
+    wxDialog* TblPropDialop;
 
 	void OnNew(wxCommandEvent& event);
 	void OnOpen(wxCommandEvent& event);
@@ -64,6 +67,18 @@ private:
 	DECLARE_EVENT_TABLE()
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -17,6 +17,8 @@
 #include "wxNwnTreasure.h"
 #include "TablePropDlg.h"
 
+
+
 //#if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
 
 #include "new.xpm"
@@ -229,9 +231,17 @@ void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
 	wxMessageBox(msg, _T("Table Proporties placeholder"), wxOK | wxICON_INFORMATION, this);
 */
 
-    TblPropDialog* dialog_1 = new TblPropDialog(0, -1, "");
+   // TblPropDlg* dialog_1 = new TblPropDlg(0, -1, "");
 
-    dialog_1->ShowModal();
+  TblPropDialog
+   TPropDlg ( this, -1,
+                 this->GetTitle(),
+                 wxPoint(100,100),
+                 wxSize(250, 300),
+                 wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
+               );
+
+    TPropDlg.ShowModal();
 //    return true;
 }
 
