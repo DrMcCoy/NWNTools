@@ -5,9 +5,10 @@ AC_PREREQ(2.57)
 AC_COPYRIGHT([Copyright 2002, 2003 Edward T. Smith.  All rights reserved.
 
 Copyright 2003 The Open Knights Consortium.  All rights reserved.])
-AC_INIT([NWN Tools], [2.0.0], eyrdan@users.sourceforge.net)
+AC_INIT([NWN Tools], [2.0.0], [eyrdan@users.sourceforge.net], [nwntools])
 AC_SUBST(RELEASE, 1)
 AC_CONFIG_SRCDIR(_NwnLib/NwnDefines.h)
+AC_CANONICAL_HOST
 AM_INIT_AUTOMAKE([1.7 gnits dist-bzip2])
 
 # Checks for programs.
@@ -55,6 +56,7 @@ AC_CONFIG_FILES([_MathLib/Makefile
                  _NwnLib/Makefile
                  _NmcLib/Makefile
                  Makefile
+		 nwntools.spec
                  nwnnsscomp/Makefile
                  nwnmdlcomp/Makefile])
                  
