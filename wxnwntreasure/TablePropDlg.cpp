@@ -95,7 +95,7 @@ void TblPropDialog::do_layout()
 
 wxString TblPropDialog::GetTblName()
 {
-    wxString value = text_TblName->GetValue();    
+    wxString value = text_TblName->GetValue() + wxT(" - ") +  combo_box_1->GetValue();    
 
     return value;
 }

@@ -157,9 +157,16 @@ void PlcItemPropDlg::do_layout()
 
 }
 
+wxString PlcItemPropDlg::GetTblName()
+{
+    wxString value = choice_1->GetStringSelection();
+
+    return value;
+}
+
 void PlcItemPropDlg::OnOk(wxCommandEvent &event)
 {
-       event.Skip();
+       EndModal(wxID_OK);
 }
 
 void PlcItemPropDlg::OnChoiceSel(wxCommandEvent &event)

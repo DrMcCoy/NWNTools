@@ -189,10 +189,17 @@ void ItemPropDlg::do_layout()
 
 }
 
+wxString ItemPropDlg::GetTblName()
+{
+  wxString value = choice_1->GetStringSelection();
+
+    return value;
+}
+
 void ItemPropDlg::OnOk(wxCommandEvent &event)
 {
 
-       event.Skip();
+      EndModal(wxID_OK);
 }
 
 void ItemPropDlg::OnChoiceSel(wxCommandEvent &event)

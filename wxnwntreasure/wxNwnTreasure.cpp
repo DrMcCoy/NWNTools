@@ -231,9 +231,9 @@ void NwnTFrame::OnSave(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
 {
- wxTreeItemId tree_sel = _tc1->GetSelection();
+ wxTreeItemIdValue tree_sel = _tc1->GetSelection();
  
- if (tree_sel==_tc1_b1) {
+ if (_tc1->GetItemParent(tree_sel)==_tc1_b1) {
   ItemPropDlg
    IPropDlg ( this, -1,
                  this->GetTitle(),
@@ -241,11 +241,13 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                  wxSize(250, 300),
                  wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
                );
-
-    IPropDlg.ShowModal();
+    
+      if (IPropDlg.ShowModal()==wxID_OK) {
+           _tc1->AppendItem(tree_sel, IPropDlg.GetTblName(), 5);
+      }
     };
 
- if (tree_sel==_tc1_b2) {       
+ if (_tc1->GetItemParent(tree_sel)==_tc1_b2) {       
   EncItemPropDlg
    EPropDlg ( this, -1,
                  this->GetTitle(),
@@ -254,10 +256,12 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                  wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
                );
 
-    EPropDlg.ShowModal();
+      if (EPropDlg.ShowModal()==wxID_OK) {
+           _tc1->AppendItem(tree_sel, EPropDlg.GetTblName(), 5);
+      }
     };
     
- if (tree_sel==_tc1_b3) { 
+ if (_tc1->GetItemParent(tree_sel)==_tc1_b3) { 
   PlcItemPropDlg
    PPropDlg ( this, -1,
                  this->GetTitle(),
@@ -266,7 +270,9 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                  wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
                );
 
-    PPropDlg.ShowModal();    
+      if (PPropDlg.ShowModal()==wxID_OK) {
+           _tc1->AppendItem(tree_sel, PPropDlg.GetTblName(), 5);
+      }
 
 };  
 
@@ -274,15 +280,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnAfter(wxCommandEvent& WXUNUSED(event))
 {
-   ItemPropDlg
-   IPropDlg ( this, -1,
-                 this->GetTitle(),
-                 wxPoint(300,200),
-                 wxSize(250, 300),
-                 wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
-               );
 
-    IPropDlg.ShowModal();
 }
 
 void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))

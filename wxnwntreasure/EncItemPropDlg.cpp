@@ -166,9 +166,16 @@ void EncItemPropDlg::do_layout()
 
 }
 
+wxString EncItemPropDlg::GetTblName()
+{
+  wxString value = choice_1->GetStringSelection();
+
+    return value;
+}
+
 void EncItemPropDlg::OnOk(wxCommandEvent &event)
 {
-       event.Skip();
+       EndModal(wxID_OK);
 }
 
 void EncItemPropDlg::OnChoiceSel(wxCommandEvent &event)
