@@ -1,3 +1,5 @@
+SUBDIRS = python
+
 bin_PROGRAMS = nwnnsscomp
 
 nwnnsscomp_SOURCES = nwnnsscomp.cpp

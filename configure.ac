@@ -4,8 +4,8 @@
 AC_PREREQ(2.57)
 AC_COPYRIGHT([Copyright 2002, 2003 Edward T. Smith.  All rights reserved.
 
-Copyright 2003 The Open Knights Consortium.  All rights reserved.])
-AC_INIT([NWN Tools], [2.1.0], [sumpfork@users.sourceforge.net], [nwntools])
+Copyright 2003, 2004 The Open Knights Consortium.  All rights reserved.])
+AC_INIT([NWN Tools], [2.2.0], [sumpfork@users.sourceforge.net], [nwntools])
 AC_SUBST(RELEASE, 1)
 AC_CONFIG_SRCDIR(_NwnLib/NwnDefines.h)
 AC_CANONICAL_HOST
@@ -77,6 +77,7 @@ AC_CONFIG_FILES([_MathLib/Makefile
                  Makefile
 		 nwntools.spec
                  nwnnsscomp/Makefile
+                 nwnnsscomp/python/Makefile
                  nwnmdlcomp/Makefile
                  wxnwntreasure/Makefile])
 AC_OUTPUT
