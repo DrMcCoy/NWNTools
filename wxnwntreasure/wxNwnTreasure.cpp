@@ -81,6 +81,7 @@ END_EVENT_TABLE()
 
 
 NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
+
     wxFrame(parent, id, title, pos, size, wxDEFAULT_FRAME_STYLE)
 {
     // Give it an icon
@@ -124,7 +125,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
 
 
 
-	_tb = CreateToolBar(wxTB_TEXT | wxTB_FLAT | wxTB_DOCKABLE, -1, wxT("Toolbar"));
+	_tb = CreateToolBar(wxTB_HORIZONTAL | wxTB_TEXT | wxTB_FLAT | wxTB_DOCKABLE, -1, wxT("Toolbar"));
 
 	_tb->AddTool(ID_New, wxT("New"), wxBitmap(new_xpm), wxT("New..."));
 	_tb->AddTool(ID_Open, wxT("Open"), wxBitmap(fileopen_xpm), wxT("Open..."));
@@ -151,10 +152,8 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
   _tb->AddSeparator();
 	_tb->AddTool(ID_About, wxT("About"), wxBitmap(helpicon_xpm), wxT("About..."));
 	_tb->AddTool(ID_Exit, wxT("Exit"), wxBitmap(exit_xpm), wxT("Exit..."));
-
+        
 	_tb->Realize();
-	
-
 
 	_tc1 = new wxTreeCtrl(this, ID_TreeChg, wxDefaultPosition, wxDefaultSize, 
             wxTR_LINES_AT_ROOT|wxTR_HIDE_ROOT|wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
@@ -186,7 +185,7 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
 
     set_properties();
     do_layout();
-
+        
 }
 
 
@@ -247,7 +246,7 @@ void NwnTFrame::OnSave(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
 {
- wxTreeItemIdValue tree_sel = _tc1->GetSelection();
+ wxTreeItemId tree_sel = _tc1->GetSelection();
  
  if (_tc1->GetItemParent(tree_sel)==_tc1_b1) {
 
@@ -294,7 +293,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
             else if (EPropDlg.GetAction()==wxT("Move To Table")) {
               pEncItemTblData->SetTable(EPropDlg.GetTableName(), EPropDlg.GetMin(), EPropDlg.GetMax(), EPropDlg.GetMod(), EPropDlg.GetSpecific());
             }
-           _tc1->AppendItem(tree_sel, EPropDlg.GetTblName(), EPropDlg.GetIcon());
+            _tc1->AppendItem(tree_sel, EPropDlg.GetTblName(), EPropDlg.GetIcon(), EPropDlg.GetIcon(), pEncItemTblData);
       }
     }
     
@@ -333,7 +332,7 @@ void NwnTFrame::OnAfter(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
 {
-    wxTreeItemIdValue branch = _tc1->GetSelection();
+    wxTreeItemId branch = _tc1->GetSelection();
     if ((branch == _tc1_b1 || branch == _tc1_b2 || branch == _tc1_b3) && (branch != _tc1_b4)) {
         TblPropDialog
         TPropDlg ( this, -1,
@@ -360,8 +359,8 @@ void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
 void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))
 {
 
-  wxTreeItemIdValue branch = _tc1->GetSelection();
-  wxTreeItemIdValue parent = _tc1->GetItemParent(branch);
+  wxTreeItemId branch = _tc1->GetSelection();
+  wxTreeItemId parent = _tc1->GetItemParent(branch);
 
   if (_tc1->GetItemParent(parent)==_tc1_b1) {
     ShowItemProp();
@@ -374,7 +373,7 @@ void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::ShowItemProp()
 {
-  wxTreeItemIdValue branch = _tc1->GetSelection();
+  wxTreeItemId branch = _tc1->GetSelection();
        ItemPropDlg
     IPropDlg ( this, -1,
                  this->GetTitle(),
@@ -440,7 +439,7 @@ void NwnTFrame::ShowItemProp()
 
 void NwnTFrame::ShowEncProp()
 {
-  wxTreeItemIdValue branch = _tc1->GetSelection();
+  wxTreeItemId branch = _tc1->GetSelection();
     EncItemPropDlg
         EPropDlg ( this, -1,
                  this->GetTitle(),
@@ -449,6 +448,9 @@ void NwnTFrame::ShowEncProp()
                  wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
                );
         EncItemTblData *pEncItemTblData = static_cast<EncItemTblData*>(_tc1->GetItemData(branch));
+        if(!pEncItemTblData) {
+            printf("pEncitemTblData == null\n");
+        }
         wxString action; int chance;
         /* This next line appears to be where the Segfualt happens. */
         action = pEncItemTblData->GetAction();
@@ -496,7 +498,7 @@ void NwnTFrame::ShowEncProp()
 
 void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
 {
-    wxTreeItemIdValue branch = _tc1->GetSelection();
+    wxTreeItemId branch = _tc1->GetSelection();
     
         TblPropDialog
         TPropDlg ( this, -1,
@@ -535,7 +537,7 @@ void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnDelete(wxCommandEvent& WXUNUSED(event))
 {
-	wxTreeItemIdValue item;
+	wxTreeItemId item;
 	item = _tc1->GetSelection();
 	if ((item != _tc1_b1) && (item != _tc1_b2) && (item != _tc1_b3) 
     && (item != _tc1_b4) && (item != _tc1_b4_sb1)) {
@@ -553,8 +555,8 @@ void NwnTFrame::OnUp(wxCommandEvent& WXUNUSED(event))
   int cur_icon;
   int pre_icon;  
 
-  wxTreeItemIdValue current;
-  wxTreeItemIdValue previous;
+  wxTreeItemId current;
+  wxTreeItemId previous;
 
   current = _tc1->GetSelection();
   previous = _tc1->GetPrevSibling(current);
@@ -582,8 +584,8 @@ void NwnTFrame::OnDown(wxCommandEvent& WXUNUSED(event))
   int cur_icon;
   int next_icon;
 
-  wxTreeItemIdValue current;
-  wxTreeItemIdValue next;
+  wxTreeItemId current;
+  wxTreeItemId next;
 
   current = _tc1->GetSelection();
   next = _tc1->GetNextSibling(current);
@@ -621,7 +623,7 @@ void NwnTFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 void NwnTFrame::OnTreeChg(wxCommandEvent& WXUNUSED(event))
 {
 
-  wxTreeItemIdValue branch = _tc1->GetSelection();
+  wxTreeItemId branch = _tc1->GetSelection();
 
   if ( (branch == _tc1_b1) || (branch == _tc1_b2) 
   || (branch == _tc1_b3)) {

@@ -6,6 +6,8 @@ wxnwntreasure_SOURCES = \
 	EncItemPropDlg.h \
 	PlcItemPropDlg.cpp \
 	PlcItemPropDlg.h \
+	ProItemPropDlg.cpp \
+	ProItemPropDlg.h \
 	ItemPropDlg.cpp \
 	ItemPropDlg.h \
 	TablePropDlg.cpp \
