@@ -22,6 +22,7 @@ EXTRA_DIST = \
 	new.xpm \
 	none.xpm \
 	prefs.xpm \
+	prop.xpm \
 	remove.xpm \
 	save.xpm \
 	save_as.xpm \
