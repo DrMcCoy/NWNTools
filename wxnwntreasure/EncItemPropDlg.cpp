@@ -21,6 +21,19 @@ END_EVENT_TABLE()
         wxT("Spawn Creature/NPC"),
         wxT("Move To Table")
             };
+        const wxString choice_2_choices[] = {
+        wxT(""),
+            };
+        const wxString choice_3_choices[] = {
+        wxT("Inherit"),
+        wxT("Generic"),
+        wxT("Specific"),
+            };
+        const wxString choice_4_choices[] = {
+        wxT("Inherit"),
+        wxT("Generic"),
+        wxT("Specific"),
+            };                        
 
 EncItemPropDlg::EncItemPropDlg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
@@ -29,19 +42,7 @@ EncItemPropDlg::EncItemPropDlg(wxWindow* parent, int id, const wxString& title, 
     label_1 = new wxStaticText(this, -1, wxT("Action To Take"));
     label_2 = new wxStaticText(this, -1, wxT("Chance"));
 
-        const wxString choice_2_choices[] = {
-        wxT(""),
-            };
-        const wxString choice_3_choices[] = {
-        wxT("Inherit"),
-        wxT("Generic"),
-        wxT("Specific"),
-            };                        
-        const wxString choice_4_choices[] = {
-        wxT("Inherit"),
-        wxT("Generic"),
-        wxT("Specific"),
-            };                        
+                    
     choice_1 = new wxChoice(this, ID_EncChoice, wxDefaultPosition, wxDefaultSize, 3, choice_1_choices, 0);
     spin_1 = new wxSpinCtrl(this, -1, wxT("1"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
   
@@ -202,6 +203,105 @@ int EncItemPropDlg::GetIcon()
   return icon;
 }
 
+wxString EncItemPropDlg::GetAction()
+{
+    wxString action;
+    action = choice_1->GetStringSelection();
+    return action;
+}
+
+int EncItemPropDlg::GetChance()
+{
+    int chance;
+    chance = spin_1->GetValue();
+    return chance;
+}
+
+wxString EncItemPropDlg::GetBlueprint()
+{
+    wxString blueprint;
+    blueprint = text_2->GetValue();
+    return blueprint;
+}
+
+int EncItemPropDlg::GetMin()
+{
+    int min;
+    if (choice_1->GetSelection()==2) { min = spin_4->GetValue(); }
+    else if (choice_1->GetSelection()==3) { min = spin_6->GetValue(); }
+    return min;
+}
+
+int EncItemPropDlg::GetMax()
+{
+    int max;
+    if (choice_1->GetSelection()==2) { max = spin_5->GetValue(); }
+    else if (choice_1->GetSelection()==3) { max = spin_7->GetValue(); }
+    return max;
+}
+
+wxString EncItemPropDlg::GetTableName()
+{
+    wxString tblname;
+    tblname = choice_2->GetStringSelection();
+    return tblname;
+}
+
+wxString EncItemPropDlg::GetMod()
+{
+    wxString mod;
+    mod = choice_3->GetStringSelection();
+    return mod;
+}
+
+wxString EncItemPropDlg::GetSpecific()
+{
+    wxString specific;
+    specific = choice_4->GetStringSelection();
+    return specific;
+}
+
+void EncItemPropDlg::SetAction(wxString a)
+{
+    wxString action = a;
+
+    if (action == choice_1_choices[0]) {choice_1->SetSelection(0);}
+    if (action == choice_1_choices[1]) {choice_1->SetSelection(1);}
+    if (action == choice_1_choices[2]) {choice_1->SetSelection(2);}
+
+}
+
+void EncItemPropDlg::SetChance(int a)
+{
+    int chance = a;
+    spin_1->SetValue(chance);
+}
+
+void EncItemPropDlg::SetItem(wxString a, int b, int c)
+{
+    wxString blueprint = a; int min = b; int max = c;
+    text_2->SetValue(blueprint);
+    spin_4->SetValue(min);
+    spin_5->SetValue(max);
+}
+
+void EncItemPropDlg::SetTable(wxString a, int b, int c, wxString d, wxString e)
+{
+    wxString tablename = a; int min = b; int max = c; wxString mod = d; wxString specific = e;
+    //choice_2->SetString(tablename);
+    spin_6->SetValue(min);
+    spin_7->SetValue(max);
+
+    for (int i=1; i<21; i++) {
+      if (mod == choice_3_choices[i] ) { choice_3->SetSelection(i); }
+    }
+
+    if (specific == choice_4_choices[0] ) { choice_4->SetSelection(0); }
+    else if (specific == choice_4_choices[1] ) { choice_4->SetSelection(1); }
+    else if (specific == choice_4_choices[2] ) { choice_4->SetSelection(2); }
+}
+
+
 void EncItemPropDlg::OnOk(wxCommandEvent &event)
 {
        EndModal(wxID_OK);
@@ -216,12 +316,26 @@ void EncItemPropDlg::OnChoiceSel(wxCommandEvent &event)
 
 
 
-   if (choice==0) { current=0; this->SetSize(wxSize(340, 110)); Centre(); };
-   if (choice==1) { main_sizer->Show(gridsizer_mid1, true); current=1; this->SetSize(wxSize(340, 200)); Centre(); };
-   if (choice==2) { main_sizer->Show(gridsizer_mid2, true); current=2; this->SetSize(wxSize(340, 350)); Centre(); };
+   if (choice==0) { ShowNothing(); };
+   if (choice==1) { ShowItem(); };
+   if (choice==2) { ShowTable(); };
   
 
    main_sizer->Layout ();
 
 }
+                                                                  
+void EncItemPropDlg::ShowNothing()
+{
+   current=0; this->SetSize(wxSize(340, 110)); Centre();
+}
 
+void EncItemPropDlg::ShowItem()
+{
+   main_sizer->Show(gridsizer_mid1, true); current=2; this->SetSize(wxSize(340, 300)); Centre();
+}
+
+void EncItemPropDlg::ShowTable()
+{
+   main_sizer->Show(gridsizer_mid2, true); current=3; this->SetSize(wxSize(340, 350)); Centre();
+}

@@ -8,6 +8,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <wx/wx.h>
 #include <wx/image.h>
@@ -32,6 +34,31 @@ public:
     wxString GetTblName();
     int GetIcon();
     
+    wxString GetAction();
+    int GetChance();
+    int GetNumDice();
+    int GetDie();
+    wxString GetMultiplier();
+    wxString GetBlueprint();
+    int GetMin();
+    int GetMax();
+    wxString GetTableName();
+    wxString GetMod();
+    wxString GetSpecific();
+
+    void SetAction(wxString);
+    void SetChance(int);
+
+    void SetGold(int, int, wxString);
+    void SetItem(wxString, int, int);
+    void SetTable(wxString, int, int, wxString, wxString);
+
+    void ShowNothing();    
+    void ShowGold();
+    void ShowItem();
+    void ShowTable();
+    
+    
 private:
 
     void set_properties();
@@ -40,6 +67,7 @@ private:
 
     void OnOk(wxCommandEvent &event);
     void OnChoiceSel(wxCommandEvent &event);
+    
     int icon;
 
 

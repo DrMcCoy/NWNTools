@@ -31,6 +31,25 @@ public:
     EncItemPropDlg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_DIALOG_STYLE);
     wxString GetTblName();
     int GetIcon();
+
+     wxString GetAction();
+    int GetChance();
+    wxString GetBlueprint();
+    int GetMin();
+    int GetMax();
+    wxString GetTableName();
+    wxString GetMod();
+    wxString GetSpecific();
+
+    void SetAction(wxString);
+    void SetChance(int);
+
+    void SetItem(wxString, int, int);
+    void SetTable(wxString, int, int, wxString, wxString);
+
+    void ShowNothing();
+    void ShowItem();
+    void ShowTable();
     
 private:
 

@@ -17,11 +17,25 @@ BEGIN_EVENT_TABLE(ItemPropDlg, wxDialog)
 END_EVENT_TABLE()
 
         const wxString choice_1_choices[] = {
-        wxT("Drop Nothing"),
-        wxT("Drop Gold"),
-        wxT("Drop Item"),
-        wxT("Move To Table")
-            };
+          wxT("Drop Nothing"),
+          wxT("Drop Gold"),
+          wxT("Drop Item"),
+          wxT("Move To Table")
+        };
+        const wxString choice_2_choices[] = {
+          wxT("")
+        };
+        const wxString choice_3_choices[] = {
+          wxT("Inherit"),
+          wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6"),
+          wxT("7"), wxT("8"), wxT("9"), wxT("10"), wxT("11"), wxT("12"), wxT("13"),
+          wxT("14"), wxT("15"), wxT("16"), wxT("17"), wxT("18"), wxT("19"), wxT("20"),
+        };
+        const wxString choice_4_choices[] = {
+          wxT("Inherit"),
+          wxT("Generic"),
+          wxT("Specific"),
+        };     
 
 ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
@@ -31,17 +45,7 @@ ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const 
     label_1 = new wxStaticText(this, -1, wxT("Action To Take"));
     label_2 = new wxStaticText(this, -1, wxT("Percent Chance"));
 
-        const wxString choice_2_choices[] = {wxT("")};
-        const wxString choice_3_choices[] = {
-        wxT("Inherit"),
-        wxT("Generic"),
-        wxT("Specific"),
-            };                        
-        const wxString choice_4_choices[] = {
-        wxT("Inherit"),
-        wxT("Generic"),
-        wxT("Specific"),
-            };                        
+                       
     choice_1 = new wxChoice(this, ID_Choice, wxDefaultPosition, wxDefaultSize, 4, choice_1_choices, 0);
     spin_1 = new wxSpinCtrl(this, -1, wxT("1"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);
     
@@ -71,7 +75,7 @@ ItemPropDlg::ItemPropDlg(wxWindow* parent, int id, const wxString& title, const 
     spin_7 = new wxSpinCtrl(this, -1, wxT("1"), wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100);    
     label_14 = new wxStaticText(this, -1, wxT("Modifier"));
     label_15 = new wxStaticText(this, -1, wxT("Specific"));
-    choice_3 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 3, choice_3_choices, 0);
+    choice_3 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 21, choice_3_choices, 0);
     choice_4 = new wxChoice(this, -1, wxDefaultPosition, wxDefaultSize, 3, choice_4_choices, 0);
     
     
@@ -228,6 +232,135 @@ int ItemPropDlg::GetIcon()
   return icon;
 }
 
+wxString ItemPropDlg::GetAction()
+{
+    wxString action;
+    action = choice_1->GetStringSelection();
+    return action;
+}
+
+int ItemPropDlg::GetChance()
+{
+    int chance;
+    chance = spin_1->GetValue();
+    return chance;
+}
+
+int ItemPropDlg::GetNumDice()
+{
+    int numdice;
+    numdice = spin_2->GetValue();
+    return numdice;
+}
+
+
+int ItemPropDlg::GetDie()
+{
+    int die;
+    die = spin_3->GetValue();
+    return die;
+}
+
+wxString ItemPropDlg::GetMultiplier()
+{
+    wxString multiplier;
+    multiplier = text_1->GetValue();
+    return multiplier;
+}
+
+wxString ItemPropDlg::GetBlueprint()
+{
+    wxString blueprint;
+    blueprint = text_2->GetValue();
+    return blueprint;
+}
+
+int ItemPropDlg::GetMin()
+{
+    int min;
+    if (choice_1->GetSelection()==2) { min = spin_4->GetValue(); }
+    else if (choice_1->GetSelection()==3) { min = spin_6->GetValue(); }
+    return min;
+}
+
+int ItemPropDlg::GetMax()
+{
+    int max;
+    if (choice_1->GetSelection()==2) { max = spin_5->GetValue(); }
+    else if (choice_1->GetSelection()==3) { max = spin_7->GetValue(); }
+    return max;
+}
+
+wxString ItemPropDlg::GetTableName()
+{
+    wxString tblname;
+    tblname = choice_2->GetStringSelection();
+    return tblname;
+}
+
+wxString ItemPropDlg::GetMod()
+{
+    wxString mod;
+    mod = choice_3->GetStringSelection();
+    return mod;
+}
+
+wxString ItemPropDlg::GetSpecific()
+{
+    wxString specific;
+    specific = choice_4->GetStringSelection();
+    return specific;
+}
+
+void ItemPropDlg::SetAction(wxString a)
+{
+    wxString action = a;
+    
+    if (action == wxT("Drop Nothing")) {choice_1->SetSelection(0);}
+    else if (action == wxT("Drop Gold")) {choice_1->SetSelection(1);}
+    else if (action == wxT("Drop Item")) {choice_1->SetSelection(2);}
+    else if (action == wxT("Move To Table")) {choice_1->SetSelection(3);}
+    
+}
+
+void ItemPropDlg::SetChance(int a)
+{
+    int chance = a;
+    spin_1->SetValue(chance);
+}
+
+void ItemPropDlg::SetGold(int a, int b, wxString c)
+{
+    int numdice = a; int die = b; wxString multiplier = c;
+    spin_2->SetValue(numdice);
+    spin_3->SetValue(die);
+    text_1->SetValue(multiplier);
+}
+
+void ItemPropDlg::SetItem(wxString a, int b, int c)
+{
+    wxString blueprint = a; int min = b; int max = c;
+    text_2->SetValue(blueprint);
+    spin_4->SetValue(min);
+    spin_5->SetValue(max);
+}
+
+void ItemPropDlg::SetTable(wxString a, int b, int c, wxString d, wxString e)
+{
+    wxString tablename = a; int min = b; int max = c; wxString mod = d; wxString specific = e;
+    //choice_2->SetString(tablename);
+    spin_6->SetValue(min);
+    spin_7->SetValue(max);
+
+    for (int i=1; i<21; i++) {
+      if (mod == choice_3_choices[i] ) { choice_3->SetSelection(i); }
+    }
+    
+    if (specific == choice_4_choices[0] ) { choice_4->SetSelection(0); }
+    else if (specific == choice_4_choices[1] ) { choice_4->SetSelection(1); }
+    else if (specific == choice_4_choices[2] ) { choice_4->SetSelection(2); }
+}
+
 void ItemPropDlg::OnOk(wxCommandEvent &event)
 {
 
@@ -242,13 +375,32 @@ void ItemPropDlg::OnChoiceSel(wxCommandEvent &event)
    if (current==2) { main_sizer->Show(gridsizer_mid2, false); };
    if (current==3) { main_sizer->Show(gridsizer_mid3, false); };
 
-   if (choice==0) { current=0; this->SetSize(wxSize(340, 110)); Centre(); };
-   if (choice==1) { main_sizer->Show(gridsizer_mid1, true); current=1; this->SetSize(wxSize(340, 175)); Centre(); };
-   if (choice==2) { main_sizer->Show(gridsizer_mid2, true); current=2; this->SetSize(wxSize(340, 300)); Centre(); };
-   if (choice==3) { main_sizer->Show(gridsizer_mid3, true); current=3; this->SetSize(wxSize(340, 350)); Centre(); };
+   if (choice==0) { ShowNothing(); };
+   if (choice==1) { ShowGold(); };
+   if (choice==2) { ShowItem(); };
+   if (choice==3) { ShowTable(); };
 
    main_sizer->Layout ();
 
 
 }
 
+void ItemPropDlg::ShowNothing()
+{
+   current=0; this->SetSize(wxSize(340, 110)); Centre();
+}
+
+void ItemPropDlg::ShowGold()
+{
+   main_sizer->Show(gridsizer_mid1, true); current=1; this->SetSize(wxSize(340, 175)); Centre();
+}
+
+void ItemPropDlg::ShowItem()
+{
+   main_sizer->Show(gridsizer_mid2, true); current=2; this->SetSize(wxSize(340, 300)); Centre();
+}
+
+void ItemPropDlg::ShowTable()
+{
+   main_sizer->Show(gridsizer_mid3, true); current=3; this->SetSize(wxSize(340, 350)); Centre();
+}

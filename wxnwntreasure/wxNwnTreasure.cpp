@@ -23,6 +23,8 @@
 #include "PlcItemPropDlg.h"
 #include "ProItemPropDlg.h"
 #include "TblData.h"
+#include "ItemTblData.h"
+#include "EncItemTblData.h"
 
 
 
@@ -258,7 +260,18 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                );
     
       if (IPropDlg.ShowModal()==wxID_OK) {
-           _tc1->AppendItem(tree_sel, IPropDlg.GetTblName(), IPropDlg.GetIcon());
+            ItemTblData* pItemTblData = new ItemTblData( IPropDlg.GetAction(), 
+                        IPropDlg.GetChance());
+            if (IPropDlg.GetAction()==wxT("Drop Gold")) {
+              pItemTblData->SetGold(IPropDlg.GetNumDice(), IPropDlg.GetDie(), IPropDlg.GetMultiplier());
+            }
+            else if (IPropDlg.GetAction()==wxT("Drop Item")) {
+              pItemTblData->SetItem(IPropDlg.GetBlueprint(), IPropDlg.GetMin(), IPropDlg.GetMax());
+            }
+            else if (IPropDlg.GetAction()==wxT("Move To Table")) {
+              pItemTblData->SetTable(IPropDlg.GetTableName(), IPropDlg.GetMin(), IPropDlg.GetMax(), IPropDlg.GetMod(), IPropDlg.GetSpecific());
+            }
+           _tc1->AppendItem(tree_sel, IPropDlg.GetTblName(), IPropDlg.GetIcon(), IPropDlg.GetIcon(), pItemTblData);
       }
     }
 
@@ -273,6 +286,14 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
                );
 
       if (EPropDlg.ShowModal()==wxID_OK) {
+           EncItemTblData* pEncItemTblData = new EncItemTblData( EPropDlg.GetAction(),
+                        EPropDlg.GetChance());
+            if (EPropDlg.GetAction()==wxT("Drop Item")) {
+              pEncItemTblData->SetItem(EPropDlg.GetBlueprint(), EPropDlg.GetMin(), EPropDlg.GetMax());
+            }
+            else if (EPropDlg.GetAction()==wxT("Move To Table")) {
+              pEncItemTblData->SetTable(EPropDlg.GetTableName(), EPropDlg.GetMin(), EPropDlg.GetMax(), EPropDlg.GetMod(), EPropDlg.GetSpecific());
+            }
            _tc1->AppendItem(tree_sel, EPropDlg.GetTblName(), EPropDlg.GetIcon());
       }
     }
@@ -338,8 +359,138 @@ void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
 
 void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))
 {
- 
 
+  wxTreeItemIdValue branch = _tc1->GetSelection();
+  wxTreeItemIdValue parent = _tc1->GetItemParent(branch);
+
+  if (_tc1->GetItemParent(parent)==_tc1_b1) {
+    ShowItemProp();
+  }
+  if (_tc1->GetItemParent(parent)==_tc1_b2) {
+    ShowEncProp();    
+  }
+}
+
+
+void NwnTFrame::ShowItemProp()
+{
+  wxTreeItemIdValue branch = _tc1->GetSelection();
+       ItemPropDlg
+    IPropDlg ( this, -1,
+                 this->GetTitle(),
+                 wxPoint(300,200),
+                 wxSize(250, 300),
+                 wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
+               );
+        ItemTblData *pItemTblData = static_cast<ItemTblData*>(_tc1->GetItemData(branch));
+        wxString action; int chance;
+        action = pItemTblData->GetAction(); IPropDlg.SetAction(action);
+        chance = pItemTblData->GetChance(); IPropDlg.SetChance(chance);
+        if (action == wxT("Drop Gold")) {
+           int numdice; int die; wxString multiplier;
+           numdice = pItemTblData->GetNumDice();
+           die = pItemTblData->GetDie();
+           multiplier = pItemTblData->GetMultiplier();
+           IPropDlg.SetGold(numdice, die, multiplier);
+           IPropDlg.ShowGold();
+        }
+        if (action == wxT("Drop Item")) {
+           wxString blueprint; int min; int max;
+           blueprint = pItemTblData->GetBlueprint();
+           min = pItemTblData->GetMin();
+           max = pItemTblData->GetMax();
+           IPropDlg.SetItem(blueprint, min, max);
+           IPropDlg.ShowItem();
+        }
+        if (action == wxT("Move To Table")) {
+           wxString tablename; int min; int max; wxString mod; wxString specific;
+           tablename = pItemTblData->GetTableName(); min = pItemTblData->GetMin();
+           max = pItemTblData->GetMax(); mod = pItemTblData->GetMod();
+           specific = pItemTblData->GetSpecific();
+           IPropDlg.SetTable(tablename, min, max, mod, specific);
+           IPropDlg.ShowTable();
+        }
+        if (IPropDlg.ShowModal()==wxID_OK) {
+
+            action = IPropDlg.GetAction(); chance = IPropDlg.GetChance();
+            pItemTblData->SetData(action, chance);
+          if (action == wxT("Drop Gold")) {
+             int numdice; int die; wxString multiplier;
+             numdice = IPropDlg.GetNumDice(); die = IPropDlg.GetDie();
+             multiplier = IPropDlg.GetMultiplier();
+             pItemTblData->SetGold(numdice, die, multiplier);
+          }
+          if (action == wxT("Drop Item")) {
+             wxString blueprint; int min; int max;
+             blueprint = IPropDlg.GetBlueprint(); min = IPropDlg.GetMin();
+             max = IPropDlg.GetMax();
+             pItemTblData->SetItem(blueprint, min, max);
+          }
+          if (action == wxT("Move To Table")) {
+             wxString tablename; int min; int max; wxString mod; wxString specific;
+             tablename = IPropDlg.GetTableName(); min = IPropDlg.GetMin();
+             max = IPropDlg.GetMax(); mod = IPropDlg.GetMod();
+             specific = IPropDlg.GetSpecific();
+             pItemTblData->SetTable(tablename, min, max, mod, specific);
+
+          }
+          _tc1->SetItemText(branch, IPropDlg.GetTblName());
+      }
+}
+
+void NwnTFrame::ShowEncProp()
+{
+  wxTreeItemIdValue branch = _tc1->GetSelection();
+    EncItemPropDlg
+        EPropDlg ( this, -1,
+                 this->GetTitle(),
+                 wxPoint(300,200),
+                 wxSize(250, 300),
+                 wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
+               );
+        EncItemTblData *pEncItemTblData = static_cast<EncItemTblData*>(_tc1->GetItemData(branch));
+        wxString action; int chance;
+        action = pEncItemTblData->GetAction();
+        EPropDlg.SetAction(action);
+ /*       chance = pEncItemTblData->GetChance();
+        EPropDlg.SetChance(chance);
+        if (action == wxT("Spawn Creature/NPC")) {
+           wxString blueprint; int min; int max;
+           blueprint = pEncItemTblData->GetBlueprint();
+           min = pEncItemTblData->GetMin();
+           max = pEncItemTblData->GetMax();
+           EPropDlg.SetItem(blueprint, min, max);
+           EPropDlg.ShowItem();
+        }
+        if (action == wxT("Move To Table")) {
+           wxString tablename; int min; int max; wxString mod; wxString specific;
+           tablename = pEncItemTblData->GetTableName(); min = pEncItemTblData->GetMin();
+           max = pEncItemTblData->GetMax(); mod = pEncItemTblData->GetMod();
+           specific = pEncItemTblData->GetSpecific();
+           EPropDlg.SetTable(tablename, min, max, mod, specific);
+           EPropDlg.ShowTable();
+        }
+        */
+        if (EPropDlg.ShowModal()==wxID_OK) {
+        /*   action = EPropDlg.GetAction(); chance = EPropDlg.GetChance();
+           pEncItemTblData->SetData(action, chance);
+          if (action == wxT("Drop Item")) {
+             wxString blueprint; int min; int max;
+             blueprint = EPropDlg.GetBlueprint(); min = EPropDlg.GetMin();
+             max = EPropDlg.GetMax();
+             pEncItemTblData->SetItem(blueprint, min, max);
+          }
+          if (action == wxT("Move To Table")) {
+             wxString tablename; int min; int max; wxString mod; wxString specific;
+             tablename = EPropDlg.GetTableName(); min = EPropDlg.GetMin();
+             max = EPropDlg.GetMax(); mod = EPropDlg.GetMod();
+             specific = EPropDlg.GetSpecific();
+             pEncItemTblData->SetTable(tablename, min, max, mod, specific);
+
+          }
+          _tc1->SetItemText(branch, EPropDlg.GetTblName());
+          */
+        }
 }
 
 void NwnTFrame::OnTProp(wxCommandEvent& WXUNUSED(event))

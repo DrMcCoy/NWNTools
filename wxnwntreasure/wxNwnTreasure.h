@@ -52,6 +52,8 @@ private:
     void set_properties();
     void do_layout();
 
+    void ShowItemProp();
+    void ShowEncProp();
 
     
 protected:
