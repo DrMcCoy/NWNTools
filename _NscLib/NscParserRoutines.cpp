@@ -3501,7 +3501,6 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			{
 				NscPushAssignment (pOut, NscPCode_AsnModulus, 
 					NscType_Integer, pLhs, pRhs);
-				pOut ->SetType (NscType_Integer);
 			}
 			else
 			{
@@ -3605,7 +3604,6 @@ asn_bitwise_expression:;
 			{
 				NscPushAssignment (pOut, nOp, 
 					NscType_Integer, pLhs, pRhs);
-				pOut ->SetType (NscType_Integer);
 			}
 			else
 			{
