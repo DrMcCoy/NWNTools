@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = _MathLib _NwnLib _NscLib _NmcLib nwnnsscomp nwnmdlcomp wxnwntreasure
+SUBDIRS = _MathLib _NwnLib _NscLib _NmcLib nwnnsscomp nwnmdlcomp
 
 AM_CXXFLAGS = -fno-default-inline
 
