@@ -21,6 +21,8 @@
 #include "ItemPropDlg.h"
 #include "EncItemPropDlg.h"
 #include "PlcItemPropDlg.h"
+#include "ProItemPropDlg.h"
+
 
 
 
@@ -252,7 +254,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
       if (IPropDlg.ShowModal()==wxID_OK) {
            _tc1->AppendItem(tree_sel, IPropDlg.GetTblName(), IPropDlg.GetIcon());
       }
-    };
+    }
 
  if (_tc1->GetItemParent(tree_sel)==_tc1_b2) {       
   EncItemPropDlg
@@ -266,7 +268,7 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
       if (EPropDlg.ShowModal()==wxID_OK) {
            _tc1->AppendItem(tree_sel, EPropDlg.GetTblName(), EPropDlg.GetIcon());
       }
-    };
+    }
     
  if (_tc1->GetItemParent(tree_sel)==_tc1_b3) { 
   PlcItemPropDlg
@@ -280,8 +282,19 @@ void NwnTFrame::OnCreate(wxCommandEvent& WXUNUSED(event))
       if (PPropDlg.ShowModal()==wxID_OK) {
            _tc1->AppendItem(tree_sel, PPropDlg.GetTblName(), PPropDlg.GetIcon());
       }
+ }
+ if (_tc1->GetItemParent(tree_sel)==_tc1_b4) { 
+  ProItemPropDlg
+   ProPropDlg ( this, -1,
+                 this->GetTitle(),
+                 wxPoint(300,200),
+                 wxSize(250, 300),
+                 wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
+               );
 
-};  
+               ProPropDlg.ShowModal();
+      
+ }
 
 }
 
@@ -328,7 +341,8 @@ void NwnTFrame::OnDelete(wxCommandEvent& WXUNUSED(event))
 {
 	wxTreeItemIdValue item;
 	item = _tc1->GetSelection();
-	if ((item != _tc1_b1) && (item != _tc1_b2) && (item != _tc1_b3) && (item != _tc1_b4) && (item != _tc1_b4_sb1)) {
+	if ((item != _tc1_b1) && (item != _tc1_b2) && (item != _tc1_b3) 
+    && (item != _tc1_b4) && (item != _tc1_b4_sb1)) {
 	   _tc1->Delete(item);
 	}
 
@@ -369,27 +383,47 @@ void NwnTFrame::OnTreeChg(wxCommandEvent& WXUNUSED(event))
 
   wxTreeItemIdValue branch = _tc1->GetSelection();
 
-  if ( (branch == _tc1_b1) || (branch == _tc1_b2) || (branch == _tc1_b3) || (branch == _tc1_b4)) {
+  if ( (branch == _tc1_b1) || (branch == _tc1_b2) 
+  || (branch == _tc1_b3)) {
     _tb->EnableTool(ID_Table, 1);
+
   }
-  else if ( (branch != _tc1_b1) && (branch != _tc1_b2) && (branch != _tc1_b3) && (branch != _tc1_b4)) {
+  else if ( (branch != _tc1_b1) && (branch != _tc1_b2) 
+  && (branch != _tc1_b3)) {
     _tb->EnableTool(ID_Table, 0);
+
   }  
 
-  if ( (_tc1->GetItemParent(branch) == _tc1_b1) || (_tc1->GetItemParent(branch) == _tc1_b2)
-  || (_tc1->GetItemParent(branch) == _tc1_b3) || (_tc1->GetItemParent(branch) == _tc1_b4)) {
+  if ( (_tc1->GetItemParent(branch) == _tc1_b1) 
+  || (_tc1->GetItemParent(branch) == _tc1_b2)
+  || (_tc1->GetItemParent(branch) == _tc1_b3) 
+  || (_tc1->GetItemParent(branch) == _tc1_b4)) {
     _tb->EnableTool(ID_Create, 1);
+    _tb->EnableTool(ID_TProp, 1);    
   }
-  else if ( (_tc1->GetItemParent(branch) != _tc1_b1) && (_tc1->GetItemParent(branch) != _tc1_b2)
-  && (_tc1->GetItemParent(branch) != _tc1_b3) && (_tc1->GetItemParent(branch) != _tc1_b4)) {
+  else if ( (_tc1->GetItemParent(branch) != _tc1_b1) 
+  && (_tc1->GetItemParent(branch) != _tc1_b2)
+  && (_tc1->GetItemParent(branch) != _tc1_b3) 
+  && (_tc1->GetItemParent(branch) != _tc1_b4)) {
     _tb->EnableTool(ID_Create, 0);
+    _tb->EnableTool(ID_TProp, 0);    
   }
 
   if ((_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b1)
   || (_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b2)
   || (_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b3)
-  || (_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b4) {
+  || (_tc1->GetItemParent(_tc1->GetItemParent(branch)) == _tc1_b4)) {
     _tb->EnableTool(ID_Prop, 1);
+    _tb->EnableTool(ID_Up, 1);
+    _tb->EnableTool(ID_Down, 1);
+  }
+  else if ((_tc1->GetItemParent(_tc1->GetItemParent(branch)) != _tc1_b1)
+  && (_tc1->GetItemParent(_tc1->GetItemParent(branch)) != _tc1_b2)
+  && (_tc1->GetItemParent(_tc1->GetItemParent(branch)) != _tc1_b3)
+  && (_tc1->GetItemParent(_tc1->GetItemParent(branch)) != _tc1_b4)) {
+    _tb->EnableTool(ID_Prop, 0);
+    _tb->EnableTool(ID_Up, 0);
+    _tb->EnableTool(ID_Down, 0);
   }
 }
 
