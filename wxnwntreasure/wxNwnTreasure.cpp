@@ -113,7 +113,7 @@ void NwnTFrame::set_properties()
 {
 
     SetTitle("NWN Treasure Editor (OK Edition)");
-    SetSize(wxSize(823, 561));
+    SetSize(wxSize(950, 600));
     int statusbar_widths[] = { -1 };
     _sb->SetStatusWidths(1, statusbar_widths);
     const wxString statusbar_fields[] = {
