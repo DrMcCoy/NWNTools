@@ -1613,6 +1613,8 @@ bool Decompile (unsigned char *pauchData, UINT32 ulSize,
 
 int Wildcard (const char *pszInFile, const char *pszOutFile)
 {
+        bool noError = true;
+
 #ifdef _WIN32
 	struct _finddata_t sFind;
 
@@ -1648,6 +1650,7 @@ int Wildcard (const char *pszInFile, const char *pszOutFile)
 	//
 
 	int nCount = 0;
+
 	do
 	{
 		
@@ -1679,6 +1682,7 @@ int Wildcard (const char *pszInFile, const char *pszOutFile)
 		if (pauchData == NULL)
 		{
 			printf ("Error: Unable to open file %s\n", sFind .name);
+                        noError = false;
 			continue;
 		}
 
@@ -1687,9 +1691,9 @@ int Wildcard (const char *pszInFile, const char *pszOutFile)
 		//
 
 		if (g_fCompile)
-			Compile (pauchData, ulSize, sFind .name, pszOutFile);
+			noError = noError && Compile (pauchData, ulSize, sFind .name, pszOutFile);
 		else
-			Decompile (pauchData, ulSize, sFind .name, pszOutFile);
+			noError = noError && Decompile (pauchData, ulSize, sFind .name, pszOutFile);
 		nCount++;
 	} while (_findnext (id, &sFind) >= 0);
 
@@ -1698,7 +1702,7 @@ int Wildcard (const char *pszInFile, const char *pszOutFile)
 	//
 
 	_findclose (id);
-	return nCount;
+	return nCount; //not returning error currently
 #else
 
 	//
@@ -1709,17 +1713,17 @@ int Wildcard (const char *pszInFile, const char *pszOutFile)
 	unsigned char *pauchData = NULL;
 	pauchData = NwnLoadFile (pszInFile, &ulSize);
 	if (pauchData == NULL)
-		return 0;
+		return false;
 
 	//
 	// Compile
 	//
 
 	if (g_fCompile)
-		Compile (pauchData, ulSize, pszInFile, pszOutFile);
+		noError = noError && Compile (pauchData, ulSize, pszInFile, pszOutFile);
 	else
-		Decompile (pauchData, ulSize, pszInFile, pszOutFile);
-	return 1;
+		noError = noError && Decompile (pauchData, ulSize, pszInFile, pszOutFile);
+	return noError;
 #endif
 }
 
@@ -1981,7 +1985,7 @@ int main (int argc, char *argv [])
 	if (!g_sLoader .Initialize (pszNWNDir))
 	{
 		printf ("Unable to locate or open Neverwinter Night\n");
-		exit (0);
+		exit (1);
 	}
 
 	//
@@ -1989,7 +1993,7 @@ int main (int argc, char *argv [])
 	//
 
 	if (!NscCompilerInitialize (&g_sLoader, g_nVersion, g_fEnableExtensions))
-		exit (0);
+		exit (1);
 
 	//
 	// If we are testing compilation with bif files
@@ -2023,7 +2027,7 @@ int main (int argc, char *argv [])
 		if (!g_sLoader .OpenModule (&sModule, papszInFiles [0]))
 		{
 			printf ("Unable to open module \"%s\"", papszInFiles [0]);
-			exit (0);
+			exit (1);
 		}
 		g_sLoader .SetModule (&sModule);
 
@@ -2059,7 +2063,7 @@ int main (int argc, char *argv [])
 		if (!g_sLoader .OpenModule (&sModule, papszInFiles [0]))
 		{
 			printf ("Unable to open module \"%s\"\n", papszInFiles [0]);
-			exit (0);
+			exit (1);
 		}
 		g_sLoader .SetModule (&sModule);
 
@@ -2194,7 +2198,7 @@ int main (int argc, char *argv [])
 		if (nCount == 0)
 		{
 			printf ("Error: Unable to open input file \"%s\"\n", pszOrgInFile);
-			exit (0);
+			exit (1);
 		}
 	}
 
@@ -2230,11 +2234,17 @@ int main (int argc, char *argv [])
 			if (p) 
 				*p = 0;
 			strcat (szInFile, g_fCompile ? ".nss" : ".ncs");
+                        //note that on linux the following returns true/false indicating whether any error occurred
+                        //on windows it returns the number of files compiled - errors are not reported in the return code
 			int nCount = Wildcard (szInFile, pszOutFile);
-			if (nCount == 0)
+			if (!nCount)
 			{
-				printf ("Error: Unable to open input file \"%s\"\n", pszOrgInFile);
-				exit (0);
+#ifdef _WIN32
+                            printf ("Error: Unable to open input file \"%s\"\n", pszOrgInFile);
+#else
+                            printf ("Errors occurred in compiling \"%s\"\n", pszOrgInFile);
+#endif
+                            exit (1);
 			}
 		}
 	}
