@@ -11,7 +11,7 @@
 enum
 {
 	ID_New,
-	ID_Open,
+	ID_Open = 1,
 	ID_Save,
 	ID_Create,
 	ID_After,
@@ -21,7 +21,7 @@ enum
 	ID_Delete,
 	ID_Up,
 	ID_Down,
-	ID_About,
+	ID_About = wxID_ABOUT,
 	ID_Exit,
 	ID_Empty,
 	ID_Treasure_Tbl,
