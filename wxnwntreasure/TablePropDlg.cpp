@@ -11,6 +11,7 @@
 
 #include "TablePropDlg.h"
 
+
 BEGIN_EVENT_TABLE(TblPropDialog, wxDialog)
     EVT_BUTTON( wxID_OK, TblPropDialog::OnOk )
     EVT_CHECKBOX( ID_GlblCheckbox, TblPropDialog::OnGlblCheck )
@@ -92,9 +93,16 @@ void TblPropDialog::do_layout()
 
 }
 
-void TblPropDialog::OnOk(wxCommandEvent &event)
+wxString TblPropDialog::GetTblName()
 {
-    event.Skip();
+    wxString value = text_TblName->GetValue();    
+
+    return value;
+}
+
+void TblPropDialog::OnOk(wxCommandEvent &event)
+{    
+    EndModal(wxID_OK);
 }
 
 

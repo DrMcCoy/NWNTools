@@ -25,7 +25,7 @@ PlcItemPropDlg::PlcItemPropDlg(wxWindow* parent, int id, const wxString& title, 
     label_2 = new wxStaticText(this, -1, wxT("Chance"));
         const wxString choice_1_choices[] = {
         wxT("Spawn Nothing"),
-        wxT("Spawn Creature/NPC"),
+        wxT("Spawn Placeable"),
         wxT("Move To Table")
             };
         const wxString choice_2_choices[] = {

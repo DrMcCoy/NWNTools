@@ -149,9 +149,6 @@ NwnTFrame::NwnTFrame(wxWindow* parent, int id, const wxString& title, const wxPo
             wxTR_LINES_AT_ROOT|wxTR_HIDE_ROOT|wxTR_HAS_BUTTONS|wxSUNKEN_BORDER);
 
     wxImageList *images = new wxImageList(16, 16, TRUE);
-    //wxIcon icons[2];
-    
-    
     images->Add(wxIcon(item_xpm));
     images->Add(wxIcon(encounter_xpm));
     images->Add(wxIcon(placeable_xpm));
@@ -298,7 +295,12 @@ void NwnTFrame::OnTable(wxCommandEvent& WXUNUSED(event))
                  wxRESIZE_BORDER |  wxDEFAULT_DIALOG_STYLE
                );
 
-    TPropDlg.ShowModal();
+    wxTreeItemIdValue branch = _tc1->GetSelection();
+    if (branch != _tc1_b4){
+        if (TPropDlg.ShowModal()==wxID_OK) {
+                _tc1->AppendItem(branch, TPropDlg.GetTblName(), 5); 
+        }
+    }
 }
 
 void NwnTFrame::OnProp(wxCommandEvent& WXUNUSED(event))

@@ -21,13 +21,14 @@ public:
     // end wxGlade
 
     TblPropDialog(wxWindow* parent, int id, const wxString& title, const wxPoint& pos=wxDefaultPosition, const wxSize& size=wxDefaultSize, long style=wxDEFAULT_DIALOG_STYLE);
-//   	void OnCancel(wxCommandEvent& event);
+
+    wxString GetTblName();
 private:
     // begin wxGlade: TblPropDialog::methods
     void set_properties();
     void do_layout();
     // end wxGlade
-    
+
     void OnOk(wxCommandEvent &event);
     void OnGlblCheck(wxCommandEvent &event);
 
