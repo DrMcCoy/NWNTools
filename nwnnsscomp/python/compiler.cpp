@@ -13,12 +13,12 @@ static PyObject *compiler_init(PyObject *self, PyObject *args) {
     if(!PyArg_ParseTuple(args,"s",&nwndir)) {
         return NULL;
     }
-    printf("initializing nwn loader from \"%s\"\n",nwndir);
+
     if(!loader.Initialize(nwndir)) {
         PyErr_SetString(PyExc_IOError,"NWN dir not found in compiler module");
         return NULL;
     }
-    printf("initializing compiler\n");
+
     if(!NscCompilerInitialize(&loader,version,true)) {
         PyErr_SetString(PyExc_SystemError, "NWN compiler failed to initialize");
         return NULL;

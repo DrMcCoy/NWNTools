@@ -1,3 +1,12 @@
+NWN Tools 2.1.0
+===============
+
+* The compiler has been updated to support Hordes of the Underdark.
+* Constructs involving '|=', '&=', etc now compile correctly.
+* The compiler now returns an exit flag of 1 if there are any errors during
+  compile.
+* There is now a python wrapper for the compiler in nwnnsscompiler/python.
+  This is used for integration into neveredit.
 
 NWN Tools 2.0.0
 ===============
