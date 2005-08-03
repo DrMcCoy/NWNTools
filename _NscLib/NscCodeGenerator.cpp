@@ -1546,9 +1546,11 @@ bool CNscCodeGenerator::CodeCP (bool fTop, NscSymbol *pSymbol, NscType nType,
 		CodeDESTRUCT (nTotalSize, nElement, nElementSize);
 	}
 	if ((ulFlags & NscSymFlag_PostIncrement) != 0)
-		CodeINC (fSP ? NscCode_INCISP : NscCode_INCIBP, nOffset - nElementOffset + 1);
+            CodeINC (fSP ? NscCode_INCISP : NscCode_INCIBP, nOffset - nElementOffset 
+                     + (fSP ? 1 : 0));
 	else if ((ulFlags & NscSymFlag_PostDecrement) != 0)
-		CodeINC (fSP ? NscCode_DECISP : NscCode_DECIBP, nOffset - nElementOffset + 1);
+            CodeINC (fSP ? NscCode_DECISP : NscCode_DECIBP, nOffset - nElementOffset 
+                     + (fSP ? 1 : 0));
 	return true;
 }
 
