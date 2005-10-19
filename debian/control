@@ -1,0 +1,14 @@
+Source: nwntools
+Section: devel
+Priority: optional
+Maintainer: Mickaël Leduque <ledmicka@users.sourceforge.net>
+Build-Depends: debhelper (>= 4.0.0), python
+Standards-Version: 3.6.2
+
+Package: nwntools
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}
+Description: compilers for NWN data
+ nwnnsscomp is a compiler for nwnscript language. The NSS files are compiled to NCS objects.
+ nwnmdlcomp is a compiler for the MDL from Bioware. It compiles text format MDLs to Binary MDLs.
+

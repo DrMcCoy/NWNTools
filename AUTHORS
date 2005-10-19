@@ -19,6 +19,7 @@ noted:
   Initial Linux Port
   Francois Guimond (Eyrdan) - eyrdan@users.sourceforge.net
 
-  Initial MacOS X Port & Automake/Autoconf Assistance
-  Peter Gorniak (sumpfork) - pgorniak@mac.com
+  Initial MacOS X Port & Automake/Autoconf Assistance, Python interface
+  Peter Gorniak (sumpfork) - sumpfork@users.sf.net
+
 

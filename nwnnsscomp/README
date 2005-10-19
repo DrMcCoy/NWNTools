@@ -1,0 +1,30 @@
+This is the nwn script compiler originally written by Torlack 
+(Edward T. Smith).
+
+It was compiled for the Mac by sumpfork (sumpfork@sourceforge.net)
+and bug reports should be made to the Openknights consortium at
+http://sf.net/projects/openknights.
+
+This is a command line only tool. It is part of the NWNTools package
+by Torlack that is now maintained and distributed by the Openknights
+consortium.
+
+NeverWinter Nights Script Compiler/Decompiler
+Copyright 2002-2003, Edward T. Smith
+Copyright 2003, The Open Knights Consortium
+
+Usage:
+nwnnsscomp [-cdeox] [-t#] [-v#] nwndir infile
+
+  nwndir - directory where NWN is installed.
+  infile - name of the input file.
+  -c - Compile the script (default)
+  -d - Decompile the script (can't be used with -c)
+  -e - Enable non-Bioware extensions
+  -o - Optimize the compiled source
+  -x - Extract script from NWN data files
+  -vx.xx - Set the version of the compiler
+  -t1 - Perform a compilation test with BIF scripts
+  -t2 - Perform a compilation test with the given module
+  -t3 - Optimization space saving report with the given module
+  -t4 - Perform a compilation test with the given file or files

@@ -1,0 +1,19 @@
+This package was debianized by Mickaël Leduque <ledmicka@users.sourceforge.net> on
+Tue, 18 Oct 2005 11:21:46 +0200.
+
+It was downloaded from http://sourceforge.net/projects/openknights/
+
+Copyright Holder:
+
+  Original Author
+  Edward T. Smith (Torlack) - torlack@torlack.com
+
+  Initial Linux Port
+  Francois Guimond (Eyrdan) - eyrdan@users.sourceforge.net
+
+  Initial MacOS X Port & Automake/Autoconf Assistance, Python interface
+  Peter Gorniak (sumpfork) - sumpfork@users.sf.net
+
+License:
+
+see the COPYING file

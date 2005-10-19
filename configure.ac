@@ -16,6 +16,9 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
 
+# Check for python
+AM_PATH_PYTHON(2.2,, :)
+
 AC_ARG_VAR(MSTA, [COCOM syntax description translator])
 AC_CHECK_PROG(MSTA, [msta], [msta])
 if test "$MSTA" != msta ; then
