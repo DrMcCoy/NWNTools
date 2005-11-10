@@ -74,7 +74,6 @@ AC_CONFIG_FILES([_MathLib/Makefile
 		 nwntools.spec
                  nwnnsscomp/Makefile
                  nwnnsscomp/python/Makefile
-                 nwnmdlcomp/Makefile
-                 wxnwntreasure/Makefile])
+                 nwnmdlcomp/Makefile])
 AC_OUTPUT
 

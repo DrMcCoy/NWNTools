@@ -27,6 +27,9 @@ libnsc_a_LIBADD = @LIBOBJS@
 
 EXTRA_DIST = \
 	NscParser.h \
+	location.hh \
+	position.hh \
+	stack.hh \
 	_NscLib.vcproj
 
 MAINTAINERCLEANFILES = \

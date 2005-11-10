@@ -49,7 +49,7 @@ EXTRA_DIST = \
 MAINTAINERCLEANFILES = \
 	Makefile.in
 
-#rules added by sumpfork (pgorniak@mac.com) to make mac os app and dmg
+#rules added by sumpfork (sumpfork@users.sf.net) to make mac os app and dmg
 #somewhat messy - sorry
 PROGRAM = $(bin_PROGRAMS)
 BUNDLE = $(PROGRAM).app/Contents
