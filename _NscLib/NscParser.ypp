@@ -28,14 +28,19 @@
 ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **
 */
+
+%defines
+%{
+  class CNscContext;
+%}
+
+%lex-param { CNscContext& context}
+%parse-param { CNscContext& context}
  
 %{
 #include "Nsc.h"
 
 #pragma warning (disable : 4244 4102)
-
-int yylex ();
-void yyerror(char *s);
 
 #ifndef __cplusplus
 #error "Parser yacc output must be compiled as C++"
@@ -43,6 +48,8 @@ void yyerror(char *s);
 
 class CNscPStackEntry;
 #define YYSTYPE CNscPStackEntry *
+
+int yylex (YYSTYPE* yylval, CNscContext& context);
 
 YYSTYPE NscBuildIdentifier (YYSTYPE p);
 YYSTYPE NscBuildObjectConstant (int nOID);
@@ -649,17 +656,17 @@ expression_statement:
 	| error 
 		{
 			$$ = NULL;
-			if (NscBuildSyntaxError (yychar, yylval))
+			if (NscBuildSyntaxError (yylooka, yylval))
 				YYABORT;
-			while (yychar != EOF && yychar != ';' && yychar != '{' && yychar != '}')
+			while (yylooka != EOF && yylooka != ';' && yylooka != '{' && yylooka != '}')
 			{
 				if (yylval != NULL)
 					yylval; //FIXME
-				yyclearin;
-				yychar = yylex ();
+				yylooka = yyempty_;
+				yylooka = yylex (&yylval, context);
 			}
-			if (yychar == ';')
-				yyclearin;
+			if (yylooka == ';')
+				yylooka = yyempty_;
 		} 	
 	;
 	
@@ -976,16 +983,16 @@ translation_unit:
 	| error 
 		{
 			$$ = NULL;
-			if (NscBuildSyntaxError (yychar, yylval))
+			if (NscBuildSyntaxError (yylooka, yylval))
 				YYABORT;
-			while (yychar != EOF && yychar != ';' && yychar != '{' && yychar != '}')
+			while (yylooka != EOF && yylooka != ';' && yylooka != '{' && yylooka != '}')
 			{
 				if (yylval != NULL)
 					yylval; //FIXME
-				yyclearin;
-				yychar = yylex ();
+				yylooka = yyempty_;
+				yylooka = yylex (&yylval, context);
 			}
-			yyclearin;
+			yylooka = yyempty_;
 		} 	
 	;
 
@@ -997,4 +1004,3 @@ external_declaration:
 	;
 
 %%
-
