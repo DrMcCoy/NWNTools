@@ -159,7 +159,7 @@ bool NscCompilerInitialize (CNwnLoader *pLoader, int nVersion,
 	sCtx .SetNWScript (true);
 	sCtx .SetOptExpression (true);
 	g_pCtx = &sCtx;
-	if (sCtx .yyparse () != 0 || sCtx .GetErrors () > 0)
+	if (sCtx .parse () != 0 || sCtx .GetErrors () > 0)
 	{
 		printf ("Error compiling nwscipt.nss\n");
 		return false;
@@ -251,7 +251,7 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 
 	sCtx .AddStream (pStream);
         //sCtx.yydebug = 1;
-	sCtx .yyparse ();
+	sCtx .parse ();
 	if (sCtx .GetErrors () > 0)
 	{
 		if (fAllocated)
@@ -275,7 +275,7 @@ NscResult NscCompileScript (CNwnLoader *pLoader, const char *pszName,
 	sCtx .ClearFiles ();
 	sCtx .AddStream (pStream);
 	sCtx .SetPhase2 (true);
-	sCtx .yyparse ();
+	sCtx .parse ();
 	if (sCtx .GetErrors () > 0) {
             return NscResult_Failure;
         }

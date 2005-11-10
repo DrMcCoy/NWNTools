@@ -69,7 +69,7 @@ class CNwnLoader;
 //
 //-----------------------------------------------------------------------------
 
-class CNscContext : public yyparser
+class CNscContext
 {
 	enum Constants
 	{
@@ -118,7 +118,9 @@ public:
 
 	// @cmember Get the next token
 
-	virtual int yylex ();
+	virtual int parse ();
+
+	virtual int yylex (YYSTYPE* yylval);
 
 	// @cmember Generate a parser error
 

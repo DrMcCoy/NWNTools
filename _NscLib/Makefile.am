@@ -1,6 +1,8 @@
 
 AM_CXXFLAGS = -fno-default-inline
 
+AM_YFLAGS = --defines=NscParser.h --skeleton=lalr1.cc
+
 noinst_LIBRARIES = libnsc.a
 
 libnsc_a_SOURCES = \
@@ -14,11 +16,8 @@ libnsc_a_SOURCES = \
 	NscCodeGenerator.h \
 	NscContext.h \
 	NscPStackEntry.h \
-	NscSymbolTable.h
-
-nodist_libnsc_a_SOURCES = \
-	NscParser.cpp \
-	NscParser.h
+	NscSymbolTable.h \
+	NscParser.ypp
 
 BUILT_SOURCES = \
 	NscParser.cpp \
@@ -26,18 +25,10 @@ BUILT_SOURCES = \
 
 libnsc_a_LIBADD = @LIBOBJS@
 
-CLEANFILES = \
-	NscParser.cpp \
-	NscParser.h \
-	NscParser.output
-
 EXTRA_DIST = \
-	_NscLib.vcproj \
-	NscParser.y
+	NscParser.h \
+	_NscLib.vcproj
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
-
-NscParser.cpp NscParser.h: NscParser.y
-	$(MSTA) -c++ -v -l -d $<
 

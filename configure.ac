@@ -4,8 +4,8 @@
 AC_PREREQ(2.57)
 AC_COPYRIGHT([Copyright 2002, 2003 Edward T. Smith.  All rights reserved.
 
-Copyright 2003, 2004 The Open Knights Consortium.  All rights reserved.])
-AC_INIT([NWN Tools], [2.2.0], [sumpfork@users.sourceforge.net], [nwntools])
+Copyright 2003, 2004, 2005 The Open Knights Consortium.  All rights reserved.])
+AC_INIT([NWN Tools], [2.3.0], [sumpfork@users.sourceforge.net], [nwntools])
 AC_SUBST(RELEASE, 1)
 AC_CONFIG_SRCDIR(_NwnLib/NwnDefines.h)
 AC_CANONICAL_HOST
@@ -15,17 +15,10 @@ AM_INIT_AUTOMAKE([1.7 gnits dist-bzip2])
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
+AC_PROG_YACC
 
 # Check for python
 AM_PATH_PYTHON(2.2,, :)
-
-AC_ARG_VAR(MSTA, [COCOM syntax description translator])
-AC_CHECK_PROG(MSTA, [msta], [msta])
-if test "$MSTA" != msta ; then
-   AC_MSG_ERROR([Could not find the msta command from the cocom
-                       compiler compiler suite, please install from
-                       cocom.sourceforge.net])
-fi
 
 AC_ARG_VAR(EBUILD, [ebuild parsing command])
 AC_PATH_PROG(EBUILD, [ebuild], [], [/usr/sbin:/usr/bin:/usr/lib/portage/bin])

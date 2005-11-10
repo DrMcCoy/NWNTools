@@ -1,3 +1,12 @@
+NWN Tools 2.3.0
+===============
+* switch compiler to be generated using bison instead of msta, which appears unsupported
+* use autoconf to find python interpreter
+
+NWN Tools 2.2.0 (unreleased)
+===============
+* Fixed a reported bug with post incrementor and decrementor of a global variable
+
 NWN Tools 2.1.0
 ===============
 

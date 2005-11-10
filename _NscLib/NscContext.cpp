@@ -125,6 +125,21 @@ CNscContext::~CNscContext ()
 		RemoveTopStream ();
 }
 
+//----------------------------------------------------------------------------
+//
+// Construct the parser and call it
+//
+//----------------------------------------------------------------------------
+
+int CNscContext::parse ()
+{
+    yy::parser parser(*this);
+#ifdef _DEBUG
+    parser.set_debug_level(true);
+#endif
+    return parser.parse();
+}
+
 //-----------------------------------------------------------------------------
 //
 // @mfunc Get the next token from the current line or NULL if out
@@ -133,14 +148,14 @@ CNscContext::~CNscContext ()
 //
 //-----------------------------------------------------------------------------
 
-int CNscContext::yylex ()
+int CNscContext::yylex (YYSTYPE* yylval)
 {
 
 	//
 	// Initialize lvalue
 	//
 
-	yylval = NULL;
+	*yylval = NULL;
 
 	//
 	// If we have no stream, return nothing
@@ -201,7 +216,7 @@ read_another_line:;
 
 		int nCount = (int) (m_pStreamTop ->pszNextTokenPos - pszStart);
 		UINT32 ulHash = CNscSymbolTable::GetHash (pszStart, nCount);
-
+		
 		//
 		// See if it is a reserved word
 		//
@@ -220,7 +235,7 @@ read_another_line:;
 				CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
 				pEntry ->SetType ((NscType) (
 					NscType_Engine_0 + pSymbol ->nEngineObject));
-				yylval = pEntry;
+				*yylval = pEntry;
 				return pSymbol ->nToken;
 			}
 			else
@@ -230,7 +245,7 @@ read_another_line:;
 		{
 			CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
 			pEntry ->SetIdentifier (pszStart, nCount);
-			yylval = pEntry;
+			*yylval = pEntry;
 			return IDENTIFIER;
 		}
 	}
@@ -289,7 +304,7 @@ read_another_line:;
 			CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
 			pEntry ->SetType (NscType_Integer);
 			pEntry ->PushConstantInteger (nValue);
-			yylval = pEntry;
+			*yylval = pEntry;
 			return INTEGER_CONST; 
 		}
 
@@ -339,7 +354,7 @@ read_another_line:;
 			memcpy (psz, pszStart, nCharacter);
 			psz [nCharacter] = 0;
 			CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
-			yylval = pEntry;
+			*yylval = pEntry;
 			if (fHasDecimal)
 			{
 				pEntry ->SetType (NscType_Float);
@@ -610,7 +625,7 @@ read_another_line:;
 							CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
 							pEntry ->SetType (NscType_String);
 							pEntry ->PushConstantString (pszStart, (int) (pszOut - pszStart));
-							yylval = pEntry;
+							*yylval = pEntry;
 							return STRING_CONST;
 						}
 						else if (c == '\\')
@@ -629,7 +644,7 @@ read_another_line:;
 							CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
 							pEntry ->SetType (NscType_String);
 							pEntry ->PushConstantString (pszStart, (int) (pszOut - pszStart));
-							yylval = pEntry;
+							*yylval = pEntry;
 							GenerateError ("Unterminated string");
 							return STRING_CONST; 
 						}
@@ -1311,4 +1326,19 @@ int CNscContext::GetTypeSize (NscType nType)
 			}
 			break;
 	}
+}
+
+//----------------------------------------------------------------------------
+//
+// Functions to hand off parser callbacks to the context class
+//
+//----------------------------------------------------------------------------
+
+void yy::parser::error (const yy::parser::location_type& l,
+			const std::string& m) {
+    context.yyerror(m.c_str());
+}
+
+int yylex (YYSTYPE* yylval, CNscContext& context) {
+    return context.yylex(yylval);
 }
