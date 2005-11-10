@@ -6,3 +6,6 @@ NscParser.h
 NscParser.output
 *.a
 *.o
+stack.hh
+position.hh
+location.hh
