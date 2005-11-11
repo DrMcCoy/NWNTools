@@ -50,6 +50,7 @@ class CNscPStackEntry;
 #define YYSTYPE CNscPStackEntry *
 
 int yylex (YYSTYPE* yylval, CNscContext& context);
+int yylex (YYSTYPE* yylval);
 
 YYSTYPE NscBuildIdentifier (YYSTYPE p);
 YYSTYPE NscBuildObjectConstant (int nOID);
@@ -656,17 +657,17 @@ expression_statement:
 	| error 
 		{
 			$$ = NULL;
-			if (NscBuildSyntaxError (yylooka, yylval))
+			if (NscBuildSyntaxError (YYCHAR_NAME, yylval))
 				YYABORT;
-			while (yylooka != EOF && yylooka != ';' && yylooka != '{' && yylooka != '}')
+			while (YYCHAR_NAME != EOF && YYCHAR_NAME != ';' && YYCHAR_NAME != '{' && YYCHAR_NAME != '}')
 			{
 				if (yylval != NULL)
 					yylval; //FIXME
-				yylooka = yyempty_;
-				yylooka = yylex (&yylval, context);
+				YYCHAR_NAME = yyempty_;
+				YYCHAR_NAME = yylex (&yylval, context);
 			}
-			if (yylooka == ';')
-				yylooka = yyempty_;
+			if (YYCHAR_NAME == ';')
+				YYCHAR_NAME = yyempty_;
 		} 	
 	;
 	
@@ -983,16 +984,16 @@ translation_unit:
 	| error 
 		{
 			$$ = NULL;
-			if (NscBuildSyntaxError (yylooka, yylval))
+			if (NscBuildSyntaxError (YYCHAR_NAME, yylval))
 				YYABORT;
-			while (yylooka != EOF && yylooka != ';' && yylooka != '{' && yylooka != '}')
+			while (YYCHAR_NAME != EOF && YYCHAR_NAME != ';' && YYCHAR_NAME != '{' && YYCHAR_NAME != '}')
 			{
 				if (yylval != NULL)
 					yylval; //FIXME
-				yylooka = yyempty_;
-				yylooka = yylex (&yylval, context);
+				YYCHAR_NAME = yyempty_;
+				YYCHAR_NAME = yylex (&yylval, context);
 			}
-			yylooka = yyempty_;
+			YYCHAR_NAME = yyempty_;
 		} 	
 	;
 

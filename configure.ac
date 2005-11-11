@@ -17,6 +17,25 @@ AC_PROG_CC
 AC_PROG_RANLIB
 AC_PROG_YACC
 
+# Check bison version, substitute name for yychar
+bison_version=`bison -V | grep "^bison" | awk '{print $4}'`
+bison_v=`echo $bison_version | awk 'BEGIN { FS="." } {printf "%d", $1*10+$2;}'`
+AC_MSG_RESULT([checking bison version: $bison_version])
+
+if test -n "$bison_v" && test "$bison_v" -lt 20
+then
+        AC_MSG_ERROR([need a bison version >= 2.0])
+fi
+
+if test -n "$bison_v" && test "$bison_v" -eq 20
+then
+        AC_MSG_RESULT([setting bison lalr1 yychar variable name to yylooka_])
+        AC_DEFINE(YYCHAR_NAME,yylooka_,[name of yychar lookahead var in bison lalr1.cc])
+else
+        AC_MSG_RESULT([setting bison lalr1 yychar variable name to yylooka])
+        AC_SUBST(YYCHAR_NAME,yylooka,[name of yychar lookahead var in bison lalr1.cc])
+fi
+
 # Check for python
 AM_PATH_PYTHON(2.2,, :)
 

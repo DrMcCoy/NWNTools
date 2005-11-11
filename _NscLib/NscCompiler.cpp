@@ -366,3 +366,22 @@ const char *NscGetActionName (int nAction)
 		return pSymbol ->szString;
 	}
 }
+
+//----------------------------------------------------------------------------
+//
+// Functions to hand off parser callbacks to the context class
+//
+//----------------------------------------------------------------------------
+
+void yy::parser::error (const yy::parser::location_type& l,
+			const std::string& m) {
+    context.yyerror(m.c_str());
+}
+
+int yylex (YYSTYPE* yylval, CNscContext& context) {
+    return context.yylex(yylval);
+}
+
+int yylex (YYSTYPE* yylval) {
+    return g_pCtx->yylex(yylval);
+}
