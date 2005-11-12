@@ -1,9 +1,120 @@
+2005-11-11 18:28  sumpfork
+
+	* configure.ac (tags: v2_3_0):
+
+	fix 2.1 bison handling I just broke
+
+2005-11-11 18:25  sumpfork
+
+	* configure.ac, _NscLib/NscCompiler.cpp (tags: v2_3_0),
+	  _NscLib/NscContext.cpp (tags: v2_3_0), _NscLib/NscParser.ypp
+	  (tags: v2_3_0):
+
+	try to also accomodate bison 2.0
+
+2005-11-10 16:07  sumpfork
+
+	* _NscLib/.cvsignore, nwnnsscomp/python/.cvsignore (utags: v2_3_0):
+
+	ignore generated files
+
+2005-11-10 15:13  sumpfork
+
+	* configure.ac, _NscLib/Makefile.am (tags: v2_3_0),
+	  nwnnsscomp/python/Makefile.am (tags: v2_3_0),
+	  wxnwntreasure/Makefile.am (tags: v2_3_0):
+
+	make sure necessary files are include on make dist;properly exclude wxnwntreasure
+
+2005-11-10 13:32  sumpfork
+
+	* _NscLib/: NscParser.y, NscParser.ypp:
+
+	rename parser generation file
+
+2005-11-10 13:31  sumpfork
+
+	* NEWS (tags: v2_3_0), configure.ac, _NscLib/Makefile.am,
+	  _NscLib/NscCompiler.cpp, _NscLib/NscContext.cpp,
+	  _NscLib/NscContext.h (tags: v2_3_0):
+
+	change parser to use bison instead of msta
+
+2005-10-18 22:24  sumpfork
+
+	* AUTHORS (tags: v2_3_0), configure.ac, debian/changelog (tags:
+	  v2_3_0), debian/compat (tags: v2_3_0), debian/control (tags:
+	  v2_3_0), debian/copyright (tags: v2_3_0), debian/dirs (tags:
+	  v2_3_0), debian/docs (tags: v2_3_0), debian/rules (tags: v2_3_0),
+	  nwnnsscomp/README (tags: v2_3_0), nwnnsscomp/python/Makefile.am:
+
+	checking in debian patch from ML
+
+2005-08-03 10:34  sumpfork
+
+	* _NscLib/NscCodeGenerator.cpp (tags: v2_3_0):
+
+	long overdue patch from forums applied
+
+2005-02-04 17:18  sumpfork
+
+	* configure.ac, nwnnsscomp/Makefile.am (tags: v2_3_0),
+	  nwnnsscomp/python/Makefile.am:
+
+	bump version to 2.2
+	include compiler python bindings in the make process
+
+2005-02-04 16:33  sumpfork
+
+	* _NscLib/NscCompiler.cpp, _NscLib/NscParser.y,
+	  _NscLib/NscParserRoutines.cpp (tags: v2_3_0),
+	  _NwnLib/NwnDefines.h (tags: v2_3_0):
+
+	fixing previous fix for gcc 3.4 (used wrong symbol, was producing faulty compile output)
+	changing CONST to NWCONST to avoid conflict warnings with standard C library
+
+2005-01-27 20:10  sumpfork
+
+	* autogen.sh (tags: v2_3_0), configure.ac, _NmcLib/Makefile.am
+	  (tags: v2_3_0), _NscLib/NscCompiler.cpp, _NwnLib/NwnDefines.h:
+
+	fixes for gcc 3.4
+
+2004-07-09 17:17  sumpfork
+
+	* nwnnsscomp/python/: compiler.cpp, setup.py, test.py (utags:
+	  v2_3_0):
+
+	replacing stack alloc with new to fix linux compiler crash on errors
+	add correct dependencies to setup.py
+	new very basic test file for the python extension
+
+2004-06-16 09:48  eyrdan
+
+	* nwnnsscomp/nwnnsscomp.cpp (tags: v2_3_0):
+
+	Fixed const char* vs. char* of NwnBasename return type.
+
+2004-06-15 20:57  sumpfork
+
+	* nwnnsscomp/nwnnsscomp.cpp:
+
+	fixing assumption that basename returns pointer to same string (once again)
+
+2004-05-15 15:54  sumpfork
+
+	* ChangeLog (tags: v2_3_0), NEWS, configure.ac,
+	  nwnnsscomp/python/compiler.cpp:
+
+	updating NEWS, Changelog and bumping version to 2.1.0
+	removing some printouts from compiler
+
 2004-05-15 15:09  sumpfork
 
 	* nwnnsscomp/nwnnsscomp.cpp:
 
 	compiler now exits with value 1 on error (not consistent on windows)
-	
+
 2004-05-15 14:44  sumpfork
 
 	* _NscLib/NscParserRoutines.cpp:
