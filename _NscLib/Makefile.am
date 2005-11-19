@@ -26,12 +26,13 @@ BUILT_SOURCES = \
 libnsc_a_LIBADD = @LIBOBJS@
 
 EXTRA_DIST = \
-	NscParser.h \
-	location.hh \
-	position.hh \
-	stack.hh \
 	_NscLib.vcproj
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
+
+#remove the bison generated file because it is generated differently
+#for different bison versions
+dist-hook:
+	rm -f $(distdir)/{NscParser.cpp,NscParser.h}
 
