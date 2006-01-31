@@ -1,3 +1,6 @@
+NWN Tools 2.3.1
+* do not include bison generated files in dist, as they depend on bison version
+
 NWN Tools 2.3.0
 ===============
 * switch compiler to be generated using bison instead of msta, which appears unsupported
