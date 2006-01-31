@@ -2,7 +2,7 @@ all-local: setup.py compiler.cpp __init__.py
 	$(PYTHON) setup.py build
 
 install-exec-local: 
-	$(PYTHON) setup.py install --prefix=$(DESTDIR)
+	$(PYTHON) setup.py install --prefix=${prefix}
 
 EXTRA_DIST = \
 	compiler.cpp \

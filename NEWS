@@ -1,4 +1,9 @@
+NWN Tools 2.3.2
+===============
+* fix python package prefix path used on install
+
 NWN Tools 2.3.1
+===============
 * do not include bison generated files in dist, as they depend on bison version
 
 NWN Tools 2.3.0
