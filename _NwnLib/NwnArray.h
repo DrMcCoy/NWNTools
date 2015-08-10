@@ -337,6 +337,7 @@ public:
 		m_ulOffset = 0;
 		m_ulCount = 0;
 		m_ulAlloc = 0;
+		m_pData = NULL;
 	}
 
 	// @cmember General destructor
