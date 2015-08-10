@@ -19,8 +19,6 @@ libmath_a_SOURCES = \
 
 libmath_a_LIBADD = @LIBOBJS@
 
-AM_CXXFLAGS = -fno-default-inline
-
 EXTRA_DIST = \
 	_MathLib.vcproj
 

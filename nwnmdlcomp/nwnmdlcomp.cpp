@@ -1114,7 +1114,7 @@ int main (int argc, char *argv [])
 		char *pszOrgInFile = papszInFiles [0];
 		char szPattern [512];
 		strcpy (szPattern, papszInFiles [0]);
-		char *p = strchr (NwnBasename (szPattern), '.');
+		char *p = const_cast<char *>(strchr (NwnBasename (szPattern), '.'));
 		if (p) 
 			*p = 0;
 

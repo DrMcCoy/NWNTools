@@ -43,6 +43,9 @@
 #include "NscPStackEntry.h"
 #include "NscSymbolTable.h"
 
+// "Import" token definitions.
+typedef yy::parser::token token;
+
 //
 // Externals
 //
@@ -396,142 +399,142 @@ bool NscBuildSyntaxError (int nToken, YYSTYPE yylval)
 
 		switch (nToken)
 		{
-			case IDENTIFIER:
+			case token::IDENTIFIER:
 				if (yylval)
 					pszToken = yylval ->GetIdentifier ();
 				else
 					pszToken = "identifier";
 				break;
 
-			case INTEGER_CONST:
+			case token::INTEGER_CONST:
 				pszToken = "integer constant";
 				break;
 
-			case FLOAT_CONST:
+			case token::FLOAT_CONST:
 				pszToken = "float constant";
 				break;
 
-			case STRING_CONST:
+			case token::STRING_CONST:
 				pszToken = "string constant";
 				break;
 
-			case ADDEQ:
+			case token::ADDEQ:
 				pszToken = "+=";
 				break;
 
-			case SUBEQ:
+			case token::SUBEQ:
 				pszToken = "-=";
 				break;
 
-			case MULEQ:
+			case token::MULEQ:
 				pszToken = "*=";
 				break;
 
-			case DIVEQ:
+			case token::DIVEQ:
 				pszToken = "/=";
 				break;
 
-			case MODEQ:
+			case token::MODEQ:
 				pszToken = "%=";
 				break;
 
-			case XOREQ:
+			case token::XOREQ:
 				pszToken = "^=";
 				break;
 
-			case ANDEQ:
+			case token::ANDEQ:
 				pszToken = "&=";
 				break;
 
-			case OREQ:
+			case token::OREQ:
 				pszToken = "|=";
 				break;
 
-			case SL:
+			case token::SL:
 				pszToken = "<<";
 				break;
 
-			case SR:
+			case token::SR:
 				pszToken = ">>";
 				break;
 
-			case USR:
+			case token::USR:
 				pszToken = ">>>";
 				break;
 
-			case SLEQ:
+			case token::SLEQ:
 				pszToken = "<<=";
 				break;
 
-			case SREQ:
+			case token::SREQ:
 				pszToken = ">>=";
 				break;
 
-			case USREQ:
+			case token::USREQ:
 				pszToken = ">>>=";
 				break;
 
-			case EQ:
+			case token::EQ:
 				pszToken = "==";
 				break;
 
-			case NOTEQ:
+			case token::NOTEQ:
 				pszToken = "!=";
 				break;
 
-			case LTEQ:
+			case token::LTEQ:
 				pszToken = "<=";
 				break;
 
-			case GTEQ:
+			case token::GTEQ:
 				pszToken = ">=";
 				break;
 
-			case ANDAND:
+			case token::ANDAND:
 				pszToken = "&&";
 				break;
 
-			case OROR:
+			case token::OROR:
 				pszToken = "||";
 				break;
 
-			case PLUSPLUS:
+			case token::PLUSPLUS:
 				pszToken = "++";
 				break;
 
-			case MINUSMINUS:
+			case token::MINUSMINUS:
 				pszToken = "--";
 				break;
 
-			case FLOAT_TYPE:
+			case token::FLOAT_TYPE:
 				pszToken = "float";
 				break;
 
-			case INT_TYPE:
+			case token::INT_TYPE:
 				pszToken = "int";
 				break;
 
-			case OBJECT_TYPE:
+			case token::OBJECT_TYPE:
 				pszToken = "object";
 				break;
 
-			case STRING_TYPE:
+			case token::STRING_TYPE:
 				pszToken = "string";
 				break;
 
-			case VOID_TYPE:
+			case token::VOID_TYPE:
 				pszToken = "void";
 				break;
 
-			case STRUCT_TYPE:
+			case token::STRUCT_TYPE:
 				pszToken = "struct";
 				break;
 
-			case VECTOR_TYPE:
+			case token::VECTOR_TYPE:
 				pszToken = "vector";
 				break;
 
-			case ENGINE_TYPE:
+			case token::ENGINE_TYPE:
 				if (yylval)
 				{
 					int nIndex = yylval ->GetType () - NscType_Engine_0;
@@ -541,63 +544,63 @@ bool NscBuildSyntaxError (int nToken, YYSTYPE yylval)
 					pszToken = "engine-type";
 				break;
 
-			case ACTION_TYPE:
+			case token::ACTION_TYPE:
 				pszToken = "action";
 				break;
 
-			case OBJECT_SELF_CONST:
+			case token::OBJECT_SELF_CONST:
 				pszToken = "OBJECT_SELF";
 				break;
 
-			case OBJECT_INVALID_CONST:
+			case token::OBJECT_INVALID_CONST:
 				pszToken = "OBJECT_INVALID";
 				break;
 
-			case BREAK:
+			case token::BREAK:
 				pszToken = "break";
 				break;
 
-			case CASE:
+			case token::CASE:
 				pszToken = "case";
 				break;
 
-			case CONTINUE:
+			case token::CONTINUE:
 				pszToken = "continue";
 				break;
 
-			case DEFAULT:
+			case token::DEFAULT:
 				pszToken = "default";
 				break;
 
-			case DO:
+			case token::DO:
 				pszToken = "do";
 				break;
 
-			case ELSE:
+			case token::ELSE:
 				pszToken = "else";
 				break;
 
-			case FOR:
+			case token::FOR:
 				pszToken = "for";
 				break;
 
-			case IF:
+			case token::IF:
 				pszToken = "if";
 				break;
 
-			case RETURN:
+			case token::RETURN:
 				pszToken = "return";
 				break;
 
-			case SWITCH:
+			case token::SWITCH:
 				pszToken = "switch";
 				break;
 
-			case WHILE:
+			case token::WHILE:
 				pszToken = "while";
 				break;
 
-			case NWCONST:
+			case token::NWCONST:
 				pszToken = "const";
 				break;
 
@@ -657,31 +660,31 @@ YYSTYPE NscBuildType (int nType, YYSTYPE pId)
 
 	switch (nType)
 	{
-		case VOID_TYPE:
+		case token::VOID_TYPE:
 			pOut ->SetType (NscType_Void);
 			break;
 
-		case INT_TYPE:
+		case token::INT_TYPE:
 			pOut ->SetType (NscType_Integer);
 			break;
 
-		case FLOAT_TYPE:
+		case token::FLOAT_TYPE:
 			pOut ->SetType (NscType_Float);
 			break;
 
-		case OBJECT_TYPE:
+		case token::OBJECT_TYPE:
 			pOut ->SetType (NscType_Object);
 			break;
 
-		case STRING_TYPE:
+		case token::STRING_TYPE:
 			pOut ->SetType (NscType_String);
 			break;
 
-		case VECTOR_TYPE:
+		case token::VECTOR_TYPE:
 			pOut ->SetType (NscType_Vector);
 			break;
 
-		case ACTION_TYPE:
+		case token::ACTION_TYPE:
 			if (!g_pCtx ->IsNWScript ())
 			{
 				g_pCtx ->GenerateError ("\"action\" identifier only "
@@ -692,7 +695,7 @@ YYSTYPE NscBuildType (int nType, YYSTYPE pId)
                 pOut ->SetType (NscType_Action);
 			break;
 
-		case STRUCT_TYPE:
+		case token::STRUCT_TYPE:
 			assert (pId != NULL);
 			{
 				if (!g_pCtx ->IsPhase2 () && !g_pCtx ->IsNWScript ())
@@ -723,7 +726,7 @@ YYSTYPE NscBuildType (int nType, YYSTYPE pId)
 			}
 			break;
 
-		case ENGINE_TYPE:
+		case token::ENGINE_TYPE:
 			assert (pId != NULL);
 			{
 				pOut ->SetType (pId ->GetType ());
@@ -2923,7 +2926,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case SL:
+                case token::SL:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 				if (g_pCtx ->GetOptExpression () &&
@@ -2948,7 +2951,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case SR:
+                case token::SR:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 #ifdef NOT_ENABLED_YET
@@ -2975,7 +2978,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case USR:
+                case token::USR:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 #ifdef NOT_ENABLED_YET
@@ -3086,7 +3089,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case LTEQ:
+                case token::LTEQ:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 				if (g_pCtx ->GetOptExpression () &&
@@ -3128,7 +3131,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case GTEQ:
+                case token::GTEQ:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 				if (g_pCtx ->GetOptExpression () &&
@@ -3170,7 +3173,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case EQ:
+                case token::EQ:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 				if (g_pCtx ->GetOptExpression () &&
@@ -3260,7 +3263,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case NOTEQ:
+                case token::NOTEQ:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 				if (g_pCtx ->GetOptExpression () &&
@@ -3440,7 +3443,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case MULEQ:
+                case token::MULEQ:
 			if (nLhsType == NscType_Vector && nRhsType == NscType_Float)
 			{
 				NscPushAssignment (pOut, NscPCode_AsnMultiply, 
@@ -3468,7 +3471,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case DIVEQ:
+                case token::DIVEQ:
 			if (nLhsType == NscType_Vector && nRhsType == NscType_Float)
 			{
 				NscPushAssignment (pOut, NscPCode_AsnDivide, 
@@ -3496,7 +3499,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case MODEQ:
+                case token::MODEQ:
 			if (nLhsType == NscType_Integer && nRhsType == NscType_Integer)
 			{
 				NscPushAssignment (pOut, NscPCode_AsnModulus, 
@@ -3509,7 +3512,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case ADDEQ:
+		case token::ADDEQ:
 			if (nLhsType == NscType_Vector && nRhsType == NscType_Vector)
 			{
 				NscPushAssignment (pOut, NscPCode_AsnAdd, 
@@ -3542,7 +3545,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case SUBEQ:
+                case token::SUBEQ:
 			if (nLhsType == NscType_Vector && nRhsType == NscType_Vector)
 			{
 				NscPushAssignment (pOut, NscPCode_AsnSubtract, 
@@ -3570,7 +3573,7 @@ YYSTYPE NscBuildBinaryOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			}
 			break;
 
-		case SLEQ:
+		case token::SLEQ:
 			pszOp = "<<=";
 			nOp = NscPCode_AsnShiftLeft;
 asn_shift_operator:;
@@ -3586,17 +3589,17 @@ asn_shift_operator:;
 			}
 			break;
 
-		case SREQ:
+		case token::SREQ:
 			pszOp = ">>=";
 			nOp = NscPCode_AsnShiftRight;
 			goto asn_shift_operator;
 
-		case USREQ:
+		case token::USREQ:
 			pszOp = ">>>=";
 			nOp = NscPCode_AsnUnsignedShiftRight;
 			goto asn_shift_operator;
 
-		case ANDEQ:
+		case token::ANDEQ:
 			pszOp = "&=";
 			nOp = NscPCode_AsnBitwiseAND;
 asn_bitwise_expression:;
@@ -3612,12 +3615,12 @@ asn_bitwise_expression:;
 			}
 			break;
 
-		case XOREQ:
+		case token::XOREQ:
 			pszOp = "^=";
 			nOp = NscPCode_AsnBitwiseXOR;
 			goto asn_bitwise_expression;
 
-		case OREQ:
+		case token::OREQ:
 			pszOp = "|=";
 			nOp = NscPCode_AsnBitwiseOR;
 			goto asn_bitwise_expression;
@@ -3696,12 +3699,12 @@ YYSTYPE NscBuildLogicalOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 
 		const char *pszOp;
 		NscPCode nOp;
-		if (nToken == ANDAND)
+		if (nToken == token::ANDAND)
 		{
 			pszOp = "&&";
 			nOp = NscPCode_LogicalAND;
 		}
-		else if (nToken == OROR)
+		else if (nToken == token::OROR)
 		{
 			pszOp = "||";
 			nOp = NscPCode_LogicalOR;
@@ -3750,12 +3753,12 @@ YYSTYPE NscBuildLogicalOp (int nToken, YYSTYPE pLhs, YYSTYPE pRhs)
 			// If the operation is known to be true or false by the lhs
 			//
 
-			else if (nToken == ANDAND && nLhsConstant == 0)
+			else if (nToken == token::ANDAND && nLhsConstant == 0)
 			{
 				pOut ->PushConstantInteger (0);
 				pOut ->SetType (NscType_Integer);
 			}
-			else if (nToken == OROR && nLhsConstant == 1)
+			else if (nToken == token::OROR && nLhsConstant == 1)
 			{
 				pOut ->PushConstantInteger (1);
 				pOut ->SetType (NscType_Integer);
@@ -4706,7 +4709,7 @@ YYSTYPE NscBuild5Block (int nToken, YYSTYPE pPrev, int nAddFence,
 	bool fCheckCond;
 	switch (nToken)
 	{
-		case IF:
+		case token::IF:
 			nPCode = NscPCode_If;
 			nFenceType = NscFenceType_If;
 			pszToken = "if";
@@ -4714,7 +4717,7 @@ YYSTYPE NscBuild5Block (int nToken, YYSTYPE pPrev, int nAddFence,
 			fCheckCond = pPrev == NULL;
 			break;
 
-		case WHILE:
+		case token::WHILE:
 			nPCode = NscPCode_While;
 			nFenceType = NscFenceType_While;
 			pszToken = "while";
@@ -4722,7 +4725,7 @@ YYSTYPE NscBuild5Block (int nToken, YYSTYPE pPrev, int nAddFence,
 			fCheckCond = pPrev == NULL;
 			break;
 
-		case DO:
+		case token::DO:
 			nPCode = NscPCode_Do;
 			nFenceType = NscFenceType_Do;
 			pszToken = "do";
@@ -4730,7 +4733,7 @@ YYSTYPE NscBuild5Block (int nToken, YYSTYPE pPrev, int nAddFence,
 			fCheckCond = pPrev != NULL;
 			break;
 
-		case FOR:
+		case token::FOR:
 			nPCode = NscPCode_For;
 			nFenceType = NscFenceType_For;
 			pszToken = "for";
@@ -4738,7 +4741,7 @@ YYSTYPE NscBuild5Block (int nToken, YYSTYPE pPrev, int nAddFence,
 			fCheckCond = pPrev == NULL;
 			break;
 
-		case SWITCH:
+		case token::SWITCH:
 			nPCode = NscPCode_Switch;
 			nFenceType = NscFenceType_Switch;
 			pszToken = "switch";
@@ -4787,7 +4790,7 @@ YYSTYPE NscBuild5Block (int nToken, YYSTYPE pPrev, int nAddFence,
 		// for this
 		//
 
-		if (nToken == SWITCH)
+		if (nToken == token::SWITCH)
 		{
 			NscSymbolFence *pFence = g_pCtx ->GetCurrentFence ();
 			pFence ->nPrevLocals++;
@@ -4806,7 +4809,7 @@ YYSTYPE NscBuild5Block (int nToken, YYSTYPE pPrev, int nAddFence,
 	// then set return
 	//
 
-	if (nToken == IF && pFalse)
+	if (nToken == token::IF && pFalse)
 	{
 		if (fHadReturn)
 			NscSetFenceReturn (true);
@@ -4992,7 +4995,7 @@ YYSTYPE NscBuildCase (int nToken, YYSTYPE pCond)
 		// If this is a case
 		//
 
-		if (nToken == CASE)
+		if (nToken == token::CASE)
 		{
 
 			//
@@ -5061,7 +5064,7 @@ YYSTYPE NscBuildCase (int nToken, YYSTYPE pCond)
 			// Test for only one default
 			//
 
-			if (nToken == DEFAULT)
+			if (nToken == token::DEFAULT)
 			{
 				if (pFence ->fHasDefault)
 				{
@@ -5086,9 +5089,9 @@ YYSTYPE NscBuildCase (int nToken, YYSTYPE pCond)
 			//
 
 			NscPCode nPCode;
-			if (nToken == CASE)
+			if (nToken == token::CASE)
 				nPCode = NscPCode_Case;
-			else if (nToken == DEFAULT)
+			else if (nToken == token::DEFAULT)
 				nPCode = NscPCode_Default;
 			else
 			{
@@ -5262,9 +5265,9 @@ YYSTYPE NscBuildBreakContinue (int nToken)
 	//
 
 	NscPCode nPCode;
-	if (nToken == BREAK)
+	if (nToken == token::BREAK)
 		nPCode = NscPCode_Break;
-	else if (nToken == CONTINUE)
+	else if (nToken == token::CONTINUE)
 		nPCode = NscPCode_Continue;
 	else
 	{
@@ -5279,7 +5282,7 @@ YYSTYPE NscBuildBreakContinue (int nToken)
 	NscSymbolFence *pFence = g_pCtx ->GetCurrentFence ();
 	while (pFence)
 	{
-		if ((pFence ->nFenceType == NscFenceType_Switch && nToken == BREAK) ||
+		if ((pFence ->nFenceType == NscFenceType_Switch && nToken == token::BREAK) ||
 			pFence ->nFenceType == NscFenceType_Do ||
 			pFence ->nFenceType == NscFenceType_While ||
 			pFence ->nFenceType == NscFenceType_For)
@@ -5288,12 +5291,12 @@ YYSTYPE NscBuildBreakContinue (int nToken)
 	}
 	if (pFence == NULL)
 	{
-		if (nToken == BREAK)
+		if (nToken == token::BREAK)
 		{
             g_pCtx ->GenerateError ("\"break\" statement only allowed in "
 			    "\"switch\", \"do\", \"while\", and \"for\" statements");
 		}
-		else if (nToken == CONTINUE)
+		else if (nToken == token::CONTINUE)
 		{
             g_pCtx ->GenerateError ("\"continue\" statement only allowed in "
 			    "\"do\", \"while\", and \"for\" statements");

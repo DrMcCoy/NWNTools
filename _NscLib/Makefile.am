@@ -1,7 +1,6 @@
-
-AM_CXXFLAGS = -fno-default-inline
-
 AM_YFLAGS = --defines=NscParser.h --skeleton=lalr1.cc
+
+AM_CXXFLAGS = -fPIC
 
 noinst_LIBRARIES = libnsc.a
 

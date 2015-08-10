@@ -43,6 +43,9 @@
 #include "NscPStackEntry.h"
 #include "NscSymbolTable.h"
 
+// "Import" token definitions.
+typedef yy::parser::token token;
+
 //
 // Externals
 //
@@ -230,7 +233,7 @@ read_another_line:;
 		if (pSymbol != NULL)
 		{
 			assert (pSymbol ->nSymType == NscSymType_Token);
-			if (pSymbol ->nToken == ENGINE_TYPE)
+			if (pSymbol ->nToken == token::ENGINE_TYPE)
 			{
 				CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
 				pEntry ->SetType ((NscType) (
@@ -246,7 +249,7 @@ read_another_line:;
 			CNscPStackEntry *pEntry = GetPStackEntry (__FILE__, __LINE__);
 			pEntry ->SetIdentifier (pszStart, nCount);
 			*yylval = pEntry;
-			return IDENTIFIER;
+			return token::IDENTIFIER;
 		}
 	}
 
@@ -305,7 +308,7 @@ read_another_line:;
 			pEntry ->SetType (NscType_Integer);
 			pEntry ->PushConstantInteger (nValue);
 			*yylval = pEntry;
-			return INTEGER_CONST; 
+			return token::INTEGER_CONST; 
 		}
 
 		//
@@ -359,13 +362,13 @@ read_another_line:;
 			{
 				pEntry ->SetType (NscType_Float);
 				pEntry ->PushConstantFloat ((float) atof (psz));
-				return FLOAT_CONST;
+				return token::FLOAT_CONST;
 			}
 			else
 			{
 				pEntry ->SetType (NscType_Integer);
 				pEntry ->PushConstantInteger (atol (psz));
-				return INTEGER_CONST;
+				return token::INTEGER_CONST;
 			}
 		}
 	}
@@ -414,7 +417,7 @@ read_another_line:;
 				else if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return DIVEQ;
+					return token::DIVEQ;
 				}
 				else 
 				{
@@ -441,12 +444,12 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return ADDEQ;
+					return token::ADDEQ;
 				}
 				else if (c == '+')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return PLUSPLUS;
+					return token::PLUSPLUS;
 				}
 				else
 					return '+';
@@ -457,12 +460,12 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return SUBEQ;
+					return token::SUBEQ;
 				}
 				else if (c == '-')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return MINUSMINUS;
+					return token::MINUSMINUS;
 				}
 				else
 					return '-';
@@ -473,7 +476,7 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return MULEQ;
+					return token::MULEQ;
 				}
 				else
 					return '*';
@@ -484,7 +487,7 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return MODEQ;
+					return token::MODEQ;
 				}
 				else
 					return '%';
@@ -495,7 +498,7 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return XOREQ;
+					return token::XOREQ;
 				}
 				else
 					return '^';
@@ -506,12 +509,12 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return ANDEQ;
+					return token::ANDEQ;
 				}
 				else if (c == '&')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return ANDAND;
+					return token::ANDAND;
 				}
 				else
 					return '&';
@@ -522,12 +525,12 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return OREQ;
+					return token::OREQ;
 				}
 				else if (c == '|')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return OROR;
+					return token::OROR;
 				}
 				else
 					return '|';
@@ -538,7 +541,7 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return NOTEQ;
+					return token::NOTEQ;
 				}
 				else
 					return '!';
@@ -549,7 +552,7 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return EQ;
+					return token::EQ;
 				}
 				else
 					return '=';
@@ -560,7 +563,7 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return LTEQ;
+					return token::LTEQ;
 				}
 				else if (c == '<')
 				{
@@ -569,10 +572,10 @@ read_another_line:;
 					if (c == '=')
 					{
 						m_pStreamTop ->pszNextTokenPos++;
-						return SLEQ;
+						return token::SLEQ;
 					}
 					else
-						return SL;
+						return token::SL;
 				}
 				else
 					return '<';
@@ -583,7 +586,7 @@ read_another_line:;
 				if (c == '=')
 				{
 					m_pStreamTop ->pszNextTokenPos++;
-					return GTEQ;
+					return token::GTEQ;
 				}
 				else if (c == '>')
 				{
@@ -592,7 +595,7 @@ read_another_line:;
 					if (c == '=')
 					{
 						m_pStreamTop ->pszNextTokenPos++;
-						return SREQ;
+						return token::SREQ;
 					}
 					else if (c == '>')
 					{
@@ -601,13 +604,13 @@ read_another_line:;
 						if (c == '=')
 						{
 							m_pStreamTop ->pszNextTokenPos++;
-							return USREQ;
+							return token::USREQ;
 						}
 						else
-							return USR;
+							return token::USR;
 					}
 					else
-						return SR;
+						return token::SR;
 				}
 				else
 					return '>';
@@ -626,7 +629,7 @@ read_another_line:;
 							pEntry ->SetType (NscType_String);
 							pEntry ->PushConstantString (pszStart, (int) (pszOut - pszStart));
 							*yylval = pEntry;
-							return STRING_CONST;
+							return token::STRING_CONST;
 						}
 						else if (c == '\\')
 						{
@@ -646,7 +649,7 @@ read_another_line:;
 							pEntry ->PushConstantString (pszStart, (int) (pszOut - pszStart));
 							*yylval = pEntry;
 							GenerateError ("Unterminated string");
-							return STRING_CONST; 
+							return token::STRING_CONST; 
 						}
 						else
 							*pszOut++ = c;
@@ -898,7 +901,7 @@ try_again:;
 					{
 						NscSymbol *pSymbol = g_sNscReservedWords .Add (
 							pszVTmp, NscSymType_Token);
-						pSymbol ->nToken = ENGINE_TYPE;
+						pSymbol ->nToken = token::ENGINE_TYPE;
 						pSymbol ->nEngineObject = nIndex;
 					}
 				}

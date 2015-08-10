@@ -44,6 +44,9 @@
 #include "NscSymbolTable.h"
 #include "NscCodeGenerator.h"
 
+// "Import" token definitions.
+typedef yy::parser::token token;
+
 //
 // Globals
 //
@@ -107,31 +110,31 @@ bool NscCompilerInitialize (CNwnLoader *pLoader, int nVersion,
 	// Add the reserved words
 	//
 
-	NscAddToken ("int",            INT_TYPE);
-	NscAddToken ("float",          FLOAT_TYPE);
-	NscAddToken ("object",         OBJECT_TYPE);
-	NscAddToken ("string",         STRING_TYPE);
-	NscAddToken ("struct",         STRUCT_TYPE);
-	NscAddToken ("void",           VOID_TYPE);
-	NscAddToken ("vector",         VECTOR_TYPE);
-	NscAddToken ("action",         ACTION_TYPE);
+	NscAddToken ("int",            token::INT_TYPE);
+	NscAddToken ("float",          token::FLOAT_TYPE);
+	NscAddToken ("object",         token::OBJECT_TYPE);
+	NscAddToken ("string",         token::STRING_TYPE);
+	NscAddToken ("struct",         token::STRUCT_TYPE);
+	NscAddToken ("void",           token::VOID_TYPE);
+	NscAddToken ("vector",         token::VECTOR_TYPE);
+	NscAddToken ("action",         token::ACTION_TYPE);
 
-	NscAddToken ("break",          BREAK);
-	NscAddToken ("case",           CASE);
-	NscAddToken ("continue",       CONTINUE);
-	NscAddToken ("default",        DEFAULT);
-	NscAddToken ("do",             DO);
-	NscAddToken ("else",           ELSE);
-	NscAddToken ("for",            FOR);
-	NscAddToken ("if",             IF);
-	NscAddToken ("return",         RETURN);
-	NscAddToken ("switch",         SWITCH);
-	NscAddToken ("while",          WHILE);
+	NscAddToken ("break",          token::BREAK);
+	NscAddToken ("case",           token::CASE);
+	NscAddToken ("continue",       token::CONTINUE);
+	NscAddToken ("default",        token::DEFAULT);
+	NscAddToken ("do",             token::DO);
+	NscAddToken ("else",           token::ELSE);
+	NscAddToken ("for",            token::FOR);
+	NscAddToken ("if",             token::IF);
+	NscAddToken ("return",         token::RETURN);
+	NscAddToken ("switch",         token::SWITCH);
+	NscAddToken ("while",          token::WHILE);
 	if (fEnableExtensions || nVersion >= 999)
-        NscAddToken ("const",      NWCONST);
+        NscAddToken ("const",      token::NWCONST);
 
-	NscAddToken ("OBJECT_SELF",    OBJECT_SELF_CONST);
-	NscAddToken ("OBJECT_INVALID", OBJECT_INVALID_CONST);
+	NscAddToken ("OBJECT_SELF",    token::OBJECT_SELF_CONST);
+	NscAddToken ("OBJECT_INVALID", token::OBJECT_INVALID_CONST);
 
 	//
 	// Read NWSCRIPT
@@ -373,8 +376,7 @@ const char *NscGetActionName (int nAction)
 //
 //----------------------------------------------------------------------------
 
-void yy::parser::error (const yy::parser::location_type& l,
-			const std::string& m) {
+void yy::parser::error (const std::string& m) {
     context.yyerror(m.c_str());
 }
 

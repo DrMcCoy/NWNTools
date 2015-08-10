@@ -1187,7 +1187,7 @@ void DoTest4 (const char *pszName)
 		int nFileLength = (int) strlen (pszName);
 		char *pszNCS = (char *) alloca (sizeof (char) * (nFileLength + 5));
 		strcpy (pszNCS, pszName);
-		char *p = strrchr (NwnBasename (pszNCS), '.');
+		char *p = const_cast<char *>(strrchr (NwnBasename (pszNCS), '.'));
 		if (p && stricmp (p, ".nss") == 0)
 			strcpy (p, ".ncs");
 		else
@@ -2117,7 +2117,7 @@ int main (int argc, char *argv [])
 			char *pszOrgInFile = papszInFiles [i];
 			char szInFile [512];
 			strcpy (szInFile, papszInFiles [i]);
-			char *p = strchr (NwnBasename (szInFile), '.');
+			char *p = const_cast<char *>(strchr (NwnBasename (szInFile), '.'));
 			if (p) 
 				*p = 0;
 			strcat (szInFile, ".nss");
@@ -2151,7 +2151,7 @@ int main (int argc, char *argv [])
 		char *pszOrgInFile = papszInFiles [0];
 		char szPattern [512];
 		strcpy (szPattern, papszInFiles [0]);
-		char *p = strchr (NwnBasename (szPattern), '.');
+		char *p = const_cast<char *>(strchr (NwnBasename (szPattern), '.'));
 		if (p) 
 			*p = 0;
 
@@ -2232,7 +2232,7 @@ int main (int argc, char *argv [])
                         const char *tmp;
 			strcpy (szInFile, papszInFiles [i]);
                         tmp = NwnBasename(szInFile);
-			char *p = strchr (tmp, '.');	
+			char *p = const_cast<char *>(strchr (tmp, '.'));
 
                         if (p) {
                             *p = '\0';

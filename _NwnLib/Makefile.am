@@ -1,3 +1,4 @@
+AM_CXXFLAGS = -fPIC
 
 noinst_LIBRARIES = libnwn.a
 
@@ -34,8 +35,6 @@ libnwn_a_SOURCES = \
 	NwnTexturePlt.h
 
 libnwn_a_LIBADD = @LIBOBJS@
-
-AM_CXXFLAGS = -fno-default-inline
 
 EXTRA_DIST = \
 	_NwnLib.vcproj
