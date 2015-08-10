@@ -52,7 +52,7 @@ typedef yy::parser::token token;
 
 extern CNscSymbolTable g_sNscReservedWords;
 extern int g_nNscActionCount;
-extern CNwnArray <size_t> g_anNscActions;
+extern std::vector<size_t> g_anNscActions;
 extern std::string g_astrNscEngineTypes [16];
 
 //-----------------------------------------------------------------------------
@@ -763,7 +763,7 @@ try_again:;
 				//
 
 				size_t i;
-				for (i = 0; i < m_asFiles .GetCount (); i++)
+				for (i = 0; i < m_asFiles .size(); i++)
 				{
 					if (stricmp (m_asFiles [i] .strName .c_str (), pszTemp) == 0)
 						break;
@@ -773,7 +773,7 @@ try_again:;
 				// If this isn't a duplicate
 				//
 
-				if (i >= m_asFiles .GetCount ())
+				if (i >= m_asFiles .size())
 				{
 
 					//
@@ -1060,8 +1060,8 @@ void CNscContext::AddVariable (const char *pszIdentifier, NscType nType,
 	else if (IsGlobalScope ())
 	{
 		assert (!IsPhase2 ());
-		m_anGlobalVars .Add (nSymbol);
-		m_anGlobalDefs .Add (nSymbol);
+		m_anGlobalVars .push_back (nSymbol);
+		m_anGlobalDefs .push_back (nSymbol);
 		pSymbol ->ulFlags |= NscSymFlag_Global;
 	}
 	else 
@@ -1146,7 +1146,7 @@ NscSymbol *CNscContext::AddPrototype (const char *pszIdentifier,
 
 	if ((ulFlags & NscSymFlag_EngineFunc) != 0)
 	{
-		g_anNscActions .Add (nSymbol);
+		g_anNscActions.push_back(nSymbol);
 		sExtra .nAction = g_nNscActionCount++;
 	}
 
@@ -1251,7 +1251,7 @@ void CNscContext::AddStructure (const char *pszIdentifier,
 	//
 
 	m_anStructSymbol [m_nStructs++] = nSymbol;
-	m_anGlobalDefs .Add (nSymbol);
+	m_anGlobalDefs .push_back (nSymbol);
 }
 
 //-----------------------------------------------------------------------------

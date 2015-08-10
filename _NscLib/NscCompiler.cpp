@@ -38,6 +38,8 @@
 //      
 //-----------------------------------------------------------------------------
 
+#include <vector>
+
 #include "Nsc.h"
 #include "NscContext.h"
 #include "NscPStackEntry.h"
@@ -53,7 +55,7 @@ typedef yy::parser::token token;
 
 CNscSymbolTable g_sNscReservedWords (0x400);
 int g_nNscActionCount = 0;
-CNwnArray <size_t> g_anNscActions;
+std::vector<size_t> g_anNscActions;
 CNscSymbolTable g_sNscNWScript;
 CNscContext *g_pCtx;
 std::string g_astrNscEngineTypes [16];
@@ -102,7 +104,7 @@ bool NscCompilerInitialize (CNwnLoader *pLoader, int nVersion,
 	//
 
 	g_nNscActionCount = 0;
-	g_anNscActions .RemoveAll ();
+	g_anNscActions.clear();
 	g_sNscReservedWords .Reset ();
 	g_sNscNWScript .Reset ();
 
