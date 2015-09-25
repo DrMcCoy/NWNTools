@@ -381,6 +381,7 @@ do_simple_operator:;
 							break;
 
 						case 5:
+						case 96:
 							{
 								if (&pData [3] > pEnd)
 									goto invalid_op;
