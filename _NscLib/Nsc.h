@@ -578,6 +578,8 @@ enum NscCode
 	NscCode_RESTOREBP	= 0x2B,
 	NscCode_STORE_STATE	= 0x2C,
 	NscCode_NOP			= 0x2D,
+	NscCode_WRAR		= 0x30,
+	NscCode_RDAR		= 0x32,
 	NscCode_Size		= 0x42,
 };
 
