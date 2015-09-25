@@ -230,6 +230,10 @@ static void GetOpText (unsigned char cOpType, char *szOpText)
 			strcpy (szOpText, "O[]");
 			break;
 
+		case 0x44:
+			strcpy (szOpText, "R[]");
+			break;
+
 		case 0x50:
 			strcpy (szOpText, "E0[]");
 			break;
