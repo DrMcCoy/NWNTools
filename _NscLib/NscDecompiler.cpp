@@ -127,19 +127,27 @@ static void GetOpText (unsigned char cOpType, char *szOpText)
 			break;
 
 		case 0x10:
-			strcpy (szOpText, "EFF");
+			strcpy (szOpText, "E0");
 			break;
 
 		case 0x11:
-			strcpy (szOpText, "EVNT");
+			strcpy (szOpText, "E1");
 			break;
 
 		case 0x12:
-			strcpy (szOpText, "LOC");
+			strcpy (szOpText, "E2");
 			break;
 
 		case 0x13:
-			strcpy (szOpText, "TAL");
+			strcpy (szOpText, "E3");
+			break;
+
+		case 0x14:
+			strcpy (szOpText, "E4");
+			break;
+
+		case 0x15:
+			strcpy (szOpText, "E5");
 			break;
 
 		case 0x20:
@@ -171,7 +179,27 @@ static void GetOpText (unsigned char cOpType, char *szOpText)
 			break;
 
 		case 0x30:
-			strcpy (szOpText, "EFFEFF");
+			strcpy (szOpText, "E0E0");
+			break;
+
+		case 0x31:
+			strcpy (szOpText, "E1E1");
+			break;
+
+		case 0x32:
+			strcpy (szOpText, "E2E2");
+			break;
+
+		case 0x33:
+			strcpy (szOpText, "E3E3");
+			break;
+
+		case 0x34:
+			strcpy (szOpText, "E4E4");
+			break;
+
+		case 0x35:
+			strcpy (szOpText, "E5E5");
 			break;
 
 		case 0x3A:
@@ -184,6 +212,50 @@ static void GetOpText (unsigned char cOpType, char *szOpText)
 
 		case 0x3C:
 			strcpy (szOpText, "FV");
+			break;
+
+		case 0x40:
+			strcpy (szOpText, "I[]");
+			break;
+
+		case 0x41:
+			strcpy (szOpText, "F[]");
+			break;
+
+		case 0x42:
+			strcpy (szOpText, "S[]");
+			break;
+
+		case 0x43:
+			strcpy (szOpText, "O[]");
+			break;
+
+		case 0x50:
+			strcpy (szOpText, "E0[]");
+			break;
+
+		case 0x51:
+			strcpy (szOpText, "E1[]");
+			break;
+
+		case 0x52:
+			strcpy (szOpText, "E2[]");
+			break;
+
+		case 0x53:
+			strcpy (szOpText, "E3[]");
+			break;
+
+		case 0x54:
+			strcpy (szOpText, "E4[]");
+			break;
+
+		case 0x55:
+			strcpy (szOpText, "E5[]");
+			break;
+
+		case 0x60:
+			strcpy (szOpText, "R");
 			break;
 
 		default:
