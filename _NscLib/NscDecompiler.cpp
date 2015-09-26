@@ -373,6 +373,30 @@ do_simple_operator:;
 				}
 				break;
 
+			case NscCode_GETREF:
+				{
+					if (&pData [7] > pEnd || pData [0] != 1)
+						goto invalid_op;
+					unsigned long ul1, ul2;
+					pData = GetUINT32 (pData + 1, &ul1);
+					pData = GetUINT16 (pData, &ul2);
+					sprintf (szByteText, "%02X 01 %08X %04X", cOp, ul1, ul2);
+					sprintf (szOpText, "GETREF %08X, %04X", ul1, ul2);
+				}
+				break;
+
+			case NscCode_GETREFA:
+				{
+					if (&pData [7] > pEnd || pData [0] != 1)
+						goto invalid_op;
+					unsigned long ul1, ul2;
+					pData = GetUINT32 (pData + 1, &ul1);
+					pData = GetUINT16 (pData, &ul2);
+					sprintf (szByteText, "%02X 01 %08X %04X", cOp, ul1, ul2);
+					sprintf (szOpText, "GETREFA %08X, %04X", ul1, ul2);
+				}
+				break;
+
 			case NscCode_CONST:
 				{
 					if (&pData [1] > pEnd)

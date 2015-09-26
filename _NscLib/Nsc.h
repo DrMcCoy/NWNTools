@@ -580,6 +580,8 @@ enum NscCode
 	NscCode_NOP			= 0x2D,
 	NscCode_WRAR		= 0x30,
 	NscCode_RDAR		= 0x32,
+	NscCode_GETREF		= 0x37,
+	NscCode_GETREFA		= 0x39,
 	NscCode_Size		= 0x42,
 };
 
